@@ -42,8 +42,6 @@
 
         <h1>Quyên</h1>
     </table>
-
-    aaaaaaaaaaaa
-    <h1>Khanh 2</h1>
+    <h1>Khánh</h1>
 </body>
 </html>
