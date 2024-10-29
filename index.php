@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,9 +38,6 @@
         <tr class="normal">
             <td colspan="2">Footer</td>
         </tr>
-
-        <h1>Quyên</h1>
     </table>
-    <h1>Khánh</h1>
 </body>
 </html>
