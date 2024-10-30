@@ -14,7 +14,7 @@
 }
 
 #header .nav-item .nav-link{
-    color: var(--color-link) !important;
+    color: white !important;
 }
 
 #header .nav-item .nav-link.active{
@@ -22,7 +22,7 @@
 }
 
 #header .nav-item.active{
-    border-bottom: 2px solid var(--color-link) !important;
+    border-bottom: 3px solid white !important;
 }
 
 #carousel_home_banner{
