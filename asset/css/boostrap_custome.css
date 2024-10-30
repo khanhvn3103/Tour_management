@@ -7,7 +7,7 @@
 
 .card{
     cursor: pointer !important;
-    border-radius: 10px !important;
+    border-radius: 15px !important;
 }
 
 .card .card-title{
