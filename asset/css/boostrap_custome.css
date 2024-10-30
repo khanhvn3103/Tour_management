@@ -26,3 +26,9 @@
 .card p{
     margin-bottom: .25rem !important;
 }
+
+.btn-dashed{
+    font-weight: var(--bs-btn-font-weight) !important;
+    color: var(--color-primary) !important;
+    border: 1px dashed var(--color-primary) !important;
+}

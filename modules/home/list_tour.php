@@ -54,34 +54,43 @@
         ?>
 
         <div class="row">
-            <?php
-            foreach ($listTours as $tour){
+            <div class="col-3">
+                <?php
+                    include 'modules/home/filter.php';
                 ?>
-                <div class="col-4 mt-2">
-                    <div class="card tour">
-                        <div class="card-tour-img">
-                            <img src="<?php echo $tour->image ?>" alt="<?php echo $tour->name ?>">
-                        </div>
-                        <div class="card-body">
-                            <p class="duration">Duration: <?php echo $tour->duration ?></p>
-                            <h5 class="card-title" title="<?php echo $tour->name ?>"><?php echo $tour->name ?></h5>
-                            <p class="card-text">Tour code: <?php echo $tour->code ?></p>
-                            <p class="card-text">Start point: <?php echo $tour->start_point ?></p>
-                            <p class="price">
-                                <i class="fa fa-tag me-2"></i>
-                                <?php
-                                echo number_format($tour->price, 0, ',', '.') . ' VND';
-                                ?>
-                            </p>
-                            <div class="text-end">
-                                <a href="#">View detail</a>
+            </div>
+            <div class="col-9">
+                <div class="row">
+                    <?php
+                    foreach ($listTours as $tour){
+                        ?>
+                        <div class="col-4 mt-2">
+                            <div class="card tour">
+                                <div class="card-tour-img">
+                                    <img src="<?php echo $tour->image ?>" alt="<?php echo $tour->name ?>">
+                                </div>
+                                <div class="card-body">
+                                    <p class="duration">Duration: <?php echo $tour->duration ?></p>
+                                    <h5 class="card-title" title="<?php echo $tour->name ?>"><?php echo $tour->name ?></h5>
+                                    <p class="card-text">Tour code: <?php echo $tour->code ?></p>
+                                    <p class="card-text">Start point: <?php echo $tour->start_point ?></p>
+                                    <p class="price">
+                                        <i class="fa fa-tag me-2"></i>
+                                        <?php
+                                        echo number_format($tour->price, 0, ',', '.') . ' VND';
+                                        ?>
+                                    </p>
+                                    <div class="text-end">
+                                        <a href="#">View detail</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <?php
+                    }
+                    ?>
                 </div>
-                <?php
-            }
-            ?>
+            </div>
         </div>
 
 

@@ -100,3 +100,13 @@
     -webkit-transform: scale(1.1);
 }
 
+.filter-tours{
+    padding: 1.25rem !important;
+    background: var(--background-light);
+}
+
+.filter-tours label{
+    font-weight: bold !important;
+    color: var(--color-primary) !important;
+    margin: .4rem 0;
+}
