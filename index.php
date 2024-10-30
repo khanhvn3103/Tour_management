@@ -60,6 +60,9 @@
             case 'user':
                 include 'modules/user/index.php';
                 break;
+            case 'management':
+                include 'modules/management/index.php';
+                break;
             default:
                 include 'modules/home/index.php';
         }
@@ -71,12 +74,38 @@
 
 <footer class="footer bg-body border-top" data-bs-theme="dark">
     <div class="container pb-md-2">
-        <div class="d-md-flex align-items-center py-4 pt-sm-5 mt-3 mt-sm-0">
-            <div class="d-flex gap-2 gap-sm-3 justify-content-center ms-md-auto mb-4 mb-md-0 order-md-2">
-
+        <div class="row">
+            <div class="col-3">
+                <img src="asset/images/travellowkey_logo.png" style="width: 180px">
+                <div class="d-flex align-content-center justify-content-around">
+                    <i class="fa fa-github"></i>
+                </div>
             </div>
-            <p class="text-body-secondary fs-sm text-center text-md-start mb-0 me-md-4 order-md-1">© All rights
-                reserved.</p>
+
+            <div class="col-3">
+                <h5 class="text-white font-weight-bold">Thông tin</h5>
+                <span class="text-white">Giới thiệu</span>
+            </div>
+
+            <div class="col-3">
+                <h5 class="text-white font-weight-bold">Liên hệ</h5>
+                <div class="text-white">
+                    <i class="fa fa-phone"></i>
+                    1900 6420
+                </div>
+                <div class="text-white">
+                    <i class="fa fa-location-dot"></i>
+                    12 Nguyễn Văn Bảo, Phường 12, Quân Gò Vấp, TPHCM
+                </div>
+                <div class="text-white">
+                    <i class="fa fa-envelope"></i>
+                    travellowkey@gmail.com
+                </div>
+            </div>
+            <div class="col-12 border-top mt-3 pt-3 text-center">
+                <p class="text-body-secondary mb-0">
+                    © All rights reserved.</p>
+            </div>
         </div>
     </div>
 </footer>
