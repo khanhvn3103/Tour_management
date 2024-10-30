@@ -39,3 +39,8 @@
     border: 1px solid var(--color-primary) !important;
     background: white !important;
 }
+
+.footer{
+    padding: 1.5rem !important;
+    border-top-left-radius: 100px !important;
+}
