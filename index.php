@@ -4,21 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css"/>
-<!--    <link rel="stylesheet" href="/Tour_management/assets/css/style.css" id="theme-styles"/>-->
+    <!--    <link rel="stylesheet" href="/Tour_management/assets/css/style.css" id="theme-styles"/>-->
     <title>Travellowkey</title>
 </head>
-
 <body>
-<header class="navbar navbar-expand-lg bg-body navbar-sticky sticky-top z-fixed px-0" data-sticky-element="">
-    <div class="container">
+<header class="navbar navbar-expand-lg bg-body navbar-sticky sticky-top z-fixed px-0" data-sticky-element="" style="background: linear-gradient(90deg, rgba(8,80,120,1) 0%, rgba(133,216,206,1) 100%)">
+    <div class="container-lg">
         <button type="button" class="navbar-toggler me-3 me-lg-0" data-bs-toggle="offcanvas"
                 data-bs-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand py-1 py-md-2 py-xl-1 me-2 me-sm-n4 me-md-n5 me-lg-0" href="index.php">
-                <span class="d-none d-sm-flex flex-shrink-0 text-primary rtl-flip me-2">
-                    <img src="assets/images/logo.jpg" width="100px">
-                </span>
+            <span class="d-none d-sm-flex flex-shrink-0 text-primary rtl-flip me-2">
+                <img src="asset/images/travellowkey_logo.png" width="100px">
+            </span>
         </a>
         <nav class="offcanvas offcanvas-start" id="navbarNav" tabindex="-1" aria-labelledby="navbarNavLabel">
             <div class="offcanvas-body pt-2 pb-4 py-lg-0 mx-lg-auto">
