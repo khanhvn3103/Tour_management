@@ -1,4 +1,4 @@
-<section style="background: white">
+<section style="background: white" class="pb-3">
     <div class="container-lg">
         <?php
         $listTours =  [(object)
