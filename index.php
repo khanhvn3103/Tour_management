@@ -29,15 +29,18 @@
            <ul class="navbar-nav">
                <li class="nav-item active dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0">
                    <a class="nav-link active" aria-current="page" href="#" role="button"
-                      data-bs-toggle="dropdown" data-bs-trigger="hover" aria-expanded="false">HOME</a>
+                      data-bs-toggle="dropdown" data-bs-trigger="hover" aria-expanded="false">TRANG CHỦ</a>
                </li>
                <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0">
                    <a class="nav-link" aria-current="page" href="#" role="button"
-                      data-bs-toggle="dropdown" data-bs-trigger="hover" aria-expanded="false">LASTEST TOUR</a>
+                      data-bs-toggle="dropdown" data-bs-trigger="hover" aria-expanded="false">THÔNG TIN CỦA TÔI</a>
                </li>
            </ul>
        </div>
-        <button class="btn btn-primary">Đăng nhập/Đăng ký</button>
+      <div>
+          <button class="btn btn-secondary me-1">Đăng ký</button>
+          <button class="btn btn-primary">Đăng nhập</button>
+      </div>
     </div>
 
 
