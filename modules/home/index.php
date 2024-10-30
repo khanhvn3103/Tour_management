@@ -74,15 +74,4 @@
     <?php
         include 'modules/home/list_tour.php';
     ?>
-
-
-
-    <div class="container-fluid" style="background: white">
-        <div class="row">
-            <div class="col-12">
-
-            </div>
-
-        </div>
-    </div>
 </section>
