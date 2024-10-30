@@ -73,5 +73,7 @@
 
     <?php
         include 'modules/home/list_tour.php';
+        include 'modules/home/form_support.php';
+
     ?>
 </section>
