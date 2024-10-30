@@ -27,6 +27,10 @@
     margin-bottom: .25rem !important;
 }
 
+.btn, .form-control {
+    border-radius: 30px !important;
+}
+
 .btn-dashed{
     font-weight: var(--bs-btn-font-weight) !important;
     color: var(--color-primary) !important;
@@ -41,6 +45,6 @@
 }
 
 .footer{
-    padding: 1.5rem !important;
-    border-top-left-radius: 100px !important;
+    padding: 3rem 0 1rem 0 !important;
+    border-top-left-radius: 150px !important;
 }

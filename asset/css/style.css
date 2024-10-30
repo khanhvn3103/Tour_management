@@ -109,3 +109,32 @@
     color: var(--color-primary) !important;
     margin: .4rem 0;
 }
+
+.footer .text-white{
+    line-height: 1.8rem !important;
+}
+
+#help-form{
+    color: #b9f9ff;
+    background: rgba(50, 85, 98, 0.5);
+    padding: 2rem;
+    border-radius: 30px;
+}
+
+#help-form .form-group{
+    margin-bottom: 10px !important;
+}
+
+#help-form .form-group label{
+    font-weight: bold !important;
+    margin-bottom: 10px !important;
+}
+
+#help-form .form-group input{
+    background: rgba(76, 76, 76, 0.1) !important;
+    color: white;
+}
+
+#help-form .form-group input::placeholder{
+    color: white;
+}
