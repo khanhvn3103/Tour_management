@@ -1,0 +1,24 @@
+
+#header{
+    background: linear-gradient(90deg, rgba(8,80,120,1) 0%, rgba(133,216,206,1) 100%);
+}
+
+#header .logo{
+    width: 140px;
+}
+
+#header .nav-item{
+    margin-right: 0.5rem !important;
+}
+
+#header .nav-item .nav-link{
+    color: var(--color-link) !important;
+}
+
+#header .nav-item .nav-link.active{
+    font-weight: bold !important;
+}
+
+#header .nav-item.active{
+    border-bottom: 2px solid var(--color-link) !important;
+}
