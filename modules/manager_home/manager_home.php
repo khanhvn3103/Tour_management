@@ -8,49 +8,29 @@
     <link rel="stylesheet" href="/Tour_management/asset/css/manager_home.css">
 </head>
 <body>
-    <div class="d-flex">
-        <div class="sidebar">
-            <a href="/Tour_management/index.php" style="max-width: 100%;">
-                <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
-            </a>
-            <a href="#">Thống Kê</a>
-            <a href="./add_employee.php">Thêm Tài Khoản</a>
-            <a href="#">Phân Công Lịch</a>
-            <a href="#">Tạo Hoá Đơn</a>
-            <a href="#">Quản Lý Tour</a>
-            <a href="#">Danh Sách Điểm Tham Quan</a>
-        </div>
-        <div class="content">
-            <div class="col">
-                <div class="text-end">
-                    <button type="submit" name="logout" class="btn btn-secondary">Đăng xuất</button>
-                </div>
+    <div class="sidebar">
+        <a href="/Tour_management/index.php" style="max-width: 100%;">
+            <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
+        </a>
+        <a href="#">Thống Kê</a>
+        <a href="./add_employee.php">Thêm Tài Khoản</a>
+        <a href="#">Phân Công Lịch</a>
+        <a href="#">Tạo Hoá Đơn</a>
+        <a href="#">Quản Lý Tour</a>
+        <a href="#">Danh Sách Điểm Tham Quan</a>
+    </div>
+    <div class="content">
+        <div class="col">
+            <div class="text-end">
+                <button type="submit" name="logout" class="btn btn-secondary">Đăng xuất</button>
             </div>
-            <h2 class="text-primary fw-bold mb-4">Tổng Quan Thống Kê</h2>
-            <div class="row">
-                <div class="card card-container">
-                    <div class="card-body">
-                        <h5 class="card-title">Lưu Lượng Truy Cập Hàng Tháng</h5>
-                        <p class="card-text">Thống kê lưu lượng truy cập hàng tháng của trang web.</p>
-                    </div>
-                </div>
-                <div class="card card-container">
-                    <div class="card-body">
-                        <h5 class="card-title">Số Lượng Tài Khoản Đã Tạo</h5>
-                        <p class="card-text">Thống kê số lượng tài khoản được tạo bởi nhân viên và khách hàng.</p>
-                    </div>
-                </div>
-                <div class="card card-container">
-                    <div class="card-body">
-                        <h5 class="card-title">Phân Công Lịch</h5>
-                        <p class="card-text">Thông tin về số lượng lịch làm việc đã được phân công cho nhân viên.</p>
-                    </div>
-                </div>
-                <div class="card card-container">
-                    <div class="card-body">
-                        <h5 class="card-title">Hoá Đơn Đã Tạo</h5>
-                        <p class="card-text">Chi tiết về số lượng hoá đơn đã được tạo trong thời gian đã chọn.</p>
-                    </div>
+        </div>
+        <h2 class="text-primary fw-bold mb-4">Tổng Quan Thống Kê</h2>
+        <div class="row">
+            <div class="card card-container">
+                <div class="card-body">
+                    <h5 class="card-title">Hoá Đơn Đã Tạo</h5>
+                    <p class="card-text">Chi tiết về số lượng hoá đơn đã được tạo trong thời gian đã chọn.</p>
                 </div>
             </div>
         </div>
