@@ -76,7 +76,7 @@
     <div class="container pb-md-2">
         <div class="row">
             <div class="col-3">
-                <img src="asset/images/travellowkey_logo.png" style="width: 180px">
+                <img src="asset/images/travellowkey_logo.png" style="width: 200px">
                 <div class="d-flex align-content-center justify-content-around">
                     <i class="fa fa-github"></i>
                 </div>
@@ -87,7 +87,7 @@
                 <span class="text-white">Giới thiệu</span>
             </div>
 
-            <div class="col-3">
+            <div class="col-5">
                 <h5 class="text-white font-weight-bold">Liên hệ</h5>
                 <div class="text-white">
                     <i class="fa fa-phone"></i>
