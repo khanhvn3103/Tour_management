@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phân Công Lịch - Quản Lý Du Lịch</title>
     <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
     <script src="/Tour_management/asset/js/boostrap.bundle.min.js"></script>
     <style>
         body {
@@ -101,12 +101,13 @@
         <a href="/Tour_management/index.php" style="max-width: 100%;">
             <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
         </a>
-        <a href="./manager_home.php">Thống Kê</a>
-        <a href="./add_employee.php">Thêm Tài Khoản</a>
-        <a href="./schedule_assignment.php">Phân Công Lịch</a>
-        <a href="./create_invoice.php">Tạo Hoá Đơn</a>
-        <a href="./tour_management.php">Quản Lý Tour</a>
-        <a href="./sightseeing_list.php">Danh Sách Điểm Tham Quan</a>
+        <a href="/Tour_management/modules/manager_home/manager_home.php">Thống Kê</a>
+        <a href="#">Danh Sách Tài Khoản</a>
+        <a href="/Tour_management/modules/manager_home/add_employee.php">Thêm Tài Khoản</a>
+        <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
+        <a href="#">Tạo Hoá Đơn</a>
+        <a href="#">Quản Lý Tour</a>
+        <a href="#">Danh Sách Điểm Tham Quan</a>
     </div>
     <div class="content">
         <div class="col">
