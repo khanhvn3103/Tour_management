@@ -18,7 +18,7 @@
 
         .sidebar {
             height: 100vh;
-            background-color: #0277bd;
+            background: linear-gradient(90deg, rgba(8,80,120,1) 0%, rgba(133,216,206,1) 100%) !important;
             padding-top: 20px;
             width: 250px;
             position: fixed;
@@ -33,7 +33,7 @@
         }
 
         .sidebar a:hover {
-            background-color: #01579b;
+            background-color: rgba(8,80,120,1);
             text-decoration: none;
         }
 
@@ -105,7 +105,8 @@
         <a href="./add_employee.php">Thêm Tài Khoản</a>
         <a href="./schedule_assignment.php">Phân Công Lịch</a>
         <a href="./create_invoice.php">Tạo Hoá Đơn</a>
-        <a href="./tour_management.php">Quản Lý Tour</a>
+        <a href="/Tour_management/modules/tour_manager/index.php">Quản Lý Tour</a>
+        <a href="/Tour_management/modules/tour_category_management/index.php">Quản Lý Gói Tour</a>
         <a href="./sightseeing_list.php">Danh Sách Điểm Tham Quan</a>
     </div>
     <div class="content">

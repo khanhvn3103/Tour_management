@@ -51,12 +51,6 @@
     // index.php?m=category&a=delete&id=1
     if (isset($m)) {
         switch ($m) {
-            case 'tour':
-                include 'modules/tour/index.php';
-                break;
-            case 'tour_category':
-                include 'modules/tour_category/index.php';
-                break;
             case 'user':
                 include 'modules/user/index.php';
                 break;
