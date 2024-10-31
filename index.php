@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/Tour_management/asset/css/all.css" id="theme-styles"/>
     <link rel="stylesheet" href="/Tour_management/asset/css/boostrap_custome.css" id="theme-styles"/>
     <link rel="stylesheet" href="/Tour_management/asset/css/style.css" id="theme-styles"/>
+    <link rel="stylesheet" href="/Tour_management/asset/css/user.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Travellowkey</title>
 </head>
