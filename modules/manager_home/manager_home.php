@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Chủ - Quản Lý Du Lịch</title>
-    <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/Tour_management/asset/css/manager_home.css">
+    <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css">
     <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
+    <script src="/Tour_management/asset/js/boostrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/Tour_management/asset/css/manager_home.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-    <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="sidebar">
@@ -16,6 +16,7 @@
             <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
         </a>
         <a href="/Tour_management/modules/manager_home/manager_home.php">Thống Kê</a>
+        <a href="#">Danh Sách Tài Khoản</a>
         <a href="/Tour_management/modules/manager_home/add_employee.php">Thêm Tài Khoản</a>
         <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
         <a href="#">Tạo Hoá Đơn</a>
