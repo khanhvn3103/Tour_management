@@ -14,7 +14,7 @@
     <header class="navbar navbar-expand-lg navbar-light bg-light p-2 w-100" id="header">
         <div class="container-lg">
         <div class="d-flex align-content-center">
-            <a class="navbar-brand" href="/"> <img src="/Tour_management/asset/images/travellowkey_logo.png" class="logo"></a>
+            <a class="navbar-brand" href="/Tour_management/index.php"> <img src="/Tour_management/asset/images/travellowkey_logo.png" class="logo"></a>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 ">
                     <a class="nav-link "  href="/Tour_management/index.php">TRANG CHỦ</a>

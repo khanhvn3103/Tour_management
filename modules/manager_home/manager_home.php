@@ -75,7 +75,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Tổng Tiền Nhận</h5>
                         <p class="card-text">Tổng tiền: <strong>150,000,000 VND</strong></p>
-                        <button class="btn btn-primary detail-button" data-bs-toggle="modal" data-bs-target="#detailModal" data-type="revenue">Xem Chi Tiết</button>
+                        <!-- <button class="btn btn-primary detail-button" data-bs-toggle="modal" data-bs-target="#detailModal" data-type="revenue">Xem Chi Tiết</button> -->
                     </div>
                 </div>
             </div>
@@ -126,6 +126,20 @@
                             <td>TP. Hồ Chí Minh</td>
                             <td>15,000,000 VND</td>
                             <td>Đã Tạo</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>Đà Nẵng</td>
+                            <td>7,000,000 VND</td>
+                            <td>Bị Huỷ</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>Hội An</td>
+                            <td>10,000,000 VND</td>
+                            <td>Hoàn Thành</td>
                         </tr>
                         <tr>
                             <td>4</td>
