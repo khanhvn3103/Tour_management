@@ -1,3 +1,87 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+include_once("../../models/mUsers.php");
+$userModel = new modelUser();
+
+// Xử lý yêu cầu thêm, sửa, xóa hoặc lấy thông tin nhân viên
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
+    $action = $_POST['action'];
+
+    if ($action == 'add') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $fullName = $_POST['fullName'];
+        $address = $_POST['address'];
+        $phone = $_POST['phone'];
+        $dob = $_POST['dob'];
+        $gender = $_POST['gender'];
+        $identifyCard = $_POST['identifyCard'];
+        $role = $_POST['role'];
+
+        if ($userModel->insertEmployee($username, $password, $fullName, $address, $phone, $dob, $gender, $identifyCard, $role)) {
+            echo "Thêm nhân viên thành công.";
+        } else {
+            echo "Có lỗi xảy ra. Vui lòng thử lại.";
+        }
+        exit;
+    } elseif ($action == 'edit') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $fullName = $_POST['fullName'];
+        $address = $_POST['address'];
+        $phone = $_POST['phone'];
+        $dob = $_POST['dob'];
+        $gender = $_POST['gender'];
+        $identifyCard = $_POST['identifyCard'];
+        $role = $_POST['role'];
+
+        // Kiểm tra xem người dùng có nhập mật khẩu mới không
+        if (empty($password)) {
+            // Nếu không nhập mật khẩu mới, giữ nguyên mật khẩu hiện tại
+            $employee = $userModel->selectOneUser($username);
+            $password = $employee['password'];
+        }
+
+        if ($userModel->updateEmployee($username, $password, $fullName, $address, $phone, $dob, $gender, $identifyCard, $role)) {
+            echo "Cập nhật thông tin nhân viên thành công.";
+        } else {
+            echo "Có lỗi xảy ra. Vui lòng thử lại.";
+        }
+        exit;
+    } elseif ($action == 'delete') {
+        $username = $_POST['username'];
+
+        if ($userModel->deleteUser($username)) {
+            echo "Xóa nhân viên thành công.";
+        } else {
+            echo "Có lỗi xảy ra. Vui lòng thử lại.";
+        }
+        exit;
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action']) && $_GET['action'] == 'get' && isset($_GET['username'])) {
+    $username = $_GET['username'];
+    $employee = $userModel->selectOneUser($username);
+
+    // Đảm bảo rằng chỉ trả về JSON hợp lệ
+    header('Content-Type: application/json');
+    echo json_encode($employee);
+    exit;
+}
+
+// Xử lý đăng xuất
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
+    session_start();
+    session_unset();
+    session_destroy();
+
+    header("Location: /Tour_management/index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -18,8 +102,8 @@
             <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
         </a>
         <a href="/Tour_management/modules/manager_home/manager_home.php">Thống Kê</a>
-        <a href="#">Danh Sách Tài Khoản</a>
-        <a href="/Tour_management/modules/manager_home/add_employee.php">Thêm Tài Khoản</a>
+        <a href="/Tour_management/modules/manager_home/manager_employee.php">Danh Sách Tài Khoản</a>
+        <a href="/Tour_management/modules/manager_home/manager_voucher.php">Thêm Voucher</a>
         <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
         <a href="#">Tạo Hoá Đơn</a>
         <a href="#">Quản Lý Tour</a>
@@ -49,7 +133,7 @@
                             <th scope="col">Ngày Sinh</th>
                             <th scope="col">Giới Tính</th>
                             <th scope="col">CMND/CCCD</th>
-                            <th scope="col">Hành Động</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -154,7 +238,7 @@
                         <input type="hidden" name="username" id="editUsername">
                         <div class="form-group mb-3">
                             <label for="editPassword">Mật Khẩu</label>
-                            <input type="password" class="form-control" name="password" id="editPassword" required>
+                            <input type="password" class="form-control" name="password" id="editPassword">
                         </div>
                         <div class="form-group mb-3">
                             <label for="editFullName">Tên Đầy Đủ</label>
@@ -220,62 +304,38 @@
             });
 
             // Xử lý sự kiện khi nhấn nút Sửa
-            // $('.edit-button').click(function() {
-            //     const username = $(this).data('username');
+            $('.edit-button').click(function() {
+                const username = $(this).data('username');
 
-            //     // Lấy thông tin nhân viên và điền vào modal chỉnh sửa
-            //     $.ajax({
-            //         url: location.href,
-            //         method: 'GET',
-            //         data: {
-            //             action: 'get',
-            //             username: username
-            //         },
-            //         success: function(response) {
-            //             console.log(response); // Kiểm tra phản hồi từ server
-            //             const employee = JSON.parse(response);
-            //             $('#editUsername').val(employee.username);
-            //             $('#editPassword').val(employee.password);
-            //             $('#editFullName').val(employee.fullName);
-            //             $('#editAddress').val(employee.address);
-            //             $('#editPhone').val(employee.phone);
-            //             $('#editDob').val(employee.dob);
-            //             $('#editGender').val(employee.gender);
-            //             $('#editIdentifyCard').val(employee.identifyCard);
-            //             $('#editRole').val(employee.role);
-
-            //             // Hiển thị modal chỉnh sửa
-            //             $('#editEmployeeModal').modal('show');
-            //         },
-            //         error: function() {
-            //             alert("Có lỗi xảy ra. Vui lòng thử lại.");
-            //         }
-            //     });
-            // });
-            $(".edit-button").on("click", function() {
-                // Lấy thông tin từ thuộc tính data
-                const username = $(this).data("username");
-
-                // Gửi yêu cầu lấy thông tin chi tiết nhân viên
+                // Lấy thông tin nhân viên và điền vào modal chỉnh sửa
                 $.ajax({
-                    url: `/Tour_management/api/get_employee.php`, // Đường dẫn API
-                    type: "GET",
+                    url: location.href, // Sử dụng URL hiện tại của trang
+                    method: 'GET',
                     data: {
+                        action: 'get',
                         username: username
                     },
                     success: function(response) {
-                        // Xử lý và hiển thị dữ liệu trong modal
-                        const data = JSON.parse(response);
-                        $("#editUsername").val(data.username);
-                        $("#editFullName").val(data.fullName);
-                        $("#editAddress").val(data.address);
-                        $("#editPhone").val(data.phone);
-                        $("#editDob").val(data.dob);
-                        $("#editRole").val(data.role);
-                        // Cập nhật các trường khác nếu cần
+                        console.log(response); // Kiểm tra phản hồi từ server
+
+                        // Nếu phản hồi từ server đã là đối tượng JavaScript, sử dụng trực tiếp
+                        const employee = (typeof response === 'object') ? response : JSON.parse(response);
+
+                        $('#editUsername').val(employee.username);
+                        // $('#editPassword').val(employee.password);
+                        $('#editFullName').val(employee.fullName);
+                        $('#editAddress').val(employee.address);
+                        $('#editPhone').val(employee.phone);
+                        $('#editDob').val(employee.dob);
+                        $('#editGender').val(employee.gender);
+                        $('#editIdentifyCard').val(employee.identifyCard);
+                        $('#editRole').val(employee.role);
+
+                        // Hiển thị modal chỉnh sửa
+                        $('#editEmployeeModal').modal('show');
                     },
-                    error: function(err) {
-                        console.error("Không thể lấy dữ liệu nhân viên:", err);
+                    error: function() {
+                        alert("Không thể lấy dữ liệu nhân viên. Vui lòng thử lại.");
                     }
                 });
             });
@@ -317,87 +377,6 @@
             });
         });
     </script>
-
-
-
-    <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-
-    include_once("../../models/mUsers.php");
-    $userModel = new modelUser();
-
-    // Xử lý yêu cầu thêm, sửa, xóa hoặc lấy thông tin nhân viên
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
-        $action = $_POST['action'];
-
-        if ($action == 'add') {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $fullName = $_POST['fullName'];
-            $address = $_POST['address'];
-            $phone = $_POST['phone'];
-            $dob = $_POST['dob'];
-            $gender = $_POST['gender'];
-            $identifyCard = $_POST['identifyCard'];
-            $role = $_POST['role'];
-
-            if ($userModel->insertEmployee($username, $password, $fullName, $address, $phone, $dob, $gender, $identifyCard, $role)) {
-                echo "Thêm nhân viên thành công.";
-            } else {
-                echo "Có lỗi xảy ra. Vui lòng thử lại.";
-            }
-            exit;
-        } elseif ($action == 'edit') {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $fullName = $_POST['fullName'];
-            $address = $_POST['address'];
-            $phone = $_POST['phone'];
-            $dob = $_POST['dob'];
-            $gender = $_POST['gender'];
-            $identifyCard = $_POST['identifyCard'];
-            $role = $_POST['role'];
-
-            if ($userModel->updateEmployee($username, $password, $fullName, $address, $phone, $dob, $gender, $identifyCard, $role)) {
-                echo "Cập nhật thông tin nhân viên thành công.";
-            } else {
-                echo "Có lỗi xảy ra. Vui lòng thử lại.";
-            }
-            exit;
-        } elseif ($action == 'delete') {
-            $username = $_POST['username'];
-
-            if ($userModel->deleteUser($username)) {
-                echo "Xóa nhân viên thành công.";
-            } else {
-                echo "Có lỗi xảy ra. Vui lòng thử lại.";
-            }
-            exit;
-        }
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action']) && $_GET['action'] == 'get' && isset($_GET['username'])) {
-        $username = $_GET['username'];
-        $employee = $userModel->selectOneUser($username);
-
-        // Đảm bảo rằng chỉ trả về JSON hợp lệ
-        header('Content-Type: application/json');
-        echo json_encode($employee);
-        exit;
-    }
-
-    // Xử lý đăng xuất
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
-        session_start();
-        session_unset();
-        session_destroy();
-
-        header("Location: /Tour_management/index.php");
-        exit();
-    }
-    ?>
-
 
 </body>
 

@@ -1,0 +1,87 @@
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #e1f5fe;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  height: 100vh;
+  background-color: #0277bd;
+  padding-top: 20px;
+  width: 250px;
+  position: fixed;
+}
+
+.sidebar a {
+  font-size: 1.1rem;
+  color: white;
+  padding: 15px;
+  text-decoration: none;
+  display: block;
+}
+
+.sidebar a:hover {
+  background-color: #01579b;
+  text-decoration: none;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 40px;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#logo {
+  max-height: 10vh;
+  width: 100%;
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #0277bd;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background-color: #01579b;
+}
+
+.btn-secondary {
+  background-color: #757575;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+.btn-secondary:hover {
+  background-color: #616161;
+}
+
+.form-select,
+.form-control {
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.text-end {
+  margin-bottom: 20px;
+}
+
+label.form-label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: block;
+}
