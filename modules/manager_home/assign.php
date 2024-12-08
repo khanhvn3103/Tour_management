@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phân Công Lịch - Quản Lý Du Lịch</title>
     <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Tour_management/asset/css/assign.css">
     <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
     <script src="/Tour_management/asset/js/boostrap.bundle.min.js"></script>
     <style>
@@ -96,14 +98,15 @@
         }
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <a href="/Tour_management/index.php" style="max-width: 100%;">
             <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
         </a>
         <a href="/Tour_management/modules/manager_home/manager_home.php">Thống Kê</a>
-        <a href="#">Danh Sách Tài Khoản</a>
-        <a href="/Tour_management/modules/manager_home/add_employee.php">Thêm Tài Khoản</a>
+        <a href="/Tour_management/modules/manager_home/manager_employee.php">Danh Sách Tài Khoản</a>
+        <a href="/Tour_management/modules/manager_home/manager_voucher.php">Thêm Voucher</a>
         <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
         <a href="./create_invoice.php">Tạo Hoá Đơn</a>
         <a href="/Tour_management/modules/tour_manager/index.php">Quản Lý Tour</a>
@@ -168,4 +171,5 @@
     }
     ?>
 </body>
+
 </html>

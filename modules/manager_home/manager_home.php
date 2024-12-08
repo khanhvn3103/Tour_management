@@ -1,29 +1,79 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['type'])) {
+    include_once("../../models/mBill.php");
+
+    $type = $_POST['type'];
+    $billModel = new modelBill();
+    $status = '';
+
+    if ($type == 'created') {
+        $status = 'Đã Tạo';
+    } elseif ($type == 'canceled') {
+        $status = 'Bị Huỷ';
+    } elseif ($type == 'completed') {
+        $status = 'Hoàn Thành';
+    } elseif ($type == 'revenue') {
+        $status = 'Hoàn Thành';
+    }
+
+    $bills = $billModel->getBillsByStatus($status);
+    $output = '';
+
+    foreach ($bills as $row) {
+        $output .= '<tr>
+            <td>' . $row['billCode'] . '</td>
+            <td>' . $row['numberOfPeople'] . '</td>
+            <td>' . $row['address'] . '</td>
+            <td>' . number_format($row['total']) . ' VND</td>
+            <td>' . $row['status'] . '</td>
+        </tr>';
+    }
+
+    echo $output;
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Chủ - Quản Lý Du Lịch</title>
     <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css">
     <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
-    <script src="/Tour_management/asset/js/boostrap.bundle.min.js"></script>
+    <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/Tour_management/asset/css/manager_home.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 </head>
+
 <body>
     <div class="sidebar">
         <a href="/Tour_management/index.php" style="max-width: 100%;">
             <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
         </a>
         <a href="/Tour_management/modules/manager_home/manager_home.php">Thống Kê</a>
-        <a href="#">Danh Sách Tài Khoản</a>
-        <a href="/Tour_management/modules/manager_home/add_employee.php">Thêm Tài Khoản</a>
+        <a href="/Tour_management/modules/manager_home/manager_employee.php">Danh Sách Tài Khoản</a>
+        <a href="/Tour_management/modules/manager_home/manager_voucher.php">Thêm Voucher</a>
         <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
         <a href="#">Tạo Hoá Đơn</a>
         <a href="/Tour_management/modules/tour_manager/index.php">Quản Lý Tour</a>
         <a href="/Tour_management/modules/tour_category_management/index.php">Quản Lý Gói Tour</a>
         <a href="#">Danh Sách Điểm Tham Quan</a>
     </div>
+
+    <?php
+    include_once("../../models/mBill.php");
+    $billModel = new modelBill();
+    $createdBills = $billModel->getBillsByStatus('Đã Tạo');
+    $canceledBills = $billModel->getBillsByStatus('Bị Huỷ');
+    $completedBills = $billModel->getBillsByStatus('Hoàn Thành');
+    $totalCreated = count($createdBills);
+    $totalCanceled = count($canceledBills);
+    $totalCompleted = count($completedBills);
+    $totalRevenue = array_sum(array_column($completedBills, 'total'));
+    ?>
+
     <div class="content">
         <div class="col">
             <div class="text-end">
@@ -48,7 +98,7 @@
                 <div class="card card-container">
                     <div class="card-body">
                         <h5 class="card-title">Tổng Hoá Đơn Đã Tạo</h5>
-                        <p class="card-text">Số lượng: <strong>15</strong></p>
+                        <p class="card-text">Số lượng: <strong><?php echo $totalCreated; ?></strong></p>
                         <button class="btn btn-primary detail-button" data-bs-toggle="modal" data-bs-target="#detailModal" data-type="created">Xem Chi Tiết</button>
                     </div>
                 </div>
@@ -57,7 +107,7 @@
                 <div class="card card-container">
                     <div class="card-body">
                         <h5 class="card-title">Tổng Hoá Đơn Bị Huỷ</h5>
-                        <p class="card-text">Số lượng: <strong>5</strong></p>
+                        <p class="card-text">Số lượng: <strong><?php echo $totalCanceled; ?></strong></p>
                         <button class="btn btn-primary detail-button" data-bs-toggle="modal" data-bs-target="#detailModal" data-type="canceled">Xem Chi Tiết</button>
                     </div>
                 </div>
@@ -66,7 +116,7 @@
                 <div class="card card-container">
                     <div class="card-body">
                         <h5 class="card-title">Tổng Hoá Đơn Hoàn Thành</h5>
-                        <p class="card-text">Số lượng: <strong>10</strong></p>
+                        <p class="card-text">Số lượng: <strong><?php echo $totalCompleted; ?></strong></p>
                         <button class="btn btn-primary detail-button" data-bs-toggle="modal" data-bs-target="#detailModal" data-type="completed">Xem Chi Tiết</button>
                     </div>
                 </div>
@@ -75,8 +125,8 @@
                 <div class="card card-container">
                     <div class="card-body">
                         <h5 class="card-title">Tổng Tiền Nhận</h5>
-                        <p class="card-text">Tổng tiền: <strong>150,000,000 VND</strong></p>
-                        <button class="btn btn-primary detail-button" data-bs-toggle="modal" data-bs-target="#detailModal" data-type="revenue">Xem Chi Tiết</button>
+                        <p class="card-text">Tổng tiền: <strong><?php echo number_format($totalRevenue); ?> VND</strong></p>
+                        <!-- <button class="btn btn-primary detail-button" data-bs-toggle="modal" data-bs-target="#detailModal" data-type="revenue">Xem Chi Tiết</button> -->
                     </div>
                 </div>
             </div>
@@ -112,59 +162,21 @@
             </div>
         </div>
     </div>
-
     <script>
         $(document).ready(function() {
             $('.detail-button').click(function() {
                 const type = $(this).data('type');
-                let tableContent = '';
-
-                if (type === 'created') {
-                    tableContent += `
-                        <tr>
-                            <td>1</td>
-                            <td>4</td>
-                            <td>TP. Hồ Chí Minh</td>
-                            <td>15,000,000 VND</td>
-                            <td>Đã Tạo</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>3</td>
-                            <td>Hà Nội</td>
-                            <td>9,000,000 VND</td>
-                            <td>Đã Tạo</td>
-                        </tr>`;
-                } else if (type === 'canceled') {
-                    tableContent += `
-                        <tr>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>Đà Nẵng</td>
-                            <td>7,000,000 VND</td>
-                            <td>Bị Huỷ</td>
-                        </tr>`;
-                } else if (type === 'completed') {
-                    tableContent += `
-                        <tr>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>Hội An</td>
-                            <td>10,000,000 VND</td>
-                            <td>Hoàn Thành</td>
-                        </tr>`;
-                } else if (type === 'revenue') {
-                    tableContent += `
-                        <tr>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>Vũng Tàu</td>
-                            <td>25,000,000 VND</td>
-                            <td>Hoàn Thành</td>
-                        </tr>`;
-                }
-
-                $('#billDetails').html(tableContent);
+                // Gửi yêu cầu AJAX để lấy dữ liệu hóa đơn từ server
+                $.ajax({
+                    url: location.href,
+                    method: 'POST',
+                    data: {
+                        type: type
+                    },
+                    success: function(response) {
+                        $('#billDetails').html(response);
+                    }
+                });
             });
         });
     </script>
@@ -178,6 +190,41 @@
         header("Location: /Tour_management/index.php");
         exit();
     }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['type'])) {
+        include_once("../../models/mBill.php");
+
+        $type = $_POST['type'];
+        $billModel = new modelBill();
+        $status = '';
+
+        if ($type == 'created') {
+            $status = 'Đã Tạo';
+        } elseif ($type == 'canceled') {
+            $status = 'Bị Huỷ';
+        } elseif ($type == 'completed') {
+            $status = 'Hoàn Thành';
+        } elseif ($type == 'revenue') {
+            $status = 'Hoàn Thành';
+        }
+
+        $bills = $billModel->getBillsByStatus($status);
+        $output = '';
+
+        foreach ($bills as $row) {
+            $output .= '<tr>
+                <td>' . $row['billCode'] . '</td>
+                <td>' . $row['numberOfPeople'] . '</td>
+                <td>' . $row['address'] . '</td>
+                <td>' . number_format($row['total']) . ' VND</td>
+                <td>' . $row['status'] . '</td>
+            </tr>';
+        }
+
+        echo $output;
+        exit;
+    }
     ?>
 </body>
+
 </html>
