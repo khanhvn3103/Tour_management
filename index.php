@@ -6,6 +6,7 @@
     if(isset($_GET["m"])){
         $m = $_GET["m"];
         var_dump($m);
+        var_dump($m);
     }
 ?>
 <!DOCTYPE html>
