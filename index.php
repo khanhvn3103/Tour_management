@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/Tour_management/asset/css/all.css" id="theme-styles"/>
     <link rel="stylesheet" href="/Tour_management/asset/css/boostrap_custome.css" id="theme-styles"/>
     <link rel="stylesheet" href="/Tour_management/asset/css/style.css" id="theme-styles"/>
+    <link rel="stylesheet" href="/Tour_management/asset/css/user.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Travellowkey</title>
 </head>
@@ -50,12 +51,6 @@
     // index.php?m=category&a=delete&id=1
     if (isset($m)) {
         switch ($m) {
-            case 'tour':
-                include 'modules/tour/index.php';
-                break;
-            case 'tour_category':
-                include 'modules/tour_category/index.php';
-                break;
             case 'user':
                 include 'modules/user/index.php';
                 break;
