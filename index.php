@@ -5,7 +5,6 @@
     header('Pragma: no-cache');
     if(isset($_GET["m"])){
         $m = $_GET["m"];
-        $m = $_GET["m"];
     }
 ?>
 <!DOCTYPE html>
