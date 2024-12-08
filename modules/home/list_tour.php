@@ -73,7 +73,7 @@
                                         ?>
                                     </p>
                                     <div class="text-end">
-                                        <a href="#">Xem chi tiết</a>
+                                        <a href="modules/home/tour_detail.php?code=<?php echo $tour->code; ?>" class="btn btn-primary btn-detail">Xem chi tiết</a>
                                     </div>
                                 </div>
                             </div>
