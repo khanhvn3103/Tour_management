@@ -1,6 +1,9 @@
 <?php
+include '../../models/tour.php';
+include '../../models/vehicle.php';
+include '../../models/employee.php';
 include '../../models/tourPackage.php';
-
+include '../../models/spot.php';
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +30,7 @@ include '../../models/tourPackage.php';
     <a href="/Tour_management/modules/tour_manage/index.php">Quản Lý Tour</a>
     <a href="/Tour_management/modules/tour_package/index.php">Quản Lý Gói Tour</a>
     <a href="/Tour_management/modules/sightseeing_spot/index.php">Danh Sách Điểm Tham Quan</a>
+
 </div>
 <div class="content">
     <div class="col mb-4">
