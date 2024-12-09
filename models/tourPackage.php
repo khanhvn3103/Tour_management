@@ -120,17 +120,55 @@ class modelTourPackage
         return "'" . $this->conn->real_escape_string($value) . "'";
     }
 
-    public function selectTourPackagesWithTours()
+    public function selectTourPackagesWithTours($startingPoint = '', $destination = '', $duration = '', $numberOfPeople = '')
     {
         if ($this->conn) {
+            // Khởi tạo truy vấn cơ bản
             $query = "
             SELECT tp.tourPackageCode, tp.packageName, tp.startingPoint, tp.image,
                    MIN(t.startDate) AS minStartDate, MAX(t.endDate) AS maxEndDate,
                    SUM(t.price) AS totalPrice
             FROM tourpackage tp
             LEFT JOIN tour t ON tp.tourPackageCode = t.tourPackageCode
-            GROUP BY tp.tourPackageCode
+            WHERE 1=1
         ";
+
+            // Thêm điều kiện lọc cho điểm đi
+            if ($startingPoint) {
+                $query .= " AND tp.startingPoint LIKE '%" . $this->conn->real_escape_string($startingPoint) . "%'";
+            }
+
+            // Thêm điều kiện lọc cho điểm đến
+            if ($destination) {
+                $query .= " AND t.destination LIKE '%" . $this->conn->real_escape_string($destination) . "%'";
+            }
+
+            // Thêm điều kiện lọc cho thời gian
+            if ($duration) {
+                switch ($duration) {
+                    case '1':
+                        $query .= " AND DATEDIFF(MAX(t.endDate), MIN(t.startDate)) BETWEEN 1 AND 3";
+                        break;
+                    case '2':
+                        $query .= " AND DATEDIFF(MAX(t.endDate), MIN(t.startDate)) BETWEEN 4 AND 7";
+                        break;
+                    case '3':
+                        $query .= " AND DATEDIFF(MAX(t.endDate), MIN(t.startDate)) BETWEEN 8 AND 14";
+                        break;
+                    case '4':
+                        $query .= " AND DATEDIFF(MAX(t.endDate), MIN(t.startDate)) > 14";
+                        break;
+                }
+            }
+
+            // Thêm điều kiện lọc cho số lượng người
+//            if ($numberOfPeople) {
+//                $query .= " AND t.numberOfPeople >= " . (int)$numberOfPeople;
+//            }
+
+            // Cập nhật GROUP BY
+            $query .= " GROUP BY tp.tourPackageCode, tp.packageName, tp.startingPoint, tp.image";
+
             $result = $this->conn->query($query);
             $tourPackages = [];
 
@@ -142,5 +180,7 @@ class modelTourPackage
             return false;
         }
     }
+
+
 }
 ?>

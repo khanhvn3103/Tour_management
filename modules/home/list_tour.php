@@ -1,6 +1,10 @@
 <?php
 $listPackageTour = new modelTourPackage();
-$listTours = $listPackageTour->selectTourPackagesWithTours();
+$startingPoint = isset($_GET['startingPoint']) ? $_GET['startingPoint'] : '';
+$destination = isset($_GET['destination']) ? $_GET['destination'] : '';
+$duration = isset($_GET['duration']) ? $_GET['duration'] : '';
+$numberOfPeople = isset($_GET['numberOfPeople']) ? $_GET['numberOfPeople'] : '';
+$listTours = $listPackageTour->selectTourPackagesWithTours($startingPoint,$destination,$duration,$numberOfPeople);
 
 ?>
 <section style="background: white" class="pb-3">
