@@ -119,5 +119,28 @@ class modelTourPackage
     {
         return "'" . $this->conn->real_escape_string($value) . "'";
     }
+
+    public function selectTourPackagesWithTours()
+    {
+        if ($this->conn) {
+            $query = "
+            SELECT tp.tourPackageCode, tp.packageName, tp.startingPoint, tp.image,
+                   MIN(t.startDate) AS minStartDate, MAX(t.endDate) AS maxEndDate,
+                   SUM(t.price) AS totalPrice
+            FROM tourpackage tp
+            LEFT JOIN tour t ON tp.tourPackageCode = t.tourPackageCode
+            GROUP BY tp.tourPackageCode
+        ";
+            $result = $this->conn->query($query);
+            $tourPackages = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $tourPackages[] = $row;
+            }
+            return $tourPackages;
+        } else {
+            return false;
+        }
+    }
 }
 ?>
