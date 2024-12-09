@@ -1,5 +1,5 @@
 <?php
-include '../../models/tourmanager.php';
+include '../../models/tourPackage.php';
 
 ?>
 
@@ -48,6 +48,12 @@ include '../../models/tourmanager.php';
             case 'create':
                 include 'create.php';
                 break;
+            case 'delete':
+                include 'delete.php';
+                break;
+            case 'edit':
+                include 'edit.php';
+                break;
             default:
                 include 'list.php';
         }
@@ -59,6 +65,7 @@ include '../../models/tourmanager.php';
 
 </body>
 <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
+<script src="/Tour_management/asset/js/sweetalert2@11.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
 <script src="/Tour_management/asset/js/dataTables.js"></script>

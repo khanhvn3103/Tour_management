@@ -1,82 +1,163 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Chủ - Quản Lý Du Lịch</title>
-    <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/Tour_management/asset/css/manager_home.css">
-    <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-    <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
-<div class="sidebar">
-    <a href="/Tour_management/index.php" style="max-width: 100%;">
-        <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
-    </a>
-    <a href="/Tour_management/modules/manager_home/manager_home.php">Thống Kê</a>
-    <a href="/Tour_management/modules/manager_home/add_employee.php">Thêm Tài Khoản</a>
-    <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
-    <a href="#">Tạo Hoá Đơn</a>
-    <a href="/Tour_management/modules/tour_manager/index.php">Quản Lý Tour</a>
-    <a href="/Tour_management/modules/tour_category_management/index.php">Quản Lý Gói Tour</a>
-    <a href="#">Danh Sách Điểm Tham Quan</a>
-</div>
-<div class="content">
-    <div class="col mb-4">
-        <div class="text-end">
-            <form action="/Tour_management/index.php" method="POST">
-                <button type="submit" name="logout" class="btn btn-secondary">Đăng xuất</button>
+<?php
+class clsKetNoi {
+    private $conn;
+
+    function ketNoiDB() {
+        $this->conn = new mysqli("localhost", "root", "", "ptud");
+
+        // Kiểm tra kết nối
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->conn->connect_error);
+        }
+    }
+
+    function getConnection() {
+        return $this->conn;
+    }
+}
+
+$errors = array();
+
+if (isset($_POST["create"])) {
+    // Kết nối đến cơ sở dữ liệu
+    $db = new clsKetNoi();
+    $db->ketNoiDB();
+    $conn = $db->getConnection();
+
+    // Kiểm tra các trường nhập liệu
+    if (empty($_POST["spotName"])) {
+        $errors[] = "Vui lòng nhập tên điểm tham quan";
+    }
+
+    if (empty($_POST["startTime"])) {
+        $errors[] = "Vui lòng nhập thời gian bắt đầu";
+    }
+
+    if (empty($_POST["endTime"])) {
+        $errors[] = "Vui lòng nhập thời gian kết thúc";
+    }
+
+    if (empty($_POST["description"])) {
+        $errors[] = "Vui lòng nhập mô tả";
+    }
+
+    // Kiểm tra upload hình ảnh
+    if (isset($_FILES["image"]) && $_FILES["image"]["error"] == UPLOAD_ERR_OK) {
+        $image_tmp_name = $_FILES["image"]["tmp_name"];
+        $image_name = basename($_FILES["image"]["name"]);
+        $upload_dir = "assets/images/uploads/";
+        $image_path = $upload_dir . $image_name;
+
+        // Kiểm tra nếu thư mục tồn tại, nếu không thì tạo mới
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+
+        // Di chuyển hình ảnh vào thư mục
+        if (!move_uploaded_file($image_tmp_name, $image_path)) {
+            $errors[] = "Không thể tải hình ảnh lên.";
+        }
+    } else {
+        $errors[] = "Vui lòng chọn hình ảnh.";
+    }
+
+    if (empty($errors)) {
+        // Lưu trữ thông tin điểm tham quan
+        $spot["spotName"] = htmlspecialchars($_POST["spotName"]);
+        $spot["startTime"] = htmlspecialchars($_POST["startTime"]);
+        $spot["endTime"] = htmlspecialchars($_POST["endTime"]);
+        $spot["description"] = htmlspecialchars($_POST["description"]);
+        $spot["image"] = $image_path; // Lưu đường dẫn hình ảnh
+
+        // Tự động lấy mã gói tour lớn nhất và cộng thêm 1
+        $result = $conn->query("SELECT MAX(tourPackageCode) AS max_code FROM sightseeingspot");
+        $row = $result->fetch_assoc();
+        $spot["tourPackageCode"] = $row['max_code'] ? $row['max_code'] + 1 : 1; // Nếu không có mã nào, bắt đầu từ 1
+
+        // Lưu vehicleCode từ input
+        $spot["vehicleCode"] = intval($_POST["vehicleCode"]);
+
+        // Thêm điểm tham quan vào cơ sở dữ liệu
+        $sql = "INSERT INTO sightseeingspot (spotName, startTime, endTime, description, image, tourPackageCode, vehicleCode) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssiii", $spot["spotName"], $spot["startTime"], $spot["endTime"], $spot["description"], $spot["image"], $spot["tourPackageCode"], $spot["vehicleCode"]);
+
+        if ($stmt->execute()) {
+            echo '<script type="text/javascript">
+                    window.location.href = "/path/to/your/redirect/page.php?message=Thêm điểm tham quan thành công";
+                  </script>';
+        } else {
+            $errors[] = "Lỗi: " . $stmt->error;
+        }
+
+        $stmt->close();
+    }
+    $conn->close();
+}
+
+// Lấy danh sách phương tiện từ bảng vehicle
+$db = new clsKetNoi();
+$db->ketNoiDB();
+$conn = $db->getConnection();
+$vehicles = $conn->query("SELECT vehicleCode, vehicleName FROM vehicle");
+?>
+
+<div>
+    <nav class="ms-2 mt-3" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/path/to/your/list/page.php">Danh sách điểm tham quan</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thêm mới điểm tham quan</li>
+        </ol>
+    </nav>
+    <div class="bg-white border-main">
+        <div class="p-5">
+            <div class="d-flex justify-content-center mt-3 mb-4">
+                <h3>Thêm mới điểm tham quan</h3>
+            </div>
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="d-flex justify-content-end mb-3">
+                    <a type="button" class="btn btn-secondary me-3" href="/path/to/your/list/page.php">Hủy <i class="fa-solid fa-xmark"></i></a>
+                    <button type="submit" class="btn btn-primary" name="create">Lưu <i class="fa-solid fa-floppy-disk ms-2"></i></button>
+                </div>
+                <?php if (!empty($errors)) { ?>
+                    <?php foreach ($errors as $error) {
+                        echo "<div class='alert alert-danger' role='alert'>$error</div>";
+                    } ?>
+                <?php } ?>
+                <div class="form-group mb-3">
+                    <label class="d-flex mb-2" for="spotName">Tên điểm tham quan <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="spotName" id="spotName" placeholder="Tên điểm tham quan..."
+                        <?php if (isset($_POST["spotName"])) echo 'value="'.htmlspecialchars($_POST["spotName"]).'"'; ?>>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="d-flex mb-2" for="startTime">Thời gian bắt đầu <span class="text-danger">*</span></label>
+                    <input type="datetime-local" class="form-control" name="startTime" id="startTime"
+                        <?php if (isset($_POST["startTime"])) echo 'value="'.htmlspecialchars($_POST["startTime"]).'"'; ?>>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="d-flex mb-2" for="endTime">Thời gian kết thúc <span class="text-danger">*</span></label>
+                    <input type="datetime-local" class="form-control" name="endTime" id="endTime"
+                        <?php if (isset($_POST["endTime"])) echo 'value="'.htmlspecialchars($_POST["endTime"]).'"'; ?>>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="d-flex mb-2" for="description">Mô tả</label>
+                    <textarea class="form-control" name="description" id="description"><?php if (isset($_POST["description"])) echo htmlspecialchars($_POST["description"]); ?></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="d-flex mb-2" for="vehicleCode">Phương tiện</label>
+                    <select class="form-control" name="vehicleCode" id="vehicleCode">
+                        <option value="">Chọn phương tiện</option>
+                        <?php while ($vehicle = $vehicles->fetch_assoc()) { ?>
+                            <option value="<?php echo $vehicle['vehicleCode']; ?>"><?php echo $vehicle['vehicleName']; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="d-flex mb-2" for="image">Hình ảnh</label>
+                    <input type="file" class="form-control" name="image" id="image" accept="image/*">
+                </div>
             </form>
         </div>
     </div>
-
-    <div class="container">
-        <div class="row mt-4">
-            <div class="col-6">
-                <h2 class="text-primary fw-bold mb-4">Thêm gói tour</h2>
-            </div>
-
-            <div class="col-6 text-end">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-secondary" href="index.php">
-                        <i class="fa-solid fa-circle-plus"></i>
-                        Hủy
-                    </a>
-
-                    <button type="button" class="btn btn-primary">
-                        <i class="fa fa-trash"></i>
-                        Lưu
-                    </button>
-
-                </div>
-            </div>
-        </div>
-
-        <form>
-            <div class="form-group">
-                <label class="mb-1 mt-3" for="exampleInputPassword1">Tên gói tour <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="exampleInputPassword1">
-            </div>
-            <div class="form-group">
-                <label class="mb-1 mt-3" for="exampleInputPassword1">Ngày điểm xuất phát <span class="text-danger">*</span></label>
-                <input type="date" class="form-control" id="exampleInputPassword1">
-            </div>
-            <div class="form-group">
-                <label class="mb-1 mt-3" for="exampleInputPassword1">Điểm đến <span class="text-danger">*</span></label>
-                <input type="date" class="form-control" id="exampleInputPassword1">
-            </div>
-            <div class="form-group">
-                <label class="mb-1 mt-3" for="exampleInputPassword1">Mô tả</label>
-                <textarea type="text" class="form-control" rows="10" id="exampleInputPassword1"></textarea>
-            </div>
-
-        </form>
-    </div>
-
-
 </div>
-
-</body>
-</html>
