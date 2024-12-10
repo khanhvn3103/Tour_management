@@ -20,7 +20,7 @@ class modelBill
     function createBill($numberOfPeople, $address, $total, $status, $formCode, $voucherCode, $tourCode, $customerCode)
     {
         if ($this->conn) {
-            $query = "INSERT INTO bill (numberOfPeople, address, total, status, formCode, voucherCode, tourCode, customerCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO bill (numberOfPeople, address, total, status, formCode, voucherCode, tourCode, customerCode, createAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
             $stmt = $this->conn->prepare($query);
 
             if ($stmt) {

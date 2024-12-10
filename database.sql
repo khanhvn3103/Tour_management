@@ -134,6 +134,7 @@ CREATE TABLE `bill` (
   `voucherCode` varchar(20) DEFAULT NULL,
   `tourCode` int(11) DEFAULT NULL,
   `customerCode` int(11) DEFAULT NULL,
+  `createAt` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`billCode`),
   KEY `formCode` (`formCode`),
   KEY `voucherCode` (`voucherCode`),
