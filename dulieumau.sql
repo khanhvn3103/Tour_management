@@ -55,8 +55,8 @@ INSERT INTO `voucher` (`voucherCode`, `beginAt`, `endAt`, `sale`) VALUES
 
 -- Dữ liệu mẫu cho bảng bill
 INSERT INTO `bill` (`numberOfPeople`, `address`, `total`, `status`, `formCode`, `voucherCode`, `tourCode`, `customerCode`) VALUES
-(4, 'Ha Noi', 15000000, 'Đã Tạo', 1, 'VOUCHER1', 1, 1),
-(3, 'Da Nang', 12000000, 'Bị Huỷ', 2, 'VOUCHER2', 2, 2);
+(4, 'Ha Noi', 15000000, 'Đã Hủy', 1, 'VOUCHER1', 1, 1),
+(3, 'Da Nang', 12000000, 'Hoàn Thành', 2, 'VOUCHER2', 2, 2);
 
 -- Dữ liệu mẫu cho bảng evaluate
 INSERT INTO `evaluate` (`content`, `star`, `customerCode`, `tourCode`, `billCode`) VALUES

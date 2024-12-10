@@ -73,4 +73,21 @@ class modelVoucher
             return false;
         }
     }
+
+    // Phương thức lấy thông tin voucher theo mã
+    function getVoucher($voucherCode)
+    {
+        if ($this->conn) {
+            $query = "SELECT * FROM voucher WHERE voucherCode = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("s", $voucherCode);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $voucher = $result->fetch_assoc();
+            $stmt->close();
+            return $voucher;
+        } else {
+            return false;
+        }
+    }
 }
