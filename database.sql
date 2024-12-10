@@ -39,6 +39,7 @@ CREATE TABLE `tourpackage` (
   `packageName` varchar(100) DEFAULT NULL,
   `startingPoint` varchar(100) DEFAULT NULL,
   `endPoint` varchar(100) DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`tourPackageCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -76,6 +77,7 @@ CREATE TABLE `sightseeingspot` (
   `description` varchar(500) DEFAULT NULL,
   `tourPackageCode` int(11) DEFAULT NULL,
   `vehicleCode` int(11) DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`spotCode`),
   KEY `tourPackageCode` (`tourPackageCode`),
   KEY `vehicleCode` (`vehicleCode`),
@@ -98,9 +100,12 @@ CREATE TABLE `tourbookingform` (
   `numberOfChildren` int(11) DEFAULT NULL,
   `numberOfAdults` int(11) DEFAULT NULL,
   `customerCode` int(11) DEFAULT NULL,
+  `tourCode` int(11) DEFAULT NULL,
   PRIMARY KEY (`formCode`),
   KEY `customerCode` (`customerCode`),
-  CONSTRAINT `tourbookingform_ibfk_1` FOREIGN KEY (`customerCode`) REFERENCES `customer` (`customerCode`)
+  KEY `tourCode` (`tourCode`),
+  CONSTRAINT `tourbookingform_ibfk_1` FOREIGN KEY (`customerCode`) REFERENCES `customer` (`customerCode`),
+  CONSTRAINT `tourbookingform_ibfk_2` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `detailbookingform` (
@@ -132,18 +137,12 @@ CREATE TABLE `bill` (
   `status` varchar(50) DEFAULT NULL,
   `formCode` int(11) DEFAULT NULL,
   `voucherCode` varchar(20) DEFAULT NULL,
-  `tourCode` int(11) DEFAULT NULL,
-  `customerCode` int(11) DEFAULT NULL,
   `createAt` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`billCode`),
   KEY `formCode` (`formCode`),
   KEY `voucherCode` (`voucherCode`),
-  KEY `tourCode` (`tourCode`),
-  KEY `customerCode` (`customerCode`),
   CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`formCode`) REFERENCES `tourbookingform` (`formCode`),
-  CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`voucherCode`) REFERENCES `voucher` (`voucherCode`),
-  CONSTRAINT `bill_ibfk_3` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`),
-  CONSTRAINT `bill_ibfk_4` FOREIGN KEY (`customerCode`) REFERENCES `customer` (`customerCode`)
+  CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`voucherCode`) REFERENCES `voucher` (`voucherCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `evaluate` (
@@ -160,4 +159,16 @@ CREATE TABLE `evaluate` (
   CONSTRAINT `evaluate_ibfk_1` FOREIGN KEY (`billCode`) REFERENCES `bill` (`billCode`),
   CONSTRAINT `evaluate_ibfk_2` FOREIGN KEY (`customerCode`) REFERENCES `customer` (`customerCode`),
   CONSTRAINT `evaluate_ibfk_3` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `work_schedule` (
+  `scheduleCode` int(11) NOT NULL AUTO_INCREMENT,
+  `employeeCode` int(11) NOT NULL,
+  `tourCode` int(11) NOT NULL,
+  `assignedAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`scheduleCode`),
+  KEY `employeeCode` (`employeeCode`),
+  KEY `tourCode` (`tourCode`),
+  CONSTRAINT `work_schedule_ibfk_1` FOREIGN KEY (`employeeCode`) REFERENCES `employee` (`employeeCode`),
+  CONSTRAINT `work_schedule_ibfk_2` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -8,13 +8,14 @@ class modelUser
     function __construct()
     {
         $p = new clsKetNoi();
-        $this->conn = $p->ketNoiDB();
+        $this->conn = $p->ketNoiDB(); // Sử dụng đối tượng kết nối duy nhất
     }
 
     function __destruct()
     {
-        $p = new clsKetNoi();
-        $p->closeKetNoi($this->conn);
+        if ($this->conn) {
+            $this->conn->close(); // Đóng kết nối khi kết thúc
+        }
     }
 
     // Phương thức lấy tất cả người dùng
@@ -23,15 +24,17 @@ class modelUser
         if ($this->conn) {
             $query = "SELECT * FROM users";
             $result = $this->conn->query($query);
-            $users = [];
-
-            while ($row = $result->fetch_assoc()) {
-                $users[] = $row;
+            if ($result) {
+                $users = [];
+                while ($row = $result->fetch_assoc()) {
+                    $users[] = $row;
+                }
+                return $users;
+            } else {
+                return false;
             }
-            return $users;
-        } else {
-            return false;
         }
+        return false;
     }
 
     // Phương thức lấy một người dùng theo username
@@ -39,9 +42,9 @@ class modelUser
     {
         if ($this->conn) {
             $query = "SELECT users.username, users.password, users.fullName, users.address, users.phone, users.dob, users.gender, users.identifyCard, employee.role
-            FROM users
-            JOIN employee ON users.username = employee.username
-            WHERE users.username = ?";
+                      FROM users
+                      JOIN employee ON users.username = employee.username
+                      WHERE users.username = ?";
             $stmt = $this->conn->prepare($query);
             if ($stmt) {
                 $stmt->bind_param("s", $username);
@@ -53,9 +56,8 @@ class modelUser
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     // Phương thức thêm người dùng mới
@@ -73,9 +75,8 @@ class modelUser
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     // Phương thức xóa người dùng
@@ -104,9 +105,8 @@ class modelUser
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     // Phương thức cập nhật người dùng
@@ -137,29 +137,29 @@ class modelUser
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
-    // Phương thức lấy tất cả nhân viên
-    public function getAllEmployees()
+    // Lấy danh sách tất cả các nhân viên
+    public function getListEmployees()
     {
         if ($this->conn) {
             $query = "SELECT employee.employeeCode, users.username, users.fullName, employee.role, users.address, users.phone, users.dob, users.gender, users.identifyCard 
                       FROM employee 
                       JOIN users ON employee.username = users.username";
             $result = $this->conn->query($query);
-            $employees = [];
-
-            while ($row = $result->fetch_assoc()) {
-                $employees[] = $row;
+            if ($result) {
+                $employees = [];
+                while ($row = $result->fetch_assoc()) {
+                    $employees[] = $row;
+                }
+                return $employees;
+            } else {
+                return false;
             }
-
-            return $employees;
-        } else {
-            return false;
         }
+        return false;
     }
 
     // Phương thức thêm nhân viên
@@ -190,9 +190,8 @@ class modelUser
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     // Phương thức cập nhật nhân viên
@@ -223,8 +222,7 @@ class modelUser
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 }

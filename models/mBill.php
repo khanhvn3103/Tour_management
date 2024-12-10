@@ -17,14 +17,14 @@ class modelBill
         $p->closeKetNoi($this->conn);
     }
 
-    function createBill($numberOfPeople, $address, $total, $status, $formCode, $voucherCode, $tourCode, $customerCode)
+    function createBill($numberOfPeople, $address, $total, $status, $formCode, $voucherCode)
     {
         if ($this->conn) {
-            $query = "INSERT INTO bill (numberOfPeople, address, total, status, formCode, voucherCode, tourCode, customerCode, createAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+            $query = "INSERT INTO bill (numberOfPeople, address, total, status, formCode, voucherCode, createAt) VALUES (?, ?, ?, ?, ?, ?, NOW())";
             $stmt = $this->conn->prepare($query);
 
             if ($stmt) {
-                $stmt->bind_param("isssisii", $numberOfPeople, $address, $total, $status, $formCode, $voucherCode, $tourCode, $customerCode);
+                $stmt->bind_param("isssis", $numberOfPeople, $address, $total, $status, $formCode, $voucherCode);
                 $result = $stmt->execute();
                 $stmt->close();
                 return $result;
@@ -94,7 +94,6 @@ class modelBill
         }
     }
 
-
     function getAllBills()
     {
         if ($this->conn) {
@@ -147,6 +146,64 @@ class modelBill
             return $forms;
         } else {
             return false;
+        }
+    }
+
+    // Phương thức tạo hóa đơn
+    function createInvoice($formCode, $address, $voucherCode = null)
+    {
+        global $tourBookingFormModel, $detailBookingFormModel, $voucherModel, $tourModel;
+
+        // Lấy thông tin từ tourbookingform
+        $booking = $tourBookingFormModel->getTourBookingForm($formCode);
+        if (!$booking) {
+            return "Không tìm thấy booking với formCode: $formCode.";
+        }
+
+        // Lấy thông tin chi tiết từ detailbookingform
+        $details = $detailBookingFormModel->getDetailBookingForm($formCode);
+        if (!$details) {
+            return "Không tìm thấy chi tiết booking với formCode: $formCode.";
+        }
+
+        // Tính tổng số người
+        $numberOfPeople = count($details);
+
+        // Lấy thông tin voucher nếu có
+        $voucher = $voucherCode ? $voucherModel->getVoucher($voucherCode) : null;
+
+        // Lấy thông tin khách hàng và tour từ booking
+        $customerCode = $booking['customerCode'];
+        $tourCode = $booking['tourCode'];
+
+        // Tính toán tổng tiền
+        $tour = $tourModel->getTour($tourCode);
+        $total = ($tour['price'] * $booking['numberOfAdults']) + ($tour['price'] * 0.7 * $booking['numberOfChildren']);
+        if ($voucher) {
+            $total = $total * ((100 - $voucher['sale']) / 100);
+        }
+
+        // Các thông tin khác
+        $status = 'Đang xử lý'; // Trạng thái hóa đơn
+
+        // Tạo hóa đơn
+        $result = $this->createBill($numberOfPeople, $address, $total, $status, $formCode, $voucherCode);
+        if($result) {
+            return "Hóa đơn đã được tạo thành công." ;
+        } else {
+            return "Có lỗi xảy ra khi tạo hóa đơn. Vui lòng thử lại.";
+        }
+    }
+
+    // Phương thức cập nhật trạng thái hóa đơn
+    function updateInvoiceStatus($billCode, $status)
+    {
+        // Cập nhật trạng thái hóa đơn
+        $result = $this->updateBillStatus($billCode, $status);
+        if($result) {
+            return "Trạng thái hóa đơn đã được cập nhật thành công." ;
+        } else {
+            return "Có lỗi xảy ra khi cập nhật trạng thái hóa đơn. Vui lòng thử lại.";
         }
     }
 }

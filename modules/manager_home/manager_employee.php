@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
                         include_once("../../models/mUsers.php");
                         $userModel = new modelUser();
 
-                        $employees = $userModel->getAllEmployees();
+                        $employees = $userModel->getListEmployees();
 
                         foreach ($employees as $employee) {
                             echo '<tr>';
