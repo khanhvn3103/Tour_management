@@ -1,6 +1,33 @@
+<?php
+include_once("../../models/mUsers.php");
+include_once("../../models/mTour.php");
+include_once("../../models/mWorkSchedules.php");
+
+// Khởi tạo các đối tượng model
+$userModel = new modelUser();
+$tourModel = new modelTour();
+$workSchedulesModel = new modelWorkSchedules();
+
+// Lấy danh sách tất cả các tour và nhân viên
+$tours = $tourModel->getAllTours();
+$employees = $userModel->getListEmployees();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
+    $tourCode = $_POST['tourCode'];
+    $employeeCode = $_POST['employeeCode'];
+
+    $result = $workSchedulesModel->assignEmployeeToTour($employeeCode, $tourCode);
+
+    if ($result) {
+        $message = 'Phân công thành công!';
+    } else {
+        $message = 'Phân công thất bại!';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +38,6 @@
     <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 </head>
-
 <body>
     <div class="sidebar">
         <a href="/Tour_management/index.php" style="max-width: 100%;">
@@ -35,43 +61,35 @@
             </div>
         </div>
         <h2 class="text-primary fw-bold mb-4">Phân Công Lịch Làm Việc</h2>
-        <div class="mb-4">
-            <label for="billSelect" class="form-label">Chọn Hoá Đơn</label>
-            <select id="billSelect" class="form-select">
-                <option selected>Chọn hoá đơn...</option>
-                <option value="1">Hoá đơn 1 - TP. Hồ Chí Minh - 15,000,000 VND</option>
-                <option value="2">Hoá đơn 2 - Hà Nội - 9,000,000 VND</option>
-                <option value="3">Hoá đơn 3 - Đà Nẵng - 7,000,000 VND</option>
-            </select>
-        </div>
-        <div class="mb-4">
-            <label for="employeeSelect" class="form-label">Chọn Nhân Viên</label>
-            <select id="employeeSelect" class="form-select">
-                <option selected>Chọn nhân viên...</option>
-                <option value="1">Nguyễn Văn A</option>
-                <option value="2">Trần Thị B</option>
-                <option value="3">Lê Văn C</option>
-            </select>
-        </div>
-        <div class="text-end">
-            <button class="btn btn-primary" id="assignButton">Xác Nhận Phân Công</button>
-        </div>
+        <?php if (isset($message)) { ?>
+            <div class="alert alert-info" role="alert">
+                <?= $message ?>
+            </div>
+        <?php } ?>
+        <form method="POST" action="">
+            <div class="mb-4">
+                <label for="tourSelect" class="form-label">Chọn Tour</label>
+                <select id="tourSelect" name="tourCode" class="form-select">
+                    <option selected>Chọn Tour...</option>
+                    <?php foreach ($tours as $tour) { ?>
+                        <option value="<?= $tour['tourCode'] ?>"><?= $tour['tourName'] ?> - <?= number_format($tour['price'], 0, ',', '.') ?> VND</option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="employeeSelect" class="form-label">Chọn Nhân Viên</label>
+                <select id="employeeSelect" name="employeeCode" class="form-select">
+                    <option selected>Chọn nhân viên...</option>
+                    <?php foreach ($employees as $employee) { ?>
+                        <option value="<?= $employee['employeeCode'] ?>"><?= $employee['fullName'] ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="text-end">
+                <button type="submit" name="assign" class="btn btn-primary">Xác Nhận Phân Công</button>
+            </div>
+        </form>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $('#assignButton').click(function() {
-                const bill = $('#billSelect').val();
-                const employee = $('#employeeSelect').val();
-
-                if (bill && employee) {
-                    alert(`Đã phân công nhân viên ${$('#employeeSelect option:selected').text()} cho hoá đơn ${$('#billSelect option:selected').text()}`);
-                } else {
-                    alert('Vui lòng chọn đầy đủ thông tin!');
-                }
-            });
-        });
-    </script>
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
@@ -84,5 +102,4 @@
     }
     ?>
 </body>
-
 </html>

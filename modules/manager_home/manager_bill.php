@@ -17,100 +17,34 @@ $tourModel = new modelTour();
 
 // Lấy danh sách các mã đặt tour chưa được tạo hóa đơn
 $availableTourBookingForms = $billModel->getAvailableTourBookingForms();
-// Lấy danh sách khách hàng
-$customers = $customerModel->getAllCustomers();
-// Lấy danh sách tour
-$tours = $tourModel->getAllTours();
 
-// Xử lý việc tạo hóa đơn
-function createInvoice($formCode, $customerCode, $tourCode, $address, $voucherCode = null)
-{
-    global $billModel, $tourBookingFormModel, $detailBookingFormModel, $voucherModel, $customerModel, $tourModel;
-
-    // Lấy thông tin từ tourbookingform
-    $booking = $tourBookingFormModel->getTourBookingForm($formCode);
-    if (!$booking) {
-        echo "Không tìm thấy booking với formCode: $formCode.";
-        return false;
-    }
-
-    // Lấy thông tin chi tiết từ detailbookingform
-    $details = $detailBookingFormModel->getDetailBookingForm($formCode);
-    if (!$details) {
-        echo "Không tìm thấy chi tiết booking với formCode: $formCode.";
-        return false;
-    }
-
-    // Tính tổng số người
-    $numberOfPeople = count($details);
-
-    // Lấy thông tin voucher nếu có
-    $voucher = $voucherCode ? $voucherModel->getVoucher($voucherCode) : null;
-
-    // Lấy thông tin khách hàng
-    $customer = $customerModel->getCustomer($customerCode);
-
-    // Lấy thông tin tour
-    $tour = $tourModel->getTour($tourCode);
-    if (!$tour) {
-        echo "Không tìm thấy thông tin tour với tourCode: $tourCode";
-        return false;
-    }
-
-    // Tính toán tổng tiền
-    $total = ($tour['price'] * $booking['numberOfAdults']) + ($tour['price'] * 0.7 * $booking['numberOfChildren']);
-    if ($voucher) {
-        $total = $total * ((100 - $voucher['sale']) / 100);
-    }
-
-    // Các thông tin khác
-    $status = 'Đang xử lý'; // Trạng thái hóa đơn
-
-    // Tạo hóa đơn
-    $result = $billModel->createBill($numberOfPeople, $address, $total, $status, $formCode, $voucherCode, $tourCode, $customerCode);
-    if ($result) {
-        echo "Hóa đơn đã được tạo thành công.";
-        exit;
-    } else {
-        echo "Có lỗi xảy ra khi tạo hóa đơn. Vui lòng thử lại.";
-        exit;
-    }
-}
-
-// Xử lý việc cập nhật trạng thái hóa đơn
-function updateInvoiceStatus($billCode, $status)
-{
-    global $billModel;
-
-    // Cập nhật trạng thái hóa đơn
-    $result = $billModel->updateBillStatus($billCode, $status);
-    if ($result) {
-        echo "Trạng thái hóa đơn đã được cập nhật thành công.";
-        exit;
-    } else {
-        echo "Có lỗi xảy ra khi cập nhật trạng thái hóa đơn. Vui lòng thử lại.";
-        exit;
-    }
-}
-
+// Xử lý yêu cầu POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action']) && $_POST['action'] == 'updateStatus') {
         $billCode = $_POST['billCode'];
         $status = $_POST['status'];
-        updateInvoiceStatus($billCode, $status);
+        echo $billModel->updateInvoiceStatus($billCode, $status);
     } else {
         $formCode = $_POST['formCode'];
-        $customerCode = $_POST['customerCode'];
-        $tourCode = $_POST['tourCode'];
         $address = $_POST['address'];
         $voucherCode = !empty($_POST['voucherCode']) ? $_POST['voucherCode'] : null;
-        createInvoice($formCode, $customerCode, $tourCode, $address, $voucherCode);
+        echo $billModel->createInvoice($formCode, $address, $voucherCode);
     }
+    exit;
 }
 
 // Lấy danh sách hóa đơn từ cơ sở dữ liệu
 $bills = $billModel->getAllBills();
+
+// Lấy thông tin bổ sung cho mỗi hóa đơn từ bảng tourbookingform
+foreach ($bills as &$bill) {
+    $booking = $tourBookingFormModel->getTourBookingForm($bill['formCode']);
+    $bill['tourCode'] = $booking['tourCode'];
+    $bill['customerCode'] = $booking['customerCode'];
+}
+unset($bill); // Xóa tham chiếu cuối cùng đến phần tử mảng
 ?>
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -157,6 +91,7 @@ $bills = $billModel->getAllBills();
                     <thead>
                         <tr>
                             <th scope="col">Mã Hóa Đơn</th>
+                            <th scope="col">Mã Đặt Tour</th>
                             <th scope="col">Mã Tour</th>
                             <th scope="col">Mã Khách Hàng</th>
                             <th scope="col">Địa Chỉ Đón</th>
@@ -171,6 +106,7 @@ $bills = $billModel->getAllBills();
                             foreach ($bills as $bill) {
                                 echo '<tr>';
                                 echo '<td>' . $bill['billCode'] . '</td>';
+                                echo '<td>' . $bill['formCode'] . '</td>';
                                 echo '<td>' . $bill['tourCode'] . '</td>';
                                 echo '<td>' . $bill['customerCode'] . '</td>';
                                 echo '<td>' . $bill['address'] . '</td>';
@@ -187,7 +123,7 @@ $bills = $billModel->getAllBills();
                                 echo '</tr>';
                             }
                         } else {
-                            echo '<tr><td colspan="7">Không có hóa đơn nào.</td></tr>';
+                            echo '<tr><td colspan="8">Không có hóa đơn nào.</td></tr>';
                         }
                         ?>
                     </tbody>
@@ -212,26 +148,6 @@ $bills = $billModel->getAllBills();
                                 <?php
                                 foreach ($availableTourBookingForms as $formCode) {
                                     echo '<option value="' . $formCode . '">' . $formCode . '</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="customerCode">Username Khách Hàng</label>
-                            <select class="form-control" name="customerCode" id="customerCode" required>
-                                <?php
-                                foreach ($customers as $customer) {
-                                    echo '<option value="' . $customer['customerCode'] . '">' . $customer['username'] . '</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="tourCode">Mã Tour</label>
-                            <select class="form-control" name="tourCode" id="tourCode" required>
-                                <?php
-                                foreach ($tours as $tour) {
-                                    echo '<option value="' . $tour['tourCode'] . '">' . $tour['tourCode'] . '</option>';
                                 }
                                 ?>
                             </select>
