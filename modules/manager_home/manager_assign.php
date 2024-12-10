@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phân Công Lịch - Quản Lý Du Lịch</title>
+    <title>Quản Lý Tài Khoản Nhân Viên</title>
     <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/Tour_management/asset/css/assign.css">
+    <link rel="stylesheet" href="/Tour_management/asset/css/manager_home.css">
+    <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
     <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
-    <script src="/Tour_management/asset/js/boostrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
         <a href="/Tour_management/modules/manager_home/manager_home.php">Thống Kê</a>
         <a href="/Tour_management/modules/manager_home/manager_employee.php">Danh Sách Tài Khoản</a>
         <a href="/Tour_management/modules/manager_home/manager_voucher.php">Thêm Voucher</a>
-        <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
+        <a href="/Tour_management/modules/manager_home/manager_assign.php">Phân Công Lịch</a>
         <a href="/Tour_management/modules/manager_home/manager_bill.php">Tạo Hoá Đơn</a>
         <a href="/Tour_management/modules/tour_manage/index.php">Quản Lý Tour</a>
         <a href="/Tour_management/modules/tour_category_management/index.php">Quản Lý Gói Tour</a>

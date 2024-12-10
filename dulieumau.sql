@@ -1,7 +1,9 @@
 -- Dữ liệu mẫu cho bảng users
 INSERT INTO `users` (`username`, `password`, `fullName`, `address`, `phone`, `dob`, `gender`, `identifyCard`) VALUES
 ('user1', 'password1', 'Nguyen Van A', 'Ha Noi', '0900123456', '1990-01-01', 1, '123456789'),
-('user2', 'password2', 'Tran Thi B', 'Ho Chi Minh', '0900654321', '1992-02-02', 0, '987654321');
+('user2', 'password2', 'Nguyen Van B', 'Ho Chi Minh', '0900654321', '1992-02-02', 0, '987654321'),
+('user3', 'password3', 'Tran Thi A', 'Ho Chi Minh', '0900654321', '1992-02-02', 0, '987654321'),
+('user4', 'password4', 'Tran Thi B', 'Ho Chi Minh', '0900654321', '1992-02-02', 0, '987654321');
 
 -- Dữ liệu mẫu cho bảng employee
 INSERT INTO `employee` (`role`, `username`) VALUES
@@ -10,8 +12,8 @@ INSERT INTO `employee` (`role`, `username`) VALUES
 
 -- Dữ liệu mẫu cho bảng customer
 INSERT INTO `customer` (`username`) VALUES
-('user1'),
-('user2');
+('user3'),
+('user4');
 
 -- Dữ liệu mẫu cho bảng tourpackage
 INSERT INTO `tourpackage` (`packageName`, `startingPoint`, `endPoint`, `description`) VALUES

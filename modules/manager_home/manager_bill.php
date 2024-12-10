@@ -133,10 +133,11 @@ $bills = $billModel->getAllBills();
         <a href="/Tour_management/modules/manager_home/manager_home.php">Thống Kê</a>
         <a href="/Tour_management/modules/manager_home/manager_employee.php">Danh Sách Tài Khoản</a>
         <a href="/Tour_management/modules/manager_home/manager_voucher.php">Thêm Voucher</a>
-        <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
-        <a href="#">Tạo Hoá Đơn</a>
-        <a href="#">Quản Lý Tour</a>
-        <a href="#">Danh Sách Điểm Tham Quan</a>
+        <a href="/Tour_management/modules/manager_home/manager_assign.php">Phân Công Lịch</a>
+        <a href="/Tour_management/modules/manager_home/manager_bill.php">Tạo Hoá Đơn</a>
+        <a href="/Tour_management/modules/tour_manage/index.php">Quản Lý Tour</a>
+        <a href="/Tour_management/modules/tour_category_management/index.php">Quản Lý Gói Tour</a>
+        <a href="./sightseeing_list.php">Danh Sách Điểm Tham Quan</a>
     </div>
 
     <div class="content">
@@ -160,8 +161,8 @@ $bills = $billModel->getAllBills();
                             <th scope="col">Mã Khách Hàng</th>
                             <th scope="col">Địa Chỉ Đón</th>
                             <th scope="col">Tổng Tiền</th>
+                            <th scope="col">Ngày Tạo</th>
                             <th scope="col">Trạng Thái</th>
-                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -174,6 +175,7 @@ $bills = $billModel->getAllBills();
                                 echo '<td>' . $bill['customerCode'] . '</td>';
                                 echo '<td>' . $bill['address'] . '</td>';
                                 echo '<td>' . $bill['total'] . '</td>';
+                                echo '<td>' . $bill['createAt'] . '</td>';
                                 echo '<td>';
                                 echo '<select class="form-select update-status-select" data-bill="' . $bill['billCode'] . '">';
                                 echo '<option value="Đang xử lý" ' . ($bill['status'] == 'Đang xử lý' ? 'selected' : '') . '>Đang xử lý</option>';
@@ -182,11 +184,10 @@ $bills = $billModel->getAllBills();
                                 echo '<option value="Đã hủy" ' . ($bill['status'] == 'Đã hủy' ? 'selected' : '') . '>Đã hủy</option>';
                                 echo '</select>';
                                 echo '</td>';
-                                echo '<td></td>';
                                 echo '</tr>';
                             }
                         } else {
-                            echo '<tr><td colspan="6">Không có hóa đơn nào.</td></tr>';
+                            echo '<tr><td colspan="7">Không có hóa đơn nào.</td></tr>';
                         }
                         ?>
                     </tbody>
