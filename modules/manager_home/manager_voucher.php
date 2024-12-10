@@ -60,7 +60,7 @@ $vouchers = $voucherModel->selectAllVouchers();
         <a href="/Tour_management/modules/manager_home/manager_employee.php">Danh Sách Tài Khoản</a>
         <a href="/Tour_management/modules/manager_home/manager_voucher.php">Thêm Voucher</a>
         <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
-        <a href="#">Tạo Hoá Đơn</a>
+        <a href="/Tour_management/modules/manager_home/manager_bill.php">Tạo Hoá Đơn</a>
         <a href="#">Quản Lý Tour</a>
         <a href="#">Danh Sách Điểm Tham Quan</a>
     </div>

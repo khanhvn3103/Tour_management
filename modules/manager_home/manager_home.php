@@ -7,14 +7,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['type'])) {
     $status = '';
 
     if ($type == 'created') {
-        $status = 'Đã Tạo';
+        // Lấy tất cả các hóa đơn chưa bị huỷ và hoàn thành
+        $status = 'Tất Cả';  // Thay thế 'Đã Tạo' bằng 'Tất Cả' nếu bạn muốn tất cả các hóa đơn
     } elseif ($type == 'canceled') {
-        $status = 'Bị Huỷ';
+        $status = 'Đã Huỷ';
     } elseif ($type == 'completed') {
         $status = 'Hoàn Thành';
     } elseif ($type == 'revenue') {
-        $status = 'Hoàn Thành';
+        // Trạng thái này có thể để trống nếu bạn đang tính tổng doanh thu
+        $status = 'Doanh Thu';
     }
+
 
     $bills = $billModel->getBillsByStatus($status);
     $output = '';
@@ -56,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['type'])) {
         <a href="/Tour_management/modules/manager_home/manager_employee.php">Danh Sách Tài Khoản</a>
         <a href="/Tour_management/modules/manager_home/manager_voucher.php">Thêm Voucher</a>
         <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
-        <a href="#">Tạo Hoá Đơn</a>
+        <a href="/Tour_management/modules/manager_home/manager_bill.php">Tạo Hoá Đơn</a>
         <a href="#">Quản Lý Tour</a>
         <a href="#">Danh Sách Điểm Tham Quan</a>
     </div>
@@ -64,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['type'])) {
     <?php
     include_once("../../models/mBill.php");
     $billModel = new modelBill();
-    $createdBills = $billModel->getBillsByStatus('Đã Tạo');
-    $canceledBills = $billModel->getBillsByStatus('Bị Huỷ');
+    $createdBills = $billModel->getBillsByStatus('Tất Cả');
+    $canceledBills = $billModel->getBillsByStatus('Đã Huỷ');
     $completedBills = $billModel->getBillsByStatus('Hoàn Thành');
     $totalCreated = count($createdBills);
     $totalCanceled = count($canceledBills);
@@ -82,16 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['type'])) {
             </div>
         </div>
         <h2 class="text-primary fw-bold mb-4">Tổng Quan Thống Kê</h2>
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <label for="startDate" class="form-label">Ngày Bắt Đầu</label>
-                <input type="date" id="startDate" class="form-control">
-            </div>
-            <div class="col-md-6">
-                <label for="endDate" class="form-label">Ngày Kết Thúc</label>
-                <input type="date" id="endDate" class="form-control">
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-3">
                 <div class="card card-container">
