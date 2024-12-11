@@ -45,12 +45,19 @@
                </li>
            </ul>
        </div>
-
-
         <div>
-          <button class="btn btn-secondary me-1">Đăng ký</button>
-          <button class="btn btn-primary">Đăng nhập</button>
-      </div>
+		  <button class="btn btn-secondary me-1" onclick="redirectToSignup()">Đăng ký</button>
+		  <button class="btn btn-primary" onclick="redirectToLogin()">Đăng nhập</button>
+		</div>
+        <script>
+            function redirectToSignup() {
+                window.location.href = "http://localhost/Tour_management/modules/authenticate/sign_up.php"; 
+            }
+
+            function redirectToLogin() {
+                window.location.href = "http://localhost/Tour_management/modules/authenticate/login.php"; 
+            }
+        </script>
     </div>
 </header>
 

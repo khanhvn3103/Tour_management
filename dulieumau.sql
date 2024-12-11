@@ -1,5 +1,6 @@
 -- Dữ liệu mẫu cho bảng users
 INSERT INTO users (username, password, fullName, address, phone, dob, gender, identifyCard) VALUES
+('admin', 'admin', 'admin', 'Ha Noi', '0901234567', '1990-01-01', 1, '123498765'),
 ('user1', 'password1', 'Nguyen Van A', 'Ha Noi', '0900123456', '1990-01-01', 1, '123456789'),
 ('user2', 'password2', 'Nguyen Van B', 'Ho Chi Minh', '0900654321', '1992-02-02', 0, '987654321'),
 ('user3', 'password3', 'Tran Thi A', 'Ho Chi Minh', '0900654322', '1993-03-03', 0, '876543210'),
@@ -11,7 +12,7 @@ INSERT INTO users (username, password, fullName, address, phone, dob, gender, id
 
 -- Dữ liệu mẫu cho bảng employee
 INSERT INTO employee (role, username) VALUES
-('Hướng dẫn viên', 'user1'),
+('admin', 'admin'),
 ('Tài xế', 'user2'),
 ('Hướng dẫn viên', 'user5'),
 ('Tài xế', 'user6'),

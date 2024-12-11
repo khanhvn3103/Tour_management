@@ -114,10 +114,10 @@ unset($bill); // Xóa tham chiếu cuối cùng đến phần tử mảng
                                 echo '<td>' . $bill['createAt'] . '</td>';
                                 echo '<td>';
                                 echo '<select class="form-select update-status-select" data-bill="' . $bill['billCode'] . '">';
-                                echo '<option value="Đang xử lý" ' . ($bill['status'] == 'Đang Xử Lý' ? 'selected' : '') . '>Đang xử lý</option>';
-                                echo '<option value="Đã xác nhận" ' . ($bill['status'] == 'Đã Xác Nhận' ? 'selected' : '') . '>Đã xác nhận</option>';
-                                echo '<option value="Hoàn thành" ' . ($bill['status'] == 'Hoàn Thành' ? 'selected' : '') . '>Hoàn thành</option>';
-                                echo '<option value="Đã hủy" ' . ($bill['status'] == 'Đã Hủy' ? 'selected' : '') . '>Đã hủy</option>';
+                                echo '<option value="Đang Xử Lý" ' . ($bill['status'] == 'Đang Xử Lý' ? 'selected' : '') . '>Đang xử lý</option>';
+                                echo '<option value="Đã Xác Nhận" ' . ($bill['status'] == 'Đã Xác Nhận' ? 'selected' : '') . '>Đã xác nhận</option>';
+                                echo '<option value="Hoàn Thành" ' . ($bill['status'] == 'Hoàn Thành' ? 'selected' : '') . '>Hoàn thành</option>';
+                                echo '<option value="Đã Hủy" ' . ($bill['status'] == 'Đã Hủy' ? 'selected' : '') . '>Đã hủy</option>';
                                 echo '</select>';
                                 echo '</td>';
                                 echo '</tr>';
