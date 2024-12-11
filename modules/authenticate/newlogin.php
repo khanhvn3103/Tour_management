@@ -1,3 +1,71 @@
+<?php
+session_start();
+include_once("../../models/clsKetNoi.php");
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = htmlspecialchars($_POST['username']);
+    $password = htmlspecialchars($_POST['password']);
+
+    $conn = new clsKetNoi();
+    $db = $conn->ketNoiDB();
+
+    if ($db) {
+        // Kiểm tra thông tin đăng nhập trong bảng users
+        $query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("ss", $username, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+
+            // Kiểm tra xem người dùng là admin
+            $query_employee = "SELECT * FROM employee WHERE username = ?";
+            $stmt_employee = $db->prepare($query_employee);
+            $stmt_employee->bind_param("s", $username);
+            $stmt_employee->execute();
+            $result_employee = $stmt_employee->get_result();
+
+            if ($result_employee->num_rows > 0) {
+                $employee = $result_employee->fetch_assoc();
+                if ($employee['role'] === 'admin') {
+                    $_SESSION['username'] = $username;
+                    $_SESSION['role'] = 'admin';
+                    header("Location: http://localhost/Tour_management/modules/manager_home/manager_home.php");
+                    exit();
+                } else {
+                    $_SESSION['username'] = $username;
+                    $_SESSION['role'] = 'employee';
+                    header("Location: http://localhost/Tour_management/index.php");
+                    exit();
+                }
+            } else {
+                $query_customer = "SELECT * FROM customer WHERE username = ?";
+                $stmt_customer = $db->prepare($query_customer);
+                $stmt_customer->bind_param("s", $username);
+                $stmt_customer->execute();
+                $result_customer = $stmt_customer->get_result();
+
+                if ($result_customer->num_rows > 0) {
+                    $_SESSION['username'] = $username;
+                    $_SESSION['role'] = 'customer';
+                    header("Location: http://localhost/Tour_management/index.php");
+                    exit();
+                }
+            }
+        } else {
+            $error_message = "Invalid username or password.";
+        }
+
+        $stmt->close();
+        $db->close();
+    } else {
+        $error_message = "Database connection failed.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -54,8 +122,13 @@
 </head>
 <body>
     <div class="login-container">
-        <form action="login.php" method="post">
+        <form action="newlogin.php" method="post">
             <h2 class="mb-4">Đăng Nhập</h2>
+            <?php if (isset($error_message)): ?>
+                <div class="alert alert-danger">
+                    <?= $error_message ?>
+                </div>
+            <?php endif; ?>
             <div class="form-group">
                 <input type="text" name="username" class="form-control" placeholder="Tên đăng nhập" required>
             </div>
@@ -66,20 +139,5 @@
             <a href="#" class="forgot-password">Quên mật khẩu?</a>
         </form>
     </div>
-
-    <?php
-    // PHP code to handle form submission
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $username = htmlspecialchars($_POST['username']);
-        $password = htmlspecialchars($_POST['password']);
-
-        // Here you should handle login logic, e.g., check credentials in database
-        // For demo purposes, we will just display the input values
-        echo "<div class='login-container mt-3'>";
-        echo "<p>Tên đăng nhập: $username</p>";
-        echo "<p>Mật khẩu: $password</p>";
-        echo "</div>";
-    }
-    ?>
 </body>
 </html>
