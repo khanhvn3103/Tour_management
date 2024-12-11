@@ -75,3 +75,7 @@ INSERT INTO bill (numberOfPeople, address, total, status, formCode, voucherCode,
 INSERT INTO evaluate (content, star, customerCode, tourCode, billCode) VALUES
 ('Tuyệt vời!', 5, 1, 1, 1),
 ('Không hài lòng lắm', 2, 2, 2, 2);
+
+-- Dữ liệu mẫu cho bảng notify
+INSERT INTO notify (customerCode, message, title, created_at) VALUES
+(1, 'Your tour is confirmed.', 'Tour Confirmation', '2024-01-01 10:00:00');
