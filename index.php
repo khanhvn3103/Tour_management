@@ -28,38 +28,9 @@
 </head>
 
 <body>
-
-<header class="navbar navbar-expand-lg navbar-light bg-light p-2 w-100" id="header">
-    <div class="container-lg">
-       <div class="d-flex align-content-center">
-           <a class="navbar-brand" href="/"> <img src="asset/images/travellowkey_logo.png" class="logo"></a>
-           <ul class="navbar-nav">
-               <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if(!isset($m)) echo 'active'?>">
-                   <a class="nav-link <?php if(!isset($m)) echo 'active'?>"  href="/Tour_management">TRANG CHỦ</a>
-               </li>
-               <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if($m == 'user') echo 'active'?>">
-                   <a class="nav-link <?php if($m == 'user') echo 'active'?>" href="/Tour_management/index.php?m=user">THÔNG TIN CỦA TÔI</a>
-               </li>
-               <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if($m == 'notifications') echo 'active'?>">
-                   <a class="nav-link <?php if($m == 'notifications') echo 'active'?>" href="/Tour_management/index.php?m=notifications">THÔNG BÁO</a>
-               </li>
-           </ul>
-       </div>
-        <div>
-		  <button class="btn btn-secondary me-1" onclick="redirectToSignup()">Đăng ký</button>
-		  <button class="btn btn-primary" onclick="redirectToLogin()">Đăng nhập</button>
-		</div>
-        <script>
-            function redirectToSignup() {
-                window.location.href = "http://localhost/Tour_management/modules/authenticate/sign_up.php"; 
-            }
-
-            function redirectToLogin() {
-                window.location.href = "http://localhost/Tour_management/modules/authenticate/login.php"; 
-            }
-        </script>
-    </div>
-</header>
+<?php
+include 'view/header.php';
+?>
 
 <div class="content" style="min-height: 72.2vh">
     <?php
@@ -73,7 +44,7 @@
                 include 'modules/management/index.php';
                 break;
             case 'notifications':
-                include 'modules/home/notifications.php'; // Thêm dòng này
+                include 'modules/home/notifications.php';
                 break;
             default:
                 include 'modules/home/index.php';
@@ -122,7 +93,5 @@
     </div>
 </footer>
 </body>
-<!--<script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>-->
 <script src="/Tour_management/asset/js/boostrap.bundle.min.js"></script>
-<!--<script type="text/javascript" src="/assets/js/myscript.js"></script>-->
 </html>
