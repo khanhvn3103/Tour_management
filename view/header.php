@@ -24,7 +24,7 @@
             }
 
             function redirectToLogin() {
-                window.location.href = "http://localhost/Tour_management/modules/authenticate/login.php";
+                window.location.href = "http://localhost/Tour_management/modules/authenticate/newlogin.php";
             }
         </script>
     </div>
