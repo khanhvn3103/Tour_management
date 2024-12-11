@@ -31,6 +31,7 @@
 <?php
 include 'view/header.php';
 ?>
+
 <div class="content" style="min-height: 72.2vh">
     <?php
     // index.php?m=category&a=delete&id=1
