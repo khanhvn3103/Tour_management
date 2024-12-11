@@ -107,6 +107,7 @@ $duration = $selectedTour['maxEndDate'] ? (new DateTime($selectedTour['maxEndDat
                     </div>
                     <button type="submit" class="btn btn-primary">Đặt Tour</button>
                 </form>
+
             </div>
         </div>
 
@@ -167,7 +168,8 @@ $duration = $selectedTour['maxEndDate'] ? (new DateTime($selectedTour['maxEndDat
         </div>
     </div>
 </footer>
-
+<script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
+<script src="/Tour_management/asset/js/sweetalert2@11.min.js"></script>
 <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
