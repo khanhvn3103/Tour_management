@@ -4,6 +4,7 @@
     header('Cache-Control: post-check=0, pre-check=0', FALSE);
     header('Pragma: no-cache');
     include 'models/tourPackage.php';
+    include "models/booking.php";
     if(isset($_GET["m"])){
         $m = $_GET["m"];
     }
@@ -39,12 +40,11 @@
                <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if($m == 'user') echo 'active'?>">
                    <a class="nav-link <?php if($m == 'user') echo 'active'?>" href="/Tour_management/index.php?m=user">THÔNG TIN CỦA TÔI</a>
                </li>
+               <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if($m == 'notifications') echo 'active'?>">
+                   <a class="nav-link <?php if($m == 'notifications') echo 'active'?>" href="/Tour_management/index.php?m=notifications">THÔNG BÁO</a>
+               </li>
            </ul>
        </div>
-      <!-- <div>
-          <button class="btn btn-secondary me-1">Đăng ký</button>
-          <button class="btn btn-primary">Đăng nhập</button>
-      </div> -->
         <div>
 		  <button class="btn btn-secondary me-1">Đăng ký</button>
 		  <button class="btn btn-primary" onclick="redirectToLogin()">Đăng nhập</button>
@@ -67,6 +67,9 @@
                 break;
             case 'management':
                 include 'modules/management/index.php';
+                break;
+            case 'notifications':
+                include 'modules/home/notifications.php'; // Thêm dòng này
                 break;
             default:
                 include 'modules/home/index.php';
