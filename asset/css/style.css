@@ -1,8 +1,32 @@
 #header{
-    background: transparent !important;
-    position: absolute;
     top: 0;
-    z-index: 2;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: background-color 0.3s;
+    background: transparent;
+    padding: 0 !important;
+}
+
+#header.sticky {
+    background-color: white !important;
+}
+
+#header .nav-item .nav-link{
+    color: white !important;
+}
+
+#header .nav-item.active{
+    border-bottom: 3px solid white !important;
+}
+
+#header.sticky .nav-item .nav-link{
+    color: var(--color-primary) !important;
+}
+
+#header.sticky .nav-item.active{
+    border-bottom: 3px solid var(--color-primary) !important;
 }
 
 #header .logo{
@@ -13,17 +37,11 @@
     margin-right: 0.5rem !important;
 }
 
-#header .nav-item .nav-link{
-    color: white !important;
-}
 
 #header .nav-item .nav-link.active{
     font-weight: bold !important;
 }
 
-#header .nav-item.active{
-    border-bottom: 3px solid white !important;
-}
 
 #carousel_home_banner{
     height: 100vh;
