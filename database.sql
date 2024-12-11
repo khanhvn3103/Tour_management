@@ -345,3 +345,62 @@ INSERT INTO `voucher` VALUES ('VOUCHER1', '2022-12-01 00:00:00', '2023-01-01 23:
 INSERT INTO `voucher` VALUES ('VOUCHER2', '2023-01-01 00:00:00', '2023-02-01 23:59:59', 20);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE `bill` (
+                        `billCode` int(11) NOT NULL AUTO_INCREMENT,
+                        `numberOfPeople` int(11) DEFAULT NULL,
+                        `address` varchar(255) DEFAULT NULL,
+                        `total` float DEFAULT NULL,
+                        `status` varchar(50) DEFAULT NULL,
+                        `formCode` int(11) DEFAULT NULL,
+                        `voucherCode` varchar(20) DEFAULT NULL,
+                        `createAt` datetime DEFAULT CURRENT_TIMESTAMP,
+                        PRIMARY KEY (`billCode`),
+                        KEY `formCode` (`formCode`),
+                        KEY `voucherCode` (`voucherCode`),
+                        CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`formCode`) REFERENCES `tourbookingform` (`formCode`),
+                        CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`voucherCode`) REFERENCES `voucher` (`voucherCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `evaluate` (
+                            `evaluateCode` int(11) NOT NULL AUTO_INCREMENT,
+                            `content` varchar(500) DEFAULT NULL,
+                            `star` int(11) DEFAULT NULL,
+                            `customerCode` int(11) DEFAULT NULL,
+                            `tourCode` int(11) DEFAULT NULL,
+                            `billCode` int(11) DEFAULT NULL,
+                            PRIMARY KEY (`evaluateCode`),
+                            KEY `billCode` (`billCode`),
+                            KEY `customerCode` (`customerCode`),
+                            KEY `tourCode` (`tourCode`),
+                            CONSTRAINT `evaluate_ibfk_1` FOREIGN KEY (`billCode`) REFERENCES `bill` (`billCode`),
+                            CONSTRAINT `evaluate_ibfk_2` FOREIGN KEY (`customerCode`) REFERENCES `customer` (`customerCode`),
+                            CONSTRAINT `evaluate_ibfk_3` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `work_schedule` (
+                                 `scheduleCode` int(11) NOT NULL AUTO_INCREMENT,
+                                 `employeeCode` int(11) NOT NULL,
+                                 `tourCode` int(11) NOT NULL,
+                                 `assignedAt` datetime DEFAULT CURRENT_TIMESTAMP,
+                                 PRIMARY KEY (`scheduleCode`),
+                                 KEY `employeeCode` (`employeeCode`),
+                                 KEY `tourCode` (`tourCode`),
+                                 CONSTRAINT `work_schedule_ibfk_1` FOREIGN KEY (`employeeCode`) REFERENCES `employee` (`employeeCode`),
+                                 CONSTRAINT `work_schedule_ibfk_2` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dữ liệu mẫu cho bảng voucher
+INSERT INTO voucher (voucherCode, beginAt, endAt, sale) VALUES
+                                                            ('VOUCHER1', '2023-12-01 00:00:00', '2024-01-01 23:59:59', 10),
+                                                            ('VOUCHER2', '2024-01-01 00:00:00', '2024-02-01 23:59:59', 20);
+
+-- Dữ liệu mẫu cho bảng bill
+INSERT INTO bill (numberOfPeople, address, total, status, formCode, voucherCode, createAt) VALUES
+                                                                                               (4, 'Ha Noi', 13500000, 'Đã Hủy', 1, 'VOUCHER1', '2024-01-01 00:00:00'),
+                                                                                               (3, 'Da Nang', 9600000, 'Hoàn Thành', 2, 'VOUCHER2', '2024-02-01 00:00:00');
+
+-- Dữ liệu mẫu cho bảng evaluate
+INSERT INTO evaluate (content, star, customerCode, tourCode, billCode) VALUES
+                                                                           ('Tuyệt vời!', 5, 1, 1, 1),
+                                                                           ('Không hài lòng lắm', 2, 2, 2, 2);
