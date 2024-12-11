@@ -43,5 +43,39 @@ class modelWorkSchedules
             return false;
         }
     }
+    function getAvailableEmployees($inputTourCode)
+    {
+        if ($this->conn) {
+            $query = "
+                SELECT e.employeeCode, e.role, u.fullName, u.phone
+                FROM employee e
+                JOIN users u ON e.username = u.username
+                WHERE e.employeeCode NOT IN (
+                    SELECT ws.employeeCode
+                    FROM work_schedule ws
+                    JOIN tour t ON ws.tourCode = t.tourCode
+                    WHERE (
+                        t.startDate < (SELECT endDate FROM tour WHERE tourCode = ?) AND
+                        t.endDate > (SELECT startDate FROM tour WHERE tourCode = ?)
+                    )
+                )
+                OR e.employeeCode NOT IN (
+                    SELECT employeeCode FROM work_schedule
+                )
+            ";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("ii", $inputTourCode, $inputTourCode);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $employees = [];
+            while ($row = $result->fetch_assoc()) {
+                $employees[] = $row;
+            }
+            $stmt->close();
+            return $employees;
+        } else {
+            return false;
+        }
+    }
 }
 ?>

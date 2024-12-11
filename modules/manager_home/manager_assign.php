@@ -8,26 +8,42 @@ $userModel = new modelUser();
 $tourModel = new modelTour();
 $workSchedulesModel = new modelWorkSchedules();
 
-// Lấy danh sách tất cả các tour và nhân viên
+// Lấy danh sách tất cả các tour
 $tours = $tourModel->getAllTours();
-$employees = $userModel->getListEmployees();
 
-// Lọc danh sách nhân viên theo vai trò
-$guides = array_filter($employees, fn($e) => $e['role'] === 'Hướng dẫn viên');
-$drivers = array_filter($employees, fn($e) => $e['role'] === 'Tài xế');
+$tourCode = '';
+$guides = [];
+$drivers = [];
+$message = '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
-    $tourCode = $_POST['tourCode'];
-    $guideCode = $_POST['guideCode'];
-    $driverCode = $_POST['driverCode'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['tourCode'])) {
+        $tourCode = $_POST['tourCode'];
+        $availableEmployees = $workSchedulesModel->getAvailableEmployees($tourCode);
 
-    $resultGuide = $workSchedulesModel->assignEmployeeToTour($guideCode, $tourCode);
-    $resultDriver = $workSchedulesModel->assignEmployeeToTour($driverCode, $tourCode);
+        $guides = array_filter($availableEmployees, fn($e) => $e['role'] === 'Hướng dẫn viên');
+        $drivers = array_filter($availableEmployees, fn($e) => $e['role'] === 'Tài xế');
+    }
 
-    if ($resultGuide && $resultDriver) {
-        $message = 'Phân công thành công!';
-    } else {
-        $message = 'Phân công thất bại!';
+    if (isset($_POST['assign'])) {
+        $guideCode = $_POST['guideCode'];
+        $driverCode = $_POST['driverCode'];
+
+        if ($guideCode && $driverCode && $tourCode) {
+            $resultGuide = $workSchedulesModel->assignEmployeeToTour($guideCode, $tourCode);
+            $resultDriver = $workSchedulesModel->assignEmployeeToTour($driverCode, $tourCode);
+
+            if ($resultGuide && $resultDriver) {
+                $message = 'Phân công thành công!';
+                $guides = [];
+                $drivers = [];
+                $tourCode = '';
+            } else {
+                $message = 'Phân công thất bại!';
+            }
+        } else {
+            $message = 'Vui lòng chọn đầy đủ thông tin để phân công!';
+        }
     }
 }
 ?>
@@ -50,12 +66,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
                 const guide = $('#guideSelect').val();
                 const driver = $('#driverSelect').val();
 
-                if (tour === "Chọn Tour..." || guide === "Chọn Hướng dẫn viên..." || driver === "Chọn Tài xế...") {
+                if (tour === "" || guide === "" || driver === "") {
                     alert('Vui lòng chọn đầy đủ thông tin!');
-                    event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu
-                } else {
-                    $('#assignForm').submit(); // Gửi biểu mẫu nếu tất cả các giá trị đã được chọn
+                    event.preventDefault();
                 }
+            });
+
+            // Khi người dùng chọn tour, gửi yêu cầu để cập nhật danh sách nhân viên khả dụng
+            $('#tourSelect').change(function() {
+                $('#assignForm').submit();
             });
         });
     </script>
@@ -83,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
             </div>
         </div>
         <h2 class="text-primary fw-bold mb-4">Phân Công Lịch Làm Việc</h2>
-        <?php if (isset($message)) { ?>
+        <?php if ($message) { ?>
             <div class="alert alert-info" role="alert">
                 <?= $message ?>
             </div>
@@ -92,16 +111,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
             <div class="mb-4">
                 <label for="tourSelect" class="form-label">Chọn Tour</label>
                 <select id="tourSelect" name="tourCode" class="form-select">
-                    <option selected>Chọn Tour...</option>
+                    <option value="" <?= ($tourCode === '') ? 'selected' : '' ?>>Chọn Tour...</option>
                     <?php foreach ($tours as $tour) { ?>
-                        <option value="<?= $tour['tourCode'] ?>"><?= $tour['tourName'] ?> - <?= number_format($tour['price'], 0, ',', '.') ?> VND</option>
+                        <option value="<?= $tour['tourCode'] ?>" <?= ($tourCode === $tour['tourCode']) ? 'selected' : '' ?>><?= $tour['tourName'] ?> - <?= number_format($tour['price'], 0, ',', '.') ?> VND</option>
                     <?php } ?>
                 </select>
             </div>
             <div class="mb-4">
                 <label for="guideSelect" class="form-label">Chọn Hướng Dẫn Viên</label>
                 <select id="guideSelect" name="guideCode" class="form-select">
-                    <option selected>Chọn Hướng dẫn viên...</option>
+                    <option value="" selected>Chọn Hướng dẫn viên...</option>
                     <?php foreach ($guides as $guide) { ?>
                         <option value="<?= $guide['employeeCode'] ?>"><?= $guide['fullName'] ?></option>
                     <?php } ?>
@@ -110,14 +129,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
             <div class="mb-4">
                 <label for="driverSelect" class="form-label">Chọn Tài Xế</label>
                 <select id="driverSelect" name="driverCode" class="form-select">
-                    <option selected>Chọn Tài xế...</option>
+                    <option value="" selected>Chọn Tài xế...</option>
                     <?php foreach ($drivers as $driver) { ?>
                         <option value="<?= $driver['employeeCode'] ?>"><?= $driver['fullName'] ?></option>
                     <?php } ?>
                 </select>
             </div>
             <div class="text-end">
-                <button type="button" id="assignButton" class="btn btn-primary">Xác Nhận Phân Công</button>
+                <button type="submit" name="assign" id="assignButton" class="btn btn-primary">Xác Nhận Phân Công</button>
             </div>
         </form>
     </div>
