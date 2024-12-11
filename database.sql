@@ -15,6 +15,8 @@ CREATE TABLE `users` (
   `gender` int(11) DEFAULT NULL,
   `identifyCard` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`username`)
+  UNIQUE (`phone`),
+  UNIQUE (`identifyCard`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `employee` (

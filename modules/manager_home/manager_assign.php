@@ -12,13 +12,19 @@ $workSchedulesModel = new modelWorkSchedules();
 $tours = $tourModel->getAllTours();
 $employees = $userModel->getListEmployees();
 
+// Lọc danh sách nhân viên theo vai trò
+$guides = array_filter($employees, fn($e) => $e['role'] === 'Hướng dẫn viên');
+$drivers = array_filter($employees, fn($e) => $e['role'] === 'Tài xế');
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
     $tourCode = $_POST['tourCode'];
-    $employeeCode = $_POST['employeeCode'];
+    $guideCode = $_POST['guideCode'];
+    $driverCode = $_POST['driverCode'];
 
-    $result = $workSchedulesModel->assignEmployeeToTour($employeeCode, $tourCode);
+    $resultGuide = $workSchedulesModel->assignEmployeeToTour($guideCode, $tourCode);
+    $resultDriver = $workSchedulesModel->assignEmployeeToTour($driverCode, $tourCode);
 
-    if ($result) {
+    if ($resultGuide && $resultDriver) {
         $message = 'Phân công thành công!';
     } else {
         $message = 'Phân công thất bại!';
@@ -31,12 +37,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Tài Khoản Nhân Viên</title>
+    <title>Quản Lý Phân Công Lịch</title>
     <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="/Tour_management/asset/css/manager_home.css">
     <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
     <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#assignButton').click(function(event) {
+                const tour = $('#tourSelect').val();
+                const guide = $('#guideSelect').val();
+                const driver = $('#driverSelect').val();
+
+                if (tour === "Chọn Tour..." || guide === "Chọn Hướng dẫn viên..." || driver === "Chọn Tài xế...") {
+                    alert('Vui lòng chọn đầy đủ thông tin!');
+                    event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu
+                } else {
+                    $('#assignForm').submit(); // Gửi biểu mẫu nếu tất cả các giá trị đã được chọn
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="sidebar">
@@ -66,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
                 <?= $message ?>
             </div>
         <?php } ?>
-        <form method="POST" action="">
+        <form id="assignForm" method="POST" action="">
             <div class="mb-4">
                 <label for="tourSelect" class="form-label">Chọn Tour</label>
                 <select id="tourSelect" name="tourCode" class="form-select">
@@ -77,16 +99,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign'])) {
                 </select>
             </div>
             <div class="mb-4">
-                <label for="employeeSelect" class="form-label">Chọn Nhân Viên</label>
-                <select id="employeeSelect" name="employeeCode" class="form-select">
-                    <option selected>Chọn nhân viên...</option>
-                    <?php foreach ($employees as $employee) { ?>
-                        <option value="<?= $employee['employeeCode'] ?>"><?= $employee['fullName'] ?></option>
+                <label for="guideSelect" class="form-label">Chọn Hướng Dẫn Viên</label>
+                <select id="guideSelect" name="guideCode" class="form-select">
+                    <option selected>Chọn Hướng dẫn viên...</option>
+                    <?php foreach ($guides as $guide) { ?>
+                        <option value="<?= $guide['employeeCode'] ?>"><?= $guide['fullName'] ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="driverSelect" class="form-label">Chọn Tài Xế</label>
+                <select id="driverSelect" name="driverCode" class="form-select">
+                    <option selected>Chọn Tài xế...</option>
+                    <?php foreach ($drivers as $driver) { ?>
+                        <option value="<?= $driver['employeeCode'] ?>"><?= $driver['fullName'] ?></option>
                     <?php } ?>
                 </select>
             </div>
             <div class="text-end">
-                <button type="submit" name="assign" class="btn btn-primary">Xác Nhận Phân Công</button>
+                <button type="button" id="assignButton" class="btn btn-primary">Xác Nhận Phân Công</button>
             </div>
         </form>
     </div>

@@ -51,7 +51,7 @@ unset($bill); // Xóa tham chiếu cuối cùng đến phần tử mảng
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Tài Khoản Nhân Viên</title>
+    <title>Quản Lý Hóa Đơn</title>
     <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="/Tour_management/asset/css/manager_home.css">
     <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
@@ -114,10 +114,10 @@ unset($bill); // Xóa tham chiếu cuối cùng đến phần tử mảng
                                 echo '<td>' . $bill['createAt'] . '</td>';
                                 echo '<td>';
                                 echo '<select class="form-select update-status-select" data-bill="' . $bill['billCode'] . '">';
-                                echo '<option value="Đang xử lý" ' . ($bill['status'] == 'Đang xử lý' ? 'selected' : '') . '>Đang xử lý</option>';
-                                echo '<option value="Đã xác nhận" ' . ($bill['status'] == 'Đã xác nhận' ? 'selected' : '') . '>Đã xác nhận</option>';
-                                echo '<option value="Hoàn thành" ' . ($bill['status'] == 'Hoàn thành' ? 'selected' : '') . '>Hoàn thành</option>';
-                                echo '<option value="Đã hủy" ' . ($bill['status'] == 'Đã hủy' ? 'selected' : '') . '>Đã hủy</option>';
+                                echo '<option value="Đang xử lý" ' . ($bill['status'] == 'Đang Xử Lý' ? 'selected' : '') . '>Đang xử lý</option>';
+                                echo '<option value="Đã xác nhận" ' . ($bill['status'] == 'Đã Xác Nhận' ? 'selected' : '') . '>Đã xác nhận</option>';
+                                echo '<option value="Hoàn thành" ' . ($bill['status'] == 'Hoàn Thành' ? 'selected' : '') . '>Hoàn thành</option>';
+                                echo '<option value="Đã hủy" ' . ($bill['status'] == 'Đã Hủy' ? 'selected' : '') . '>Đã hủy</option>';
                                 echo '</select>';
                                 echo '</td>';
                                 echo '</tr>';
