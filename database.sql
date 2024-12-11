@@ -48,12 +48,6 @@ CREATE TABLE `bill`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of bill
--- ----------------------------
-INSERT INTO `bill` VALUES (1, 4, 'Ha Noi', 15000000, 'Đã Tạo', 1, 'VOUCHER1', 1, 1);
-INSERT INTO `bill` VALUES (2, 3, 'Da Nang', 12000000, 'Bị Huỷ', 2, 'VOUCHER2', 2, 2);
-
--- ----------------------------
 -- Table structure for customer
 -- ----------------------------
 DROP TABLE IF EXISTS `customer`;
@@ -64,13 +58,6 @@ CREATE TABLE `customer`  (
                              INDEX `username`(`username` ASC) USING BTREE,
                              CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of customer
--- ----------------------------
-INSERT INTO `customer` VALUES (1, 'user1');
-INSERT INTO `customer` VALUES (2, 'user2');
-
 -- ----------------------------
 -- Table structure for detailbookingform
 -- ----------------------------
@@ -89,12 +76,6 @@ CREATE TABLE `detailbookingform`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of detailbookingform
--- ----------------------------
-INSERT INTO `detailbookingform` VALUES (1, 'Nguyen Van A', 1, '1990-01-01 00:00:00', '123456789', 'Vietnam', 1);
-INSERT INTO `detailbookingform` VALUES (2, 'Tran Thi B', 0, '1992-02-02 00:00:00', '987654321', 'Vietnam', 2);
-
--- ----------------------------
 -- Table structure for employee
 -- ----------------------------
 DROP TABLE IF EXISTS `employee`;
@@ -106,12 +87,6 @@ CREATE TABLE `employee`  (
                              INDEX `username`(`username` ASC) USING BTREE,
                              CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of employee
--- ----------------------------
-INSERT INTO `employee` VALUES (1, 'Hướng dẫn viên', 'user1');
-INSERT INTO `employee` VALUES (2, 'Tài xế', 'user2');
 
 -- ----------------------------
 -- Table structure for evaluate
@@ -134,12 +109,6 @@ CREATE TABLE `evaluate`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of evaluate
--- ----------------------------
-INSERT INTO `evaluate` VALUES (1, 'Tuyệt vời!', 5, 1, 1, 1);
-INSERT INTO `evaluate` VALUES (2, 'Không hài lòng lắm', 2, 2, 2, 2);
-
--- ----------------------------
 -- Table structure for notify
 -- ----------------------------
 DROP TABLE IF EXISTS `notify`;
@@ -151,14 +120,6 @@ CREATE TABLE `notify`  (
                            `created_at` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
                            PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of notify
--- ----------------------------
-INSERT INTO `notify` VALUES (1, 1, 'Đơn đặt tour của bạn đã được duyệt!', NULL, '2024-12-11 19:36:17');
-INSERT INTO `notify` VALUES (2, 1, 'Đơn đặt tour của bạn đã được duyệt!', NULL, '2024-12-11 19:41:45');
-INSERT INTO `notify` VALUES (3, 1, 'Đơn đặt tour của bạn đã bị từ chối!', NULL, '2024-12-11 19:41:49');
-INSERT INTO `notify` VALUES (4, 1, 'Đơn đặt tour của bạn đã bị từ chối!', NULL, '2024-12-11 19:41:54');
 
 -- ----------------------------
 -- Table structure for sightseeingspot
@@ -180,12 +141,6 @@ CREATE TABLE `sightseeingspot`  (
                                     CONSTRAINT `sightseeingspot_ibfk_2` FOREIGN KEY (`vehicleCode`) REFERENCES `vehicle` (`vehicleCode`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of sightseeingspot
--- ----------------------------
-INSERT INTO `sightseeingspot` VALUES (1, 'Bãi biển Mỹ Khê', '2023-01-11 09:00:00', '2023-01-11 12:00:00', 'Tham quan bãi biển Mỹ Khê', 1, 1, NULL);
-INSERT INTO `sightseeingspot` VALUES (2, 'Tháp bà Ponagar', '2023-02-21 10:00:00', '2023-02-21 13:00:00', 'Tham quan Tháp bà Ponagar', 2, 2, NULL);
-INSERT INTO `sightseeingspot` VALUES (4, 'dsf', '2024-12-28 00:45:00', '2025-01-05 00:45:00', 'sadf', 4, 1, 'assets/images/uploads/pexels-quang-nguyen-vinh-222549-2131614.jpg');
 
 -- ----------------------------
 -- Table structure for sightseeingspot_tour
@@ -229,13 +184,6 @@ CREATE TABLE `tour`  (
                          CONSTRAINT `tour_ibfk_3` FOREIGN KEY (`tourPackageCode`) REFERENCES `tourpackage` (`tourPackageCode`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of tour
--- ----------------------------
-INSERT INTO `tour` VALUES (1, 'Tour Đà Nẵng', '2023-01-10 08:00:00', 5000000, 'Tham quan Đà Nẵng', 1, 1, 1, NULL);
-INSERT INTO `tour` VALUES (2, 'Tour Nha Trang', '2023-02-20 08:00:00', 6000000, 'Tham quan Nha Trang', 2, 2, 2, NULL);
-INSERT INTO `tour` VALUES (4, 'Tour Mẫu', '2024-12-11 22:52:00', 100.5, 'Mô tả cho tour mẫu.', 1, 1, 1, '2024-12-18 22:52:00');
-INSERT INTO `tour` VALUES (5, 'aaaaa', '2024-12-12 23:20:00', 234, 'ssssss', 1, 1, 1, '2024-12-28 23:20:00');
 
 -- ----------------------------
 -- Table structure for tourbookingform
@@ -255,17 +203,6 @@ CREATE TABLE `tourbookingform`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of tourbookingform
--- ----------------------------
-INSERT INTO `tourbookingform` VALUES (1, '2022-12-01 10:00:00', 2, 2, 1, NULL, NULL);
-INSERT INTO `tourbookingform` VALUES (2, '2022-12-15 15:00:00', 1, 3, 2, NULL, NULL);
-INSERT INTO `tourbookingform` VALUES (3, '2024-12-12 00:00:00', 3, 1, 1, 1, 'approved');
-INSERT INTO `tourbookingform` VALUES (4, '2024-12-13 00:00:00', 3, 1, 1, 6, 'rejected');
-INSERT INTO `tourbookingform` VALUES (5, '2024-12-13 00:00:00', 0, 1, 1, 6, NULL);
-INSERT INTO `tourbookingform` VALUES (6, '2024-12-14 00:00:00', 0, 1, 1, 6, NULL);
-INSERT INTO `tourbookingform` VALUES (7, '2024-12-27 00:00:00', 0, 1, 1, 6, NULL);
-
--- ----------------------------
 -- Table structure for tourpackage
 -- ----------------------------
 DROP TABLE IF EXISTS `tourpackage`;
@@ -278,15 +215,6 @@ CREATE TABLE `tourpackage`  (
                                 `image` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NULL DEFAULT NULL,
                                 PRIMARY KEY (`tourPackageCode`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of tourpackage
--- ----------------------------
-INSERT INTO `tourpackage` VALUES (1, 'Gói 1', 'Ha Noi', 'Da Nang', 'Tham quan Đà Nẵng', NULL);
-INSERT INTO `tourpackage` VALUES (2, 'Gói 2', 'Ho Chi Minh', 'Nha Trang', 'Tham quan Nha Trang', NULL);
-INSERT INTO `tourpackage` VALUES (3, 'ádfas', 'ádf', 'adsf', 'ádfas', NULL);
-INSERT INTO `tourpackage` VALUES (4, 'dsafsaf', 'fsdfa', 'ádf', 'ádfas', NULL);
-INSERT INTO `tourpackage` VALUES (6, 'ágfg', 'fgsd', 'sdfg', 'sdfg', 'assets/images/uploads/tải xuống.jpg');
 
 -- ----------------------------
 -- Table structure for users
@@ -305,12 +233,6 @@ CREATE TABLE `users`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of users
--- ----------------------------
-INSERT INTO `users` VALUES ('user1', 'password1', 'Nguyen Van A', 'Ha Noi', '0900123456', '1990-01-01', 1, '123456789');
-INSERT INTO `users` VALUES ('user2', 'password2', 'Tran Thi B', 'Ho Chi Minh', '0900654321', '1992-02-02', 0, '987654321');
-
--- ----------------------------
 -- Table structure for vehicle
 -- ----------------------------
 DROP TABLE IF EXISTS `vehicle`;
@@ -320,11 +242,6 @@ CREATE TABLE `vehicle`  (
                             PRIMARY KEY (`vehicleCode`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of vehicle
--- ----------------------------
-INSERT INTO `vehicle` VALUES (1, 'Xe 16 chỗ');
-INSERT INTO `vehicle` VALUES (2, 'Xe 45 chỗ');
 
 -- ----------------------------
 -- Table structure for voucher
@@ -337,12 +254,6 @@ CREATE TABLE `voucher`  (
                             `sale` float NULL DEFAULT NULL,
                             PRIMARY KEY (`voucherCode`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of voucher
--- ----------------------------
-INSERT INTO `voucher` VALUES ('VOUCHER1', '2022-12-01 00:00:00', '2023-01-01 23:59:59', 10);
-INSERT INTO `voucher` VALUES ('VOUCHER2', '2023-01-01 00:00:00', '2023-02-01 23:59:59', 20);
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -389,18 +300,3 @@ CREATE TABLE `work_schedule` (
                                  CONSTRAINT `work_schedule_ibfk_1` FOREIGN KEY (`employeeCode`) REFERENCES `employee` (`employeeCode`),
                                  CONSTRAINT `work_schedule_ibfk_2` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dữ liệu mẫu cho bảng voucher
-INSERT INTO voucher (voucherCode, beginAt, endAt, sale) VALUES
-                                                            ('VOUCHER1', '2023-12-01 00:00:00', '2024-01-01 23:59:59', 10),
-                                                            ('VOUCHER2', '2024-01-01 00:00:00', '2024-02-01 23:59:59', 20);
-
--- Dữ liệu mẫu cho bảng bill
-INSERT INTO bill (numberOfPeople, address, total, status, formCode, voucherCode, createAt) VALUES
-                                                                                               (4, 'Ha Noi', 13500000, 'Đã Hủy', 1, 'VOUCHER1', '2024-01-01 00:00:00'),
-                                                                                               (3, 'Da Nang', 9600000, 'Hoàn Thành', 2, 'VOUCHER2', '2024-02-01 00:00:00');
-
--- Dữ liệu mẫu cho bảng evaluate
-INSERT INTO evaluate (content, star, customerCode, tourCode, billCode) VALUES
-                                                                           ('Tuyệt vời!', 5, 1, 1, 1),
-                                                                           ('Không hài lòng lắm', 2, 2, 2, 2);
