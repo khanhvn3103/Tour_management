@@ -3,12 +3,20 @@ INSERT INTO users (username, password, fullName, address, phone, dob, gender, id
 ('user1', 'password1', 'Nguyen Van A', 'Ha Noi', '0900123456', '1990-01-01', 1, '123456789'),
 ('user2', 'password2', 'Nguyen Van B', 'Ho Chi Minh', '0900654321', '1992-02-02', 0, '987654321'),
 ('user3', 'password3', 'Tran Thi A', 'Ho Chi Minh', '0900654322', '1993-03-03', 0, '876543210'),
-('user4', 'password4', 'Tran Thi B', 'Da Nang', '0900654323', '1994-04-04', 0, '765432109');
+('user4', 'password4', 'Tran Thi B', 'Da Nang', '0900654323', '1994-04-04', 0, '765432109'),
+('user5', 'password5', 'Nguyen Van C', 'Can Tho', '0900654324', '1990-05-05', 1, '654321098'),
+('user6', 'password6', 'Tran Van D', 'Hai Phong', '0900654325', '1991-06-06', 1, '543210987'),
+('user7', 'password7', 'Le Thi E', 'Nha Trang', '0900654326', '1992-07-07', 0, '432109876'),
+('user8', 'password8', 'Pham Van F', 'Hue', '0900654327', '1993-08-08', 1, '321098765');
 
 -- Dữ liệu mẫu cho bảng employee
 INSERT INTO employee (role, username) VALUES
 ('Hướng dẫn viên', 'user1'),
-('Tài xế', 'user2');
+('Tài xế', 'user2'),
+('Hướng dẫn viên', 'user5'),
+('Tài xế', 'user6'),
+('Hướng dẫn viên', 'user7'),
+('Tài xế', 'user8');
 
 -- Dữ liệu mẫu cho bảng customer
 INSERT INTO customer (username) VALUES
@@ -28,7 +36,9 @@ INSERT INTO vehicle (vehicleName) VALUES
 -- Dữ liệu mẫu cho bảng tour
 INSERT INTO tour (tourName, startDate, endDate, price, description, employeeCode, vehicleCode, tourPackageCode) VALUES
 ('Tour Đà Nẵng', '2024-01-10 08:00:00', '2024-01-15 18:00:00', 5000000, 'Tham quan Đà Nẵng', 1, 1, 1),
-('Tour Nha Trang', '2024-02-20 08:00:00', '2024-02-25 18:00:00', 6000000, 'Tham quan Nha Trang', 2, 2, 2);
+('Tour Nha Trang', '2024-02-20 08:00:00', '2024-02-25 18:00:00', 6000000, 'Tham quan Nha Trang', 2, 2, 2),
+('Tour Sapa', '2024-01-12 08:00:00', '2024-01-17 18:00:00', 7000000, 'Tham quan Sapa', 3, 1, 1),
+('Tour Hue', '2024-02-22 08:00:00', '2024-02-27 18:00:00', 4000000, 'Tham quan Huế', 4, 2, 2);
 
 -- Dữ liệu mẫu cho bảng sightseeingspot
 INSERT INTO sightseeingspot (spotName, startTime, endTime, description, tourPackageCode, vehicleCode) VALUES

@@ -42,7 +42,7 @@ class modelTour
     function getAllTours()
     {
         if ($this->conn) {
-            $query = "SELECT * FROM tour";
+            $query = "SELECT * FROM tour WHERE tourCode NOT IN (SELECT tourCode FROM work_schedule)";
             $result = $this->conn->query($query);
             $tours = [];
 
@@ -55,4 +55,5 @@ class modelTour
             return false;
         }
     }
+    
 }
