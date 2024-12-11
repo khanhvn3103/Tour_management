@@ -255,8 +255,7 @@ CREATE TABLE `voucher`  (
                             PRIMARY KEY (`voucherCode`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_unicode_ci ROW_FORMAT = Dynamic;
 
-SET FOREIGN_KEY_CHECKS = 1;
-
+DROP TABLE IF EXISTS `bill`;
 CREATE TABLE `bill` (
                         `billCode` int(11) NOT NULL AUTO_INCREMENT,
                         `numberOfPeople` int(11) DEFAULT NULL,
@@ -273,6 +272,8 @@ CREATE TABLE `bill` (
                         CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`voucherCode`) REFERENCES `voucher` (`voucherCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+DROP TABLE IF EXISTS `evaluate`;
 CREATE TABLE `evaluate` (
                             `evaluateCode` int(11) NOT NULL AUTO_INCREMENT,
                             `content` varchar(500) DEFAULT NULL,
@@ -289,6 +290,8 @@ CREATE TABLE `evaluate` (
                             CONSTRAINT `evaluate_ibfk_3` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+DROP TABLE IF EXISTS `work_schedule`;
 CREATE TABLE `work_schedule` (
                                  `scheduleCode` int(11) NOT NULL AUTO_INCREMENT,
                                  `employeeCode` int(11) NOT NULL,
