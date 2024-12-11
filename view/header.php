@@ -14,8 +14,6 @@
                 </li>
             </ul>
         </div>
-
-
         <div>
             <button class="btn btn-secondary me-1">Đăng ký</button>
             <button class="btn btn-primary">Đăng nhập</button>

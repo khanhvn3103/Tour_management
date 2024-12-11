@@ -43,7 +43,7 @@ include 'view/header.php';
                 include 'modules/management/index.php';
                 break;
             case 'notifications':
-                include 'modules/home/notifications.php'; // Thêm dòng này
+                include 'modules/home/notifications.php';
                 break;
             default:
                 include 'modules/home/index.php';
