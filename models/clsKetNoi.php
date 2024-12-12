@@ -3,7 +3,7 @@ class clsKetNoi {
     private $conn;
 
     function ketNoiDB() {
-        $this->conn = new mysqli("localhost", "root", "", "ptud1");
+        $this->conn = new mysqli("localhost", "root", "", "ptud");
 
         // Kiểm tra kết nối
         if ($this->conn->connect_error) {

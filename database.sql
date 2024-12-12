@@ -69,8 +69,8 @@ CREATE TABLE `tour`  (
 CREATE TABLE `sightseeingspot`  (
     `spotCode` int NOT NULL AUTO_INCREMENT,
     `spotName` varchar(100) NULL DEFAULT NULL,
-    `startTime` datetime NULL DEFAULT NULL,
-    `endTime` datetime NULL DEFAULT NULL,
+    `startTime` time NULL DEFAULT NULL,
+    `endTime` time NULL DEFAULT NULL,
     `description` varchar(500) NULL DEFAULT NULL,
     `tourPackageCode` int NULL DEFAULT NULL,
     `vehicleCode` int NULL DEFAULT NULL,
