@@ -74,37 +74,37 @@ if (isset($_POST["create"])) {
                 <h3>Thêm mới gói tour</h3>
             </div>
             <form action="" method="post" enctype="multipart/form-data">
-                <div class="d-flex justify-content-end mb-3">
-                    <a type="button" class="btn btn-secondary me-3" href="/path/to/your/list/page.php">Hủy <i class="fa-solid fa-xmark"></i></a>
-                    <button type="submit" class="btn btn-primary" name="create">Lưu <i class="fa-solid fa-floppy-disk ms-2"></i></button>
-                </div>
                 <?php if (!empty($errors)) { ?>
                     <?php foreach ($errors as $error) {
                         echo "<div class='alert alert-danger' role='alert'>$error</div>";
                     } ?>
                 <?php } ?>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="packageName">Tên gói tour <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="packageName" id="packageName" placeholder="Tên gói tour..."
                         <?php if (isset($_POST["packageName"])) echo 'value="'.htmlspecialchars($_POST["packageName"]).'"'; ?>>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="startingPoint">Điểm khởi hành <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="startingPoint" id="startingPoint"
+                    <input type="text" class="form-control" name="startingPoint" id="startingPoint" placeholder="Điểm khởi hành"
                         <?php if (isset($_POST["startingPoint"])) echo 'value="'.htmlspecialchars($_POST["startingPoint"]).'"'; ?>>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="endPoint">Điểm đến <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="endPoint" id="endPoint"
+                    <input type="text" class="form-control" name="endPoint" id="endPoint" placeholder="Điểm đến"
                         <?php if (isset($_POST["endPoint"])) echo 'value="'.htmlspecialchars($_POST["endPoint"]).'"'; ?>>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="description">Mô tả</label>
-                    <textarea class="form-control" name="description" id="description"><?php if (isset($_POST["description"])) echo htmlspecialchars($_POST["description"]); ?></textarea>
+                    <textarea class="form-control" name="description" id="description" placeholder="Mô tả"><?php if (isset($_POST["description"])) echo htmlspecialchars($_POST["description"]); ?></textarea>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="image">Hình ảnh</label>
                     <input type="file" class="form-control" name="image" id="image" accept="image/*">
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a type="button" class="btn btn-secondary me-1" href="/path/to/your/list/page.php">Hủy <i class="fa-solid fa-xmark"></i></a>
+                    <button type="submit" class="btn btn-primary" name="create">Lưu <i class="fa-solid fa-floppy-disk ms-2"></i></button>
                 </div>
             </form>
         </div>
