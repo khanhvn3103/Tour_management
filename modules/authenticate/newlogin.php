@@ -78,7 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <style>
         body {
-            background-image: url(/Tour_management/asset/images/login.jpg);
+            background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), /* Lớp phủ tối màu */
+        url(/Tour_management/asset/images/login.jpg);
             background-size: cover;
             background-position: center;
             display: flex;
@@ -88,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin: 0;
         }
         .login-container {
-            background-color: rgba(255, 255, 255, 0.3); /* Chỉ làm mờ nền */
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -118,9 +120,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: block;
             text-align: right;
         }
+        .logo{
+            width: 250px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
     </style>
 </head>
 <body>
+    <div class="logo">
+        <a class="navbar-brand" href="/Tour_management/index.php"> <img src="../../asset/images/travellowkey_logo.png" class="logo"></a>
+    </div>
     <div class="login-container">
         <form action="newlogin.php" method="post">
             <h2 class="mb-4">Đăng Nhập</h2>

@@ -29,11 +29,12 @@ if (empty($tourCode) || $numberOfAdults < 0 || $numberOfChildren < 0 || empty($b
 
 if (empty($errors)) {
     // Thêm thông tin đặt tour vào bảng tourbookingform
-    $queryInsert = "INSERT INTO tourbookingform (customerCode, tourPackageCode, bookingDate, numberOfAdults, numberOfChildren) VALUES (?, ?, ?, ?, ?)";
+    $queryInsert = "INSERT INTO tourbookingform (customerCode, tourPackageCode, bookingDate, numberOfAdults, numberOfChildren, status) VALUES (?, ?, ?, ?, ?, ?)";
     $stmtInsert = $conn->prepare($queryInsert);
 
     if ($stmtInsert) {
-        $stmtInsert->bind_param("ssssi", $customerCode, $tourCode, $bookingDate, $numberOfAdults, $numberOfChildren);
+        $status = ""; // Trạng thái đặt tour
+        $stmtInsert->bind_param("ssssss", $customerCode, $tourCode, $bookingDate, $numberOfAdults, $numberOfChildren, $status);
         if ($stmtInsert->execute()) {
             echo '<script>
 alert("Đặt tour thành công!"); window.location.href = "/Tour_management";</script>';

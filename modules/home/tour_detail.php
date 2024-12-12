@@ -8,42 +8,30 @@ $p = new clsKetNoi();
 $conn = $p->ketNoiDB();
 
 // Truy vấn thông tin gói tour
-//$queryTour = "SELECT * FROM tourpackage WHERE tourPackageCode = ?";
-//$stmtTour = $conn->prepare($queryTour);
-//$stmtTour->bind_param("s", $tourCode);
-//$stmtTour->execute();
-//$resultTour = $stmtTour->get_result();
-//$selectedTour = $resultTour->fetch_assoc();
-$queryTimeTour = "
-        SELECT tp.tourPackageCode, tp.packageName, tp.startingPoint, tp.image, tp.description,
-                MIN(t.startDate) AS minStartDate, MAX(t.endDate) AS maxEndDate,
-               SUM(t.price) AS totalPrice
-        FROM tourpackage tp
-        LEFT JOIN tour t ON tp.tourPackageCode = t.tourPackageCode
-        WHERE tp.tourPackageCode = " . $tourCode ."
-        GROUP BY tp.tourPackageCode
-    ";
-$resultTimeTour = $conn->query($queryTimeTour);
-$selectedTour = $resultTimeTour->fetch_assoc();
+$queryTour = "SELECT t.tourCode, t.tourName, t.price, t.description, v.vehicleName, e.username 
+              FROM tour t 
+              JOIN vehicle v ON t.vehicleCode = v.vehicleCode 
+              JOIN employee e ON t.employeeCode = e.employeeCode 
+              WHERE t.tourCode = ?";
+$stmtTour = $conn->prepare($queryTour);
+$stmtTour->bind_param("i", $tourCode);
+$stmtTour->execute();
+$resultTour = $stmtTour->get_result();
+$selectedTour = $resultTour->fetch_assoc();
+
 // Nếu tour không tồn tại
 if (!$selectedTour) {
     echo "<h1>Tour không tồn tại!</h1>";
     exit;
 }
 
-
-
-//while () {
-//    $tourTimePackages[] = $row;
-//}
-
-// Truy vấn thông tin phương tiện
-$queryVehicle = "SELECT * FROM vehicle WHERE vehicleCode = ?";
-$stmtVehicle = $conn->prepare($queryVehicle);
-$stmtVehicle->bind_param("i", $selectedTour['vehicleCode']);
-$stmtVehicle->execute();
-$resultVehicle = $stmtVehicle->get_result();
-$vehicle = $resultVehicle->fetch_assoc();
+// Truy vấn thông tin hình ảnh của tour
+$queryImages = "SELECT image_path FROM tour_images WHERE tourCode = ?";
+$stmtImages = $conn->prepare($queryImages);
+$stmtImages->bind_param("i", $tourCode);
+$stmtImages->execute();
+$resultImages = $stmtImages->get_result();
+$imagePaths = $resultImages->fetch_all(MYSQLI_ASSOC);
 
 // Truy vấn thông tin địa điểm tham quan
 $querySightseeing = "SELECT * FROM sightseeingspot WHERE tourPackageCode = ?";
@@ -54,15 +42,10 @@ $resultSightseeing = $stmtSightseeing->get_result();
 $sightseeingSpots = $resultSightseeing->fetch_all(MYSQLI_ASSOC);
 
 // Đóng kết nối
-//$stmtTour->close();
-$stmtVehicle->close();
+$stmtTour->close();
+$stmtImages->close();
 $stmtSightseeing->close();
 $p->closeKetNoi($conn);
-
-//var_dump($selectedTour['image']);
-//die();
-$duration = $selectedTour['maxEndDate'] ? (new DateTime($selectedTour['maxEndDate']))->diff(new DateTime($selectedTour['minStartDate']))->format('%d ngày %h giờ') : 'Chưa cập nhật';
-
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +53,7 @@ $duration = $selectedTour['maxEndDate'] ? (new DateTime($selectedTour['maxEndDat
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $selectedTour['packageName']; ?></title>
+    <title><?php echo $selectedTour['tourName']; ?></title>
     <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="/Tour_management/asset/css/style.css">
 </head>
@@ -78,39 +61,51 @@ $duration = $selectedTour['maxEndDate'] ? (new DateTime($selectedTour['maxEndDat
 <section class="tour-detail pb-5">
     <div class="container">
         <div class="row mt-4">
-            <div class="col-md-6">
-                <img src="<?php echo $selectedTour['image'] ? '/Tour_management/modules/tour_package/' . $selectedTour['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" class="img-fluid mb-3" alt="<?php echo $selectedTour['packageName']; ?>">
-            </div>
-
-            <div class="col-md-6">
-                <h1><?php echo $selectedTour['packageName']; ?></h1>
-                <p><strong>Thời gian:</strong> <?php echo $duration; ?></p>
-                <p><strong>Điểm khởi hành:</strong> <?php echo $selectedTour['startingPoint']; ?></p>
-                <p><strong>Giá:</strong> <?php echo number_format($tour['totalPrice'] ?? 0, 0, ',', '.') . ' VND'; ?></p>
-                <p><?php echo $selectedTour['description']; ?></p>
-
-                <p><strong>Phương tiện:</strong> <?php echo $vehicle['vehicleName'] ?? 'Chưa cập nhật'; ?></p>
-
-                <form action="booking.php" method="POST">
-                    <input type="hidden" name="tour_code" value="<?php echo $selectedTour['tourPackageCode']; ?>">
-                    <div class="mb-3">
-                        <label for="adults" class="form-label">Số người lớn:</label>
-                        <input type="number" id="adults" name="adults" class="form-control" value="1" min="1">
+            <div class="col-md-12">
+                <!-- Carousel for images -->
+                <div id="tourCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <?php foreach ($imagePaths as $index => $image) { ?>
+                            <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                <img src="<?php echo $image['image_path'] ? '/Tour_management/modules/tour_manage/' . $image['image_path'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" class="d-block w-100" alt="Tour Image">
+                            </div>
+                        <?php } ?>
                     </div>
-                    <div class="mb-3">
-                        <label for="children" class="form-label">Số trẻ em (dưới 14 tuổi):</label>
-                        <input type="number" id="children" name="children" class="form-control" value="0" min="0">
-                    </div>
-                    <div class="mb-3">
-                        <label for="date" class="form-label">Chọn ngày khởi hành:</label>
-                        <input type="date" id="date" name="date" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Đặt Tour</button>
-                </form>
-
+                    <button class="carousel-control-prev" type="button" data-bs-target="#tourCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#tourCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <h1><?php echo $selectedTour['tourName']; ?></h1>
+                <p><strong>Giá:</strong> <?php echo number_format($selectedTour['price'], 0, ',', '.') . ' VND'; ?></p>
+                <p><?php echo nl2br($selectedTour['description']); ?></p>
+                <p><strong>Phương tiện:</strong> <?php echo $selectedTour['vehicleName']; ?></p>
+                <p><strong>Nhân viên hướng dẫn:</strong> <?php echo $selectedTour['username']; ?></p>
             </div>
         </div>
+        <form action="booking.php" method="POST">
+            <input type="hidden" name="tour_code" value="<?php echo $selectedTour['tourCode']; ?>">
+            <div class="mb-3">
+                <label for="adults" class="form-label">Số người lớn:</label>
+                <input type="number" id="adults" name="adults" class="form-control" value="1" min="1">
+            </div>
+            <div class="mb-3">
+                <label for="children" class="form-label">Số trẻ em (dưới 14 tuổi):</label>
+                <input type="number" id="children" name="children" class="form-control" value="0" min="0">
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Chọn ngày khởi hành:</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Đặt Tour</button>
+        </form>
 
+    </div>
+    </div>
         <!-- Detailed Description Section -->
         <div class="row mt-5">
             <div class="col-12">
@@ -128,7 +123,6 @@ $duration = $selectedTour['maxEndDate'] ? (new DateTime($selectedTour['maxEndDat
                         </li>
                     <?php } ?>
                 </ul>
-                <p><?php echo nl2br($selectedTour['description']); ?></p>
             </div>
         </div>
     </div>
@@ -169,7 +163,6 @@ $duration = $selectedTour['maxEndDate'] ? (new DateTime($selectedTour['maxEndDat
     </div>
 </footer>
 <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
-<script src="/Tour_management/asset/js/sweetalert2@11.min.js"></script>
 <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,10 +1,10 @@
 <?php
-$listPackageTour = new modelTourPackage();
+$listTour = new modelTour(); // Đổi tên biến từ listPackageTour thành listTour
 $startingPoint = isset($_GET['startingPoint']) ? $_GET['startingPoint'] : '';
 $destination = isset($_GET['destination']) ? $_GET['destination'] : '';
 $duration = isset($_GET['duration']) ? $_GET['duration'] : '';
 $numberOfPeople = isset($_GET['numberOfPeople']) ? $_GET['numberOfPeople'] : '';
-$listTours = $listPackageTour->selectTourPackagesWithTours($startingPoint,$destination,$duration,$numberOfPeople);
+$listTours = $listTour->selectAllTours(); // Gọi phương thức để lấy danh sách tour
 
 ?>
 <section style="background: white" class="pb-3">
@@ -19,25 +19,26 @@ $listTours = $listPackageTour->selectTourPackagesWithTours($startingPoint,$desti
                         if(count($listTours) > 0){
                             foreach ($listTours as $tour) {
                                 // Tính toán thời gian
-                                $duration = $tour['maxEndDate'] ? (new DateTime($tour['maxEndDate']))->diff(new DateTime($tour['minStartDate']))->format('%d ngày %h giờ') : 'Chưa cập nhật';
+                                $duration = $tour['endDate'] ? (new DateTime($tour['endDate']))->diff(new DateTime($tour['startDate']))->format('%d ngày %h giờ') : 'Chưa cập nhật';
+                                $image = $listTour->getTourOneImages($tour['tourCode']);
                                 ?>
                                 <div class="col-4 mt-2">
                                     <div class="card tour">
                                         <div class="card-tour-img">
-                                            <img src="<?php echo $tour['image'] ? '/Tour_management/modules/tour_package/' . $tour['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="<?php echo $tour['packageName'] ?>">
+                                            <img src="<?php echo $image ? '/Tour_management/modules/tour_manage/' . $image : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="<?php echo $tour['tourName'] ?>">
                                         </div>
                                         <div class="card-body">
                                             <p class="duration">Thời lượng: <?php echo $duration ?></p>
-                                            <h5 class="card-title" title="<?php echo $tour['packageName'] ?>"><?php echo $tour['packageName'] ?></h5>
-                                            <p class="card-text">Điểm đi: <?php echo $tour['startingPoint'] ?></p>
+                                            <h5 class="card-title" title="<?php echo $tour['tourName'] ?>"><?php echo $tour['tourName'] ?></h5>
+                                            <!--                                    <p class="card-text">Điểm đi: --><?php //echo $tour['startingPoint'] ?><!--</p>-->
                                             <p class="price">
                                                 <i class="fa fa-tag me-2"></i>
                                                 <?php
-                                                echo number_format($tour['totalPrice'] ?? 0, 0, ',', '.') . ' VND';
+                                                echo number_format($tour['price'] ?? 0, 0, ',', '.') . ' VND';
                                                 ?>
                                             </p>
                                             <div class="text-end">
-                                                <a href="modules/home/tour_detail.php?code=<?php echo $tour['tourPackageCode']; ?>" class="btn btn-primary btn-detail">Xem chi tiết</a>
+                                    <a href="modules/home/tour_detail.php?code=<?php echo $tour['tourCode']; ?>" class="btn btn-primary btn-detail">Xem chi tiết</a>
                                             </div>
                                         </div>
                                     </div>

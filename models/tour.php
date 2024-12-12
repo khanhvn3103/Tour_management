@@ -46,6 +46,77 @@ class modelTour
         return false;
     }
 
+    public function insertTourImages($tourCode, $imagePaths)
+    {
+        if ($this->conn) {
+            // Xóa tất cả ảnh cũ của tour trước khi thêm ảnh mới
+            $deleteQuery = "DELETE FROM tour_images WHERE tourCode = ?";
+            $deleteStmt = $this->conn->prepare($deleteQuery);
+            $deleteStmt->bind_param("i", $tourCode);
+            $deleteStmt->execute();
+
+            // Thêm ảnh mới vào cơ sở dữ liệu
+            $query = "INSERT INTO tour_images (tourCode, image_path) VALUES (?, ?)";
+            $stmt = $this->conn->prepare($query);
+            if ($stmt) {
+                foreach ($imagePaths as $path) {
+                    $stmt->bind_param("is", $tourCode, $path);
+                    $stmt->execute();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getTourImages($tourCode)
+    {
+        if ($this->conn) {
+            $query = "SELECT image_path FROM tour_images WHERE tourCode = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("i", $tourCode);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        return false;
+    }
+
+    public function getTourOneImages($tourCode)
+    {
+        if ($this->conn) {
+            // Truy vấn để lấy đường dẫn hình ảnh của tour
+            $query = "SELECT image_path FROM tour_images WHERE tourCode = ? LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+
+            // Kiểm tra xem việc chuẩn bị truy vấn có thành công không
+            if ($stmt) {
+                $stmt->bind_param("i", $tourCode);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                // Kiểm tra xem có kết quả nào không
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    return $row['image_path']; // Trả về image_path
+                } else {
+                    return null; // Không có hình ảnh nào
+                }
+            } else {
+                // Xử lý lỗi trong việc chuẩn bị truy vấn
+                return false;
+            }
+        }
+        return false; // Kết nối không hợp lệ
+    }
+
+
+
+    public function getConnection() {
+        return $this->conn;
+    }
+
+
     public function insertTour($tourName, $startDate, $endDate, $price, $description, $employeeCode, $vehicleCode, $tourPackageCode)
     {
         if ($this->conn) {
