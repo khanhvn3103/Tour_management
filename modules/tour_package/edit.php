@@ -68,29 +68,30 @@ if (isset($_POST["update"])) {
     <div class="p-5">
         <h3>Cập nhật gói tour</h3>
         <form action="" method="post" enctype="multipart/form-data">
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="packageName">Tên gói tour <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="packageName" id="packageName" value="<?php echo htmlspecialchars($tourPackage['packageName']); ?>">
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="startingPoint">Điểm khởi hành <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="startingPoint" id="startingPoint" value="<?php echo htmlspecialchars($tourPackage['startingPoint']); ?>">
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="endPoint">Điểm đến <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="endPoint" id="endPoint" value="<?php echo htmlspecialchars($tourPackage['endPoint']); ?>">
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="description">Mô tả</label>
                 <textarea class="form-control" name="description" id="description"><?php echo htmlspecialchars($tourPackage['description']); ?></textarea>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="image">Hình ảnh hiện tại</label><br>
-                <img src="<?php echo $tourPackage['image'] ? '/Tour_management/modules/tour_package/' . $tourPackage['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="Hình ảnh gói tour" width="200px" class="mb-3"/>
+                <img style="border-radius: 10px" src="<?php echo $tourPackage['image'] ? '/Tour_management/modules/tour_package/' . $tourPackage['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="Hình ảnh gói tour" width="200px" class="mb-2"/>
                 <label for="image">Chọn hình ảnh mới (nếu có)</label>
                 <input type="file" class="form-control" name="image" id="image" accept="image/*">
             </div>
 
+            <a href="/Tour_management/modules/tour_package/index.php" class="btn btn-secondary">Hủy</a>
             <button type="submit" class="btn btn-primary" name="update">Cập nhật</button>
             <?php if (!empty($errors)) { ?>
                 <?php foreach ($errors as $error) {
