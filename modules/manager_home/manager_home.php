@@ -51,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['type'])) {
 </head>
 
 <body>
-<?php
-include '../../view/leftmenu.php'
-?>
+    <?php
+    include '../../view/leftmenu.php'
+    ?>
 
     <?php
     include_once("../../models/mBill.php");

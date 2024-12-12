@@ -60,9 +60,9 @@ unset($bill); // Xóa tham chiếu cuối cùng đến phần tử mảng
 </head>
 
 <body>
-<?php
-include '../../view/leftmenu.php'
-?>
+    <?php
+    include '../../view/leftmenu.php'
+    ?>
 
     <div class="content">
         <div class="col">

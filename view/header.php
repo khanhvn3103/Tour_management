@@ -19,7 +19,7 @@ session_start();
                     if ($_SESSION['role'] == 'admin') {
                     ?>
                         <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0">
-                            <a class="nav-link" href="Tour_management/modules/manager_home/manager_home.php">QUẢN TRỊ</a>
+                            <a class="nav-link" href="/Tour_management/modules/manager_home/manager_home.php">QUẢN TRỊ</a>
                         </li>
                     <?php
                     }

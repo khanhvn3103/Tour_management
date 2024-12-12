@@ -97,9 +97,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
 </head>
 
 <body>
-<?php
-include '../../view/leftmenu.php'
-?>
+    <?php
+    include '../../view/leftmenu.php'
+    ?>
     <div class="content">
         <div class="col">
             <div class="text-end">

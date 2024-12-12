@@ -1,9 +1,9 @@
-session_start();
 <?php
-    if(!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin'){
-        header("Location: /Tour_management/index.php");
-        exit();
-    }
+session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
+    header("Location: /Tour_management/index.php");
+    exit();
+}
 ?>
 
 <div class="sidebar">
