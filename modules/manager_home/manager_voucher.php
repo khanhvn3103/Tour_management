@@ -10,11 +10,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
 
     if ($action == 'add') {
-        $voucherCode = $_POST['voucherCode'];
         $beginAt = date('Y-m-d', strtotime($_POST['beginAt']));
         $endAt = date('Y-m-d', strtotime($_POST['endAt']));
+        
+        if ($beginAt >= $endAt) {
+            echo "Ngày nhập bị sai.";
+            exit;
+        } 
         $sale = $_POST['sale'];
+        if ($sale <= 0) {
+            echo "Giảm giá bị sai.";
+            exit;
+        } 
+        function generateRandomString($length) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
 
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+
+            return $randomString;
+        }
+
+        $voucherCode = generateRandomString(10);
         if ($voucherModel->insertVoucher($voucherCode, $beginAt, $endAt, $sale)) {
             echo "Thêm voucher thành công.";
         } else {
@@ -52,18 +72,9 @@ $vouchers = $voucherModel->selectAllVouchers();
 </head>
 
 <body>
-    <div class="sidebar">
-        <a href="/Tour_management/index.php" style="max-width: 100%;">
-            <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
-        </a>
-        <a href="/Tour_management/modules/manager_home/manager_home.php">Thống Kê</a>
-        <a href="/Tour_management/modules/manager_home/manager_employee.php">Danh Sách Tài Khoản</a>
-        <a href="/Tour_management/modules/manager_home/manager_voucher.php">Thêm Voucher</a>
-        <a href="/Tour_management/modules/manager_home/assign.php">Phân Công Lịch</a>
-        <a href="#">Tạo Hoá Đơn</a>
-        <a href="#">Quản Lý Tour</a>
-        <a href="#">Danh Sách Điểm Tham Quan</a>
-    </div>
+<?php
+include '../../view/leftmenu.php'
+?>
 
     <div class="content">
         <div class="col">
@@ -122,10 +133,10 @@ $vouchers = $voucherModel->selectAllVouchers();
                 </div>
                 <div class="modal-body">
                     <form id="addVoucherForm">
-                        <div class="form-group mb-3">
+                        <!-- <div class="form-group mb-3">
                             <label for="voucherCode">Mã Voucher</label>
                             <input type="text" class="form-control" name="voucherCode" id="voucherCode" required>
-                        </div>
+                        </div> -->
                         <div class="form-group mb-3">
                             <label for="beginAt">Ngày Bắt Đầu</label>
                             <input type="date" class="form-control" name="beginAt" id="beginAt" required>
