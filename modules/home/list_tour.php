@@ -16,33 +16,42 @@ $listTours = $listPackageTour->selectTourPackagesWithTours($startingPoint,$desti
             <div class="col-9">
                 <div class="row">
                     <?php
-                    foreach ($listTours as $tour) {
-                        // Tính toán thời gian
-                        $duration = $tour['maxEndDate'] ? (new DateTime($tour['maxEndDate']))->diff(new DateTime($tour['minStartDate']))->format('%d ngày %h giờ') : 'Chưa cập nhật';
-                        ?>
-                        <div class="col-4 mt-2">
-                            <div class="card tour">
-                                <div class="card-tour-img">
-                                    <img src="<?php echo $tour['image'] ? '/Tour_management/modules/tour_package/' . $tour['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="<?php echo $tour['packageName'] ?>">
-                                </div>
-                                <div class="card-body">
-                                    <p class="duration">Thời lượng: <?php echo $duration ?></p>
-                                    <h5 class="card-title" title="<?php echo $tour['packageName'] ?>"><?php echo $tour['packageName'] ?></h5>
-                                    <p class="card-text">Điểm đi: <?php echo $tour['startingPoint'] ?></p>
-                                    <p class="price">
-                                        <i class="fa fa-tag me-2"></i>
-                                        <?php
-                                        echo number_format($tour['totalPrice'] ?? 0, 0, ',', '.') . ' VND';
-                                        ?>
-                                    </p>
-                                    <div class="text-end">
-                                        <a href="modules/home/tour_detail.php?code=<?php echo $tour['tourPackageCode']; ?>" class="btn btn-primary btn-detail">Xem chi tiết</a>
+                        if(count($listTours) > 0){
+                            foreach ($listTours as $tour) {
+                                // Tính toán thời gian
+                                $duration = $tour['maxEndDate'] ? (new DateTime($tour['maxEndDate']))->diff(new DateTime($tour['minStartDate']))->format('%d ngày %h giờ') : 'Chưa cập nhật';
+                                ?>
+                                <div class="col-4 mt-2">
+                                    <div class="card tour">
+                                        <div class="card-tour-img">
+                                            <img src="<?php echo $tour['image'] ? '/Tour_management/modules/tour_package/' . $tour['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="<?php echo $tour['packageName'] ?>">
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="duration">Thời lượng: <?php echo $duration ?></p>
+                                            <h5 class="card-title" title="<?php echo $tour['packageName'] ?>"><?php echo $tour['packageName'] ?></h5>
+                                            <p class="card-text">Điểm đi: <?php echo $tour['startingPoint'] ?></p>
+                                            <p class="price">
+                                                <i class="fa fa-tag me-2"></i>
+                                                <?php
+                                                echo number_format($tour['totalPrice'] ?? 0, 0, ',', '.') . ' VND';
+                                                ?>
+                                            </p>
+                                            <div class="text-end">
+                                                <a href="modules/home/tour_detail.php?code=<?php echo $tour['tourPackageCode']; ?>" class="btn btn-primary btn-detail">Xem chi tiết</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                            <div class="col-12 d-flex flex-column justify-content-center align-items-center pt-5">
+                                <img src="/Tour_management/asset/images/tours/empty.png">
+                                <p class="text-secondary">Chưa có tour phù hợp với bạn</p>
                             </div>
-                        </div>
-                        <?php
-                    }
+                    <?php
+                        }
                     ?>
                 </div>
             </div>

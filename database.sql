@@ -303,3 +303,11 @@ CREATE TABLE `work_schedule` (
                                  CONSTRAINT `work_schedule_ibfk_1` FOREIGN KEY (`employeeCode`) REFERENCES `employee` (`employeeCode`),
                                  CONSTRAINT `work_schedule_ibfk_2` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `tour_images`;
+CREATE TABLE `tour_images`  (
+                                `id` int NOT NULL AUTO_INCREMENT,
+                                `tourCode` int NULL DEFAULT NULL,
+                                `image_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+                                PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
