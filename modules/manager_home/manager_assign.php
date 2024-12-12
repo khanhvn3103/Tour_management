@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,10 +80,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
     </script>
 </head>
+
 <body>
-<?php
-include '../../view/leftmenu.php'
-?>
+    <?php
+    include '../../view/leftmenu.php'
+    ?>
     <div class="content">
         <div class="col">
             <div class="text-end">
@@ -142,4 +144,5 @@ include '../../view/leftmenu.php'
     }
     ?>
 </body>
+
 </html>

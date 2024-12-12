@@ -12,17 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
     if ($action == 'add') {
         $beginAt = date('Y-m-d', strtotime($_POST['beginAt']));
         $endAt = date('Y-m-d', strtotime($_POST['endAt']));
-        
+
         if ($beginAt >= $endAt) {
             echo "Ngày nhập bị sai.";
             exit;
-        } 
+        }
         $sale = $_POST['sale'];
         if ($sale <= 0) {
             echo "Giảm giá bị sai.";
             exit;
-        } 
-        function generateRandomString($length) {
+        }
+        function generateRandomString($length)
+        {
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $charactersLength = strlen($characters);
             $randomString = '';
@@ -72,9 +73,9 @@ $vouchers = $voucherModel->selectAllVouchers();
 </head>
 
 <body>
-<?php
-include '../../view/leftmenu.php'
-?>
+    <?php
+    include '../../view/leftmenu.php'
+    ?>
 
     <div class="content">
         <div class="col">

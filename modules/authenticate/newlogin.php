@@ -11,7 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($db) {
         // Kiểm tra thông tin đăng nhập trong bảng users
-        $query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        $query = "SELECT u.username, role, employeeCode, phone, fullName, address, dob, gender, identifyCard
+          FROM users u 
+          LEFT JOIN employee e ON u.username = e.username 
+          WHERE u.username = ? AND u.password = ?";
         $stmt = $db->prepare($query);
         $stmt->bind_param("ss", $username, $password);
         $stmt->execute();
@@ -69,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,9 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <style>
         body {
-            background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), /* Lớp phủ tối màu */
-        url(/Tour_management/asset/images/login.jpg);
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+                /* Lớp phủ tối màu */
+                url(/Tour_management/asset/images/login.jpg);
             background-size: cover;
             background-position: center;
             display: flex;
@@ -90,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             height: 100vh;
             margin: 0;
         }
+
         .login-container {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 30px;
@@ -99,13 +105,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 100%;
             max-width: 400px;
         }
+
         .login-container .form-group {
             margin-bottom: 1.5rem;
         }
+
         .login-container .form-control {
             padding: 1rem;
             border-radius: 0.5rem;
         }
+
         .login-container .btn-primary {
             background-color: #001F3F;
             border: none;
@@ -113,15 +122,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-radius: 0.5rem;
             width: 100%;
         }
+
         .login-container .btn-primary:hover {
             background-color: #001833;
         }
+
         .login-container .forgot-password {
             margin-top: 1rem;
             display: block;
             text-align: right;
         }
-        .logo{
+
+        .logo {
             width: 250px;
             position: absolute;
             top: 15px;
@@ -129,6 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
+
 <body>
     <div class="logo">
         <a class="navbar-brand" href="/Tour_management/index.php"> <img src="../../asset/images/travellowkey_logo.png" class="logo"></a>
@@ -152,4 +165,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
     </div>
 </body>
+
 </html>
