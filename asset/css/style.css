@@ -13,15 +13,26 @@
     background-color: white !important;
 }
 
-#header .nav-item .nav-link{
+#header .nav-item .nav-link,
+#header .full_name{
     color: white !important;
+}
+
+#header .nav-link svg {
+    fill: white !important;
+}
+
+#header.sticky .nav-link svg {
+    fill: var(--color-primary) !important;
 }
 
 #header .nav-item.active{
     border-bottom: 3px solid white !important;
 }
 
-#header.sticky .nav-item .nav-link{
+#header.sticky .nav-item .nav-link,
+#header.sticky .full_name
+{
     color: var(--color-primary) !important;
 }
 

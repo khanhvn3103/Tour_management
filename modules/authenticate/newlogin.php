@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
+            $_SESSION['user'] = $user;
 
             // Kiểm tra xem người dùng là admin
             $query_employee = "SELECT * FROM employee WHERE username = ?";
