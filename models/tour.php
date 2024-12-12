@@ -81,6 +81,37 @@ class modelTour
         }
         return false;
     }
+
+    public function getTourOneImages($tourCode)
+    {
+        if ($this->conn) {
+            // Truy vấn để lấy đường dẫn hình ảnh của tour
+            $query = "SELECT image_path FROM tour_images WHERE tourCode = ? LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+
+            // Kiểm tra xem việc chuẩn bị truy vấn có thành công không
+            if ($stmt) {
+                $stmt->bind_param("i", $tourCode);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                // Kiểm tra xem có kết quả nào không
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    return $row['image_path']; // Trả về image_path
+                } else {
+                    return null; // Không có hình ảnh nào
+                }
+            } else {
+                // Xử lý lỗi trong việc chuẩn bị truy vấn
+                return false;
+            }
+        }
+        return false; // Kết nối không hợp lệ
+    }
+
+
+
     public function getConnection() {
         return $this->conn;
     }
