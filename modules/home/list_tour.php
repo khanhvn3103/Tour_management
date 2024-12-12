@@ -38,7 +38,7 @@ $listTours = $listTour->selectAllTours(); // Gọi phương thức để lấy d
                                                 ?>
                                             </p>
                                             <div class="text-end">
-                                    <a href="modules/home/tour_detail.php?code=<?php echo $tour['tourCode']; ?>" class="btn btn-primary btn-detail">Xem chi tiết</a>
+                                    <a href="modules/home/tour_detail.php?tourCode=<?php echo $tour['tourCode']; ?>" class="btn btn-primary btn-detail">Xem chi tiết</a>
                                             </div>
                                         </div>
                                     </div>
