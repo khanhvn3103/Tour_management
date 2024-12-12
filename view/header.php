@@ -9,9 +9,16 @@ session_start();
                 <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if(!isset($m)) echo 'active'?>">
                     <a class="nav-link <?php if(!isset($m)) echo 'active'?>"  href="/Tour_management">TRANG CHỦ</a>
                 </li>
-                <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if($m == 'user') echo 'active'?>">
-                    <a class="nav-link <?php if($m == 'user') echo 'active'?>" href="/Tour_management/index.php?m=user">THÔNG TIN CỦA TÔI</a>
-                </li>
+                <?php
+                    if(isset($_SESSION['user'])){
+                ?>
+                    <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if($m == 'user') echo 'active'?>">
+                        <a class="nav-link <?php if($m == 'user') echo 'active'?>" href="/Tour_management/index.php?m=user">THÔNG TIN CỦA TÔI</a>
+                    </li>
+                <?php
+                    }
+                ?>
+
                 <?php
                     if($_SESSION['role'] == 'admin'){
                 ?>
