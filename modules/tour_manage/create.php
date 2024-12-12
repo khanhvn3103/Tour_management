@@ -85,23 +85,29 @@ if (isset($_POST["create"])) {
         <form action="" method="post" enctype="multipart/form-data"> <!-- Thêm enctype cho upload file -->
             <div class="form-group mb-3">
                 <label for="tourName">Tên Tour <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="tourName" id="tourName" required>
+                <input type="text" class="form-control" name="tourName" id="tourName" required placeholder="Tên tour">
             </div>
-            <div class="form-group mb-3">
-                <label for="startDate">Ngày Bắt Đầu <span class="text-danger">*</span></label>
-                <input type="datetime-local" class="form-control" name="startDate" id="startDate" required>
-            </div>
-            <div class="form-group mb-3">
-                <label for="endDate">Ngày Kết Thúc <span class="text-danger">*</span></label>
-                <input type="datetime-local" class="form-control" name="endDate" id="endDate" required>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group mb-3">
+                        <label for="startDate">Ngày Bắt Đầu <span class="text-danger">*</span></label>
+                        <input type="datetime-local" class="form-control" name="startDate" id="startDate" required>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group mb-3">
+                        <label for="endDate">Ngày Kết Thúc <span class="text-danger">*</span></label>
+                        <input type="datetime-local" class="form-control" name="endDate" id="endDate" required>
+                    </div>
+                </div>
             </div>
             <div class="form-group mb-3">
                 <label for="price">Giá <span class="text-danger">*</span></label>
-                <input type="number" step="0.01" class="form-control" name="price" id="price" required>
+                <input type="number" step="0.01" class="form-control" name="price" id="price" required placeholder="Giá / 1 người">
             </div>
             <div class="form-group mb-3">
                 <label for="description">Mô Tả</label>
-                <textarea class="form-control" name="description" id="description"></textarea>
+                <textarea class="form-control" name="description" id="description" placeholder="Mô tả"></textarea>
             </div>
             <div class="form-group mb-3">
                 <label for="vehicleCode">Chọn Phương Tiện</label>
@@ -138,6 +144,7 @@ if (isset($_POST["create"])) {
                 <input type="file" class="form-control" name="images[]" id="images" multiple accept="image/*">
             </div>
 
+            <a href="/Tour_management/modules/tour_manage/index.php" class="btn btn-secondary">Hủy</a>
             <button type="submit" class="btn btn-primary" name="create">Thêm</button>
             <?php if (!empty($errors)) { ?>
                 <?php foreach ($errors as $error) {

@@ -77,27 +77,27 @@ if (isset($_POST["update"])) {
     <div class="p-5">
         <h3>Cập nhật Tour</h3>
         <form action="" method="post">
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="tourName">Tên Tour <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="tourName" id="tourName" value="<?php echo htmlspecialchars($tour['tourName']); ?>" required>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="startDate">Ngày Bắt Đầu <span class="text-danger">*</span></label>
                 <input type="datetime-local" class="form-control" name="startDate" id="startDate" value="<?php echo date('Y-m-d\TH:i', strtotime($tour['startDate'])); ?>" required>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="endDate">Ngày Kết Thúc <span class="text-danger">*</span></label>
                 <input type="datetime-local" class="form-control" name="endDate" id="endDate" value="<?php echo date('Y-m-d\TH:i', strtotime($tour['endDate'])); ?>" required>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="price">Giá <span class="text-danger">*</span></label>
                 <input type="number" step="0.01" class="form-control" name="price" id="price" value="<?php echo htmlspecialchars($tour['price']); ?>" required>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="description">Mô Tả</label>
                 <textarea class="form-control" name="description" id="description"><?php echo htmlspecialchars($tour['description']); ?></textarea>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="vehicleCode">Chọn Phương Tiện</label>
                 <select class="form-control" name="vehicleCode" id="vehicleCode">
                     <option value="">Chọn phương tiện</option>
@@ -109,7 +109,7 @@ if (isset($_POST["update"])) {
                 </select>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="employeeCode">Chọn Nhân Viên</label>
                 <select class="form-control" name="employeeCode" id="employeeCode">
                     <option value="">Chọn nhân viên</option>
@@ -121,7 +121,7 @@ if (isset($_POST["update"])) {
                 </select>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="tourPackageCode">Chọn Gói Tour</label>
                 <select class="form-control" name="tourPackageCode" id="tourPackageCode">
                     <option value="">Chọn gói tour</option>
@@ -133,7 +133,7 @@ if (isset($_POST["update"])) {
                 </select>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label>Ảnh Cũ</label><br>
                 <?php
                 $tourImages = $tourModel->getTourImages($tourCode); // Lấy tất cả ảnh của tour
@@ -146,11 +146,12 @@ if (isset($_POST["update"])) {
                 <?php endif; ?>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label for="tourImages">Cập Nhật Ảnh Tour</label>
                 <input type="file" class="form-control" name="tourImages[]" id="tourImages" accept="image/*" multiple>
             </div>
 
+            <a href="/Tour_management/modules/tour_manage/index.php" class="btn btn-secondary">Hủy</a>
             <button type="submit" class="btn btn-primary" name="update">Cập nhật</button>
             <?php if (!empty($errors)) { ?>
                 <?php foreach ($errors as $error) {
