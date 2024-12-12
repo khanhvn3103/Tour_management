@@ -1,3 +1,11 @@
+session_start();
+<?php
+    if(!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin'){
+        header("Location: /Tour_management/index.php");
+        exit();
+    }
+?>
+
 <div class="sidebar">
     <a href="/Tour_management/index.php" style="max-width: 100%;">
         <img id="logo" src="/Tour_management/asset/images/travellowkey_logo.png" alt="Logo">
