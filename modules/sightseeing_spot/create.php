@@ -80,35 +80,38 @@ if (isset($_POST["add"])) {
                 <h3>Thêm mới địa điểm du lịch</h3>
             </div>
             <form action="" method="post" enctype="multipart/form-data">
-                <div class="d-flex justify-content-end mb-3">
-                    <a type="button" class="btn btn-secondary me-3" href="/path/to/your/list/page.php">Hủy <i class="fa-solid fa-xmark"></i></a>
-                    <button type="submit" class="btn btn-primary" name="add">Lưu <i class="fa-solid fa-floppy-disk ms-2"></i></button>
-                </div>
                 <?php if (!empty($errors)) { ?>
                     <?php foreach ($errors as $error) {
                         echo "<div class='alert alert-danger' role='alert'>$error</div>";
                     } ?>
                 <?php } ?>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="spotName">Tên Địa Điểm <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="spotName" id="spotName" placeholder="Tên địa điểm..."
+                    <input type="text" class="form-control" name="spotName" id="spotName" placeholder="Tên địa điểm"
                         <?php if (isset($_POST["spotName"])) echo 'value="'.htmlspecialchars($_POST["spotName"]).'"'; ?>>
                 </div>
-                <div class="form-group mb-3">
-                    <label class="d-flex mb-2" for="startTime">Thời Gian Bắt Đầu <span class="text-danger">*</span></label>
-                    <input type="datetime-local" class="form-control" name="startTime" id="startTime"
-                        <?php if (isset($_POST["startTime"])) echo 'value="'.htmlspecialchars($_POST["startTime"]).'"'; ?>>
+
+                <div class='row'>
+                    <div class="col-6">
+                        <div class="form-group mb-2">
+                            <label class="d-flex mb-2" for="startTime">Thời Gian Bắt Đầu <span class="text-danger">*</span></label>
+                            <input type="time" class="form-control" name="startTime" id="startTime"
+                                <?php if (isset($_POST["startTime"])) echo 'value="'.htmlspecialchars($_POST["startTime"]).'"'; ?>>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group mb-2">
+                            <label class="d-flex mb-2" for="endTime">Thời Gian Kết Thúc <span class="text-danger">*</span></label>
+                            <input type="time" class="form-control" name="endTime" id="endTime"
+                                <?php if (isset($_POST["endTime"])) echo 'value="'.htmlspecialchars($_POST["endTime"]).'"'; ?>>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label class="d-flex mb-2" for="endTime">Thời Gian Kết Thúc <span class="text-danger">*</span></label>
-                    <input type="datetime-local" class="form-control" name="endTime" id="endTime"
-                        <?php if (isset($_POST["endTime"])) echo 'value="'.htmlspecialchars($_POST["endTime"]).'"'; ?>>
-                </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="description">Mô Tả <span class="text-danger">*</span></label>
-                    <textarea class="form-control" name="description" id="description"><?php if (isset($_POST["description"])) echo htmlspecialchars($_POST["description"]); ?></textarea>
+                    <textarea class="form-control" name="description" id="description" placeholder="Nhập mô tả"><?php if (isset($_POST["description"])) echo htmlspecialchars($_POST["description"]); ?></textarea>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="tourCode">Chọn Tour</label>
                     <select class="form-control" name="tourCode" id="tourCode">
                         <option value="">Chọn tour</option>
@@ -117,7 +120,7 @@ if (isset($_POST["add"])) {
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="vehicleCode">Chọn Phương Tiện</label>
                     <select class="form-control" name="vehicleCode" id="vehicleCode">
                         <option value="">Chọn phương tiện</option>
@@ -126,9 +129,13 @@ if (isset($_POST["add"])) {
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="d-flex mb-2" for="image">Hình Ảnh <span class="text-danger">*</span></label>
                     <input type="file" class="form-control" name="image" id="image" accept=".jpg,.jpeg,.png,.gif">
+                </div>
+                <div class="d-flex justify-content-end my-2">
+                    <a type="button" class="btn btn-secondary me-1" href="/path/to/your/list/page.php">Hủy <i class="fa-solid fa-xmark"></i></a>
+                    <button type="submit" class="btn btn-primary" name="add">Lưu <i class="fa-solid fa-floppy-disk ms-2"></i></button>
                 </div>
             </form>
         </div>

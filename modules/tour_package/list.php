@@ -39,8 +39,8 @@ $data = $db->selectAllTourPackages();
     <?php foreach ($data as $item): ?>
         <tr>
             <td><input class="form-check-input" type="checkbox" value="<?php echo $item['tourPackageCode']; ?>" name="selected_ids[]"></td>
-            <td><img src="<?php echo $item['image'] ? `/Tour_management/modules/tour_package/` . $item['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="<?php echo $item['packageName']; ?>" width="100px"/></td>
             <td><?php echo $item['tourPackageCode']; ?></td>
+            <td><img style="border-radius: 6px" src="<?php echo $item['image'] ? `/Tour_management/modules/tour_package/` . $item['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="<?php echo $item['packageName']; ?>" width="100px"/></td>
             <td><a href="/Tour_management/modules/tour_package/index.php?a=edit&id=<?php echo $item['tourPackageCode']; ?>" class="text-decoration-none fw-bold"><?php echo $item['packageName']; ?></a></td>
             <td><?php echo $item['startingPoint']; ?></td>
             <td><?php echo $item['endPoint']; ?></td>
