@@ -1,0 +1,489 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* Định nghĩa màu chữ khi được tô đen */
+
+::selection {
+    color: #fff;
+    background: #476f95;
+    /* Có thể thay đổi màu nền nếu cần */
+}
+
+body {
+    font-size: 14px;
+    color: #677bab;
+    letter-spacing: 2px;
+}
+
+.divImage {
+    position: relative;  /* Để .box có thể căn giữa với .divImage */
+    width: 100%;
+    height: 700px;
+}
+
+.divImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.Slogan {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 80%;
+    height: 30%;
+    background: rgba(0, 0, 0, 0.2);
+    top: 50%;  /* Căn giữa theo chiều dọc */
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translate(-50%, -50%);  /* Dịch chuyển lại để căn giữa chính xác */
+    text-align: center;
+    color: white;  /* Màu chữ tùy chọn */
+    padding: 10px; /* Padding nếu cần */
+}
+
+
+/* section-2 */
+.infor{
+    background-color: #fff;
+}
+
+.infor .content{
+    transform: translateY(-80px);
+}
+
+.row-tab{
+    height: 80px;
+}
+
+.tab-item{
+    color: #677bab;
+    font-size: 1rem;
+    background-color: #f8f8f8;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.tab-item:hover{
+    background-color: #fff;
+}
+
+.tab-item.active{
+    background-color: #fff;
+}
+
+/* thêm phần tử dưới */
+.tab-item:hover::after,
+.tab-item.active::after {
+    content: "";
+    display: block;
+    height: 3px;
+    background-color: #476f95;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    animation: slide-in 0.5s forwards;
+}
+/* hiệu ứng //////////////// từ giữa với width là 0 kéo ra thành 100% */
+@keyframes slide-in {
+    from {
+        width: 0;
+        left: 50%; /* từ vị trí ở giữa */
+    }
+    to {
+        width: 100%;
+        left: 0;
+    }
+}
+
+.not-used{
+    background-color: #f8f8f8;
+}
+
+/* //////////////////////////////////////////// */
+/* tab-content */
+
+.row-content-tab{
+    box-shadow: 0 3px 20px 5px rgba(0, 0, 0, .03);
+}
+
+/* tab-infor */
+
+.price p{
+    color: #262d79;
+    font-weight: bold;
+}
+
+.decs .text {
+    display: -webkit-box;
+    -webkit-line-clamp: 6; /* giới hạn số dòng là 6 vượt qua thì hiện "..." */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-line-clamp: 6;
+    -moz-box-orient: vertical;
+    line-clamp: 6;
+    box-orient: vertical;
+}
+
+
+/* btn-group */
+.btn-group{
+    gap: 20px;    
+}
+
+.btn-group div{
+    width: 100px;
+    height: 40px;
+    background-color: #88a2c4;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+/* table */
+table{
+    color: #476f95!important;
+}
+
+
+tr td:nth-child(1){
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+@media (max-width: 768.98px){
+    .tab-item{
+        font-size: 0.8rem;
+    }
+    .row-tab{
+        display: flex;
+        width: 100%!important;
+        flex-wrap: wrap;
+    }
+}
+
+/* ///////////// */
+.row,
+.container-fluid,
+.content {
+    margin: 0;
+    padding: 0;
+}
+/* //////// */
+
+.books-form{
+    width: 100%;
+    height: max-content;
+    background-color: #cdd9e9;
+    box-shadow: -4px 3px 20px 0px rgba(0, 0, 0, .03);
+    padding-bottom: 30px;
+}
+
+.books-form .text-head {
+    color: #c3ddff;
+    background-color: #75a7f8;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Thêm text-shadow */
+}
+
+.input-group i,
+#text{
+    color: #677bab;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+        opacity: 1;
+}
+
+option {
+    color: #677bab!important;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    font-style: italic;
+}
+
+.not-select{
+    background-color: lightgray!important;
+}
+
+select{
+    color: #677bab!important;
+}
+
+::placeholder{
+    color: #677bab!important;
+    font-style: italic;
+}
+
+input[type = date]{
+    color: #476f95;
+}
+
+input:valid{
+    color: #677bab;
+}
+
+.books-form .btn{
+    color: #fff;
+    background-color: #6a82ce;
+    box-shadow: 3px 4px 0px 1px #3f62c6;
+    height: 50px;
+    letter-spacing: 3px;
+}
+
+
+/* tab-plane */
+
+.plane{
+    position: relative;
+    z-index: 1;
+}
+
+.row-head{
+    display: table;
+    width: 100%;
+    margin-bottom: 9px;
+}
+
+.box{
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    font-size: 22px;
+    font-weight: 600;
+    border-radius: 0;
+    text-align: center;
+}
+
+.box .inner-box{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    color: #fff;
+    background-color: #6a82ce;
+}
+
+.line{
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    width: 50px;
+}
+
+
+.inner-line{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: block;
+    width: 0;
+    height: 100%;
+    border-right: 2px dashed #6a82ce;
+    z-index: 8;
+    content: '';
+    transform: translateX(-50%);
+}
+
+.plane .title{
+    vertical-align: middle;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    padding-left: 100px;
+    text-transform: uppercase;
+    transform: translateY(-40px);
+}
+
+.row-text{
+    margin: 0 0 20px 100px;
+    font-size: 1rem;
+}
+
+ul li{
+    list-style-type: square;
+    
+}
+
+@media (max-width :767.98px){
+    .tour-plane{
+        transform: translateY(40px);
+    }
+}
+
+@media (max-width :768.98px){
+    .books-form{
+        margin-top: 20px;
+        transform: translateY(40px);
+    }
+}
+
+
+/* tab-conet-3 */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Chiều cao của bản đồ */
+    margin-bottom: 20px;
+}
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+.zoom-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #75a7f8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.zoom-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* gallery */
+
+.images{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.images .item:nth-child(1){
+    flex-basis: 66.67%;
+    padding: 0 15px 30px 0;
+}
+
+.images .item:nth-child(2){
+    flex-basis: 33%;
+    padding: 0 0 30px 15px;
+}
+
+.images .item:nth-child(3),
+.images .item:nth-child(4),
+.images .item:nth-child(5){
+    flex-basis: calc(100%/3);
+    padding-bottom: 30px!important;
+}
+
+.images .item:nth-child(3){
+    padding-right: 15px;
+}
+.images .item:nth-child(4){
+    padding: 0 15px;
+}
+.images .item:nth-child(5){
+    padding-left: 15px;
+}
+
+/*  */
+.images .item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(95%);
+    transition: 0.5s linear ease-in-out;
+}
+
+.images .item img:hover{
+    filter: brightness(100%);
+}
+
+/* tour-review */
+
+.tour-review .title{
+    border-bottom: 1px solid #000;
+}
+
+/* .tour-review .review{
+    height: 150px;
+    overflow: hidden;
+} */
+ 
+.tour-review .item .user .photo{
+    width: 60px;
+    height: 60px;
+}
+
+.tour-review .item .user .photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tour-review .item .user .name-rate .name{
+    font-size: 1.1rem;
+}
+
+.tour-review .item .user .name-rate .rate i:nth-child(-n+3){
+    color: rgb(213, 193, 15);
+}
+
+/* .tour-review .item .content-review{
+    padding-left: 70px;
+} */
+
+.tour-review .item .content-review .cmt{
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* giới hạn số dòng là 3 vượt qua thì hiện "..." */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-line-clamp: 3;
+    -moz-box-orient: vertical;
+    line-clamp: 3;
+    box-orient: vertical;
+}
+textarea {
+    resize: none;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    color: #fff;
+    background-color: #1c2f5e;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Đảm bảo form bình luận không làm ảnh hưởng đến bố cục */
+#comment-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: 1050;
+}
+
+.container.position-absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
