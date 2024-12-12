@@ -6,26 +6,26 @@ session_start();
         <div class="d-flex align-content-center">
             <a class="navbar-brand" href="/Tour_management/index.php"> <img src="asset/images/travellowkey_logo.png" class="logo"></a>
             <ul class="navbar-nav">
-                <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if(!isset($m)) echo 'active'?>">
-                    <a class="nav-link <?php if(!isset($m)) echo 'active'?>"  href="/Tour_management/index.php">TRANG CHỦ</a>
+                <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if (!isset($m)) echo 'active' ?>">
+                    <a class="nav-link <?php if (!isset($m)) echo 'active' ?>" href="/Tour_management">TRANG CHỦ</a>
                 </li>
                 <?php
-                    if(isset($_SESSION['user'])){
+                if (isset($_SESSION['user'])) {
                 ?>
-                    <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if($m == 'user') echo 'active'?>">
-                        <a class="nav-link <?php if($m == 'user') echo 'active'?>" href="/Tour_management/index.php?m=user">THÔNG TIN CỦA TÔI</a>
+                    <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0 <?php if ($m == 'user') echo 'active' ?>">
+                        <a class="nav-link <?php if ($m == 'user') echo 'active' ?>" href="/Tour_management/index.php?m=user">THÔNG TIN CỦA TÔI</a>
                     </li>
                     <?php
-                    if($_SESSION['role'] == 'admin'){
-                        ?>
+                    if ($_SESSION['role'] == 'admin') {
+                    ?>
                         <li class="nav-item dropdown pt-lg-3 pb-lg-2 me-lg-n1 me-xl-0">
                             <a class="nav-link" href="Tour_management/modules/manager_home/manager_home.php">QUẢN TRỊ</a>
                         </li>
-                        <?php
+                    <?php
                     }
                     ?>
                 <?php
-                    }
+                }
                 ?>
 
 
@@ -57,10 +57,10 @@ session_start();
 
         <div>
             <?php
-                if(!isset($_SESSION['user'])){
+            if (!isset($_SESSION['user'])) {
             ?>
-                    <button class="btn btn-secondary me-1" onclick="redirectToSignup()">Đăng ký</button>
-                    <button class="btn btn-primary" onclick="redirectToLogin()">Đăng nhập</button>
+                <button class="btn btn-secondary me-1" onclick="redirectToSignup()">Đăng ký</button>
+                <button class="btn btn-primary" onclick="redirectToLogin()">Đăng nhập</button>
             <?php
                 }else{
                     ?>
@@ -84,9 +84,6 @@ session_start();
                     <?php
                 }
                 ?>
-
-
-
         </div>
         <script>
             function redirectToSignup() {

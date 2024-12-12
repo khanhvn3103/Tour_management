@@ -188,8 +188,35 @@ CREATE TABLE `notify` (
 
 DROP TABLE IF EXISTS `tour_images`;
 CREATE TABLE `tour_images`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `tourCode` int NULL DEFAULT NULL,
-  `image_path` varchar(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+    `id` int NOT NULL AUTO_INCREMENT,
+    `tourCode` int(11) NULL DEFAULT NULL,
+    `image_path` varchar(255) NULL DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    KEY `tourCode` (`tourCode`),
+    CONSTRAINT `tour_images_ibfk_1` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`) ON DELETE RESTRICT ON UPDATE RESTRICT
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `tourplan`;
+CREATE TABLE `tourplan` (
+    `tourplanCode` int(11) NOT NULL,
+    `tourPlan1` text NOT NULL,
+    `tourPlan2` text NOT NULL,
+    `tourPlan3` text NOT NULL,
+    `tourCode` int(11) NOT NULL,
+    PRIMARY KEY (`tourplanCode`) USING BTREE,
+    KEY `tourCode` (`tourCode`),
+    CONSTRAINT `tourplan_ibfk_1` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`) ON DELETE RESTRICT ON UPDATE RESTRICT
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `tour_gallery`;
+CREATE TABLE `tour_gallery` (
+    `tour_gallaryCode` int(11) NOT NULL,
+    `tourCode` int(11) NOT NULL,
+    `gallery1` text NOT NULL,
+    `gallery2` text NOT NULL,
+    `gallery3` text NOT NULL,
+    PRIMARY KEY (`tour_gallaryCode`) USING BTREE,
+    KEY `tourCode` (`tourCode`),
+  CONSTRAINT `tour_gallery_ibfk_1` FOREIGN KEY (`tourCode`) REFERENCES `tour` (`tourCode`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
