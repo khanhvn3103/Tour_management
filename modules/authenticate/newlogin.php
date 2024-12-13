@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($result_customer->num_rows > 0) {
                     $_SESSION['username'] = $username;
                     $_SESSION['role'] = 'customer';
+                    $_SESSION['customerCode'] = $result_customer['customerCode'];
                     header("Location: http://localhost/Tour_management/index.php");
                     exit();
                 }

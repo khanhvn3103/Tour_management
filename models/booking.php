@@ -38,11 +38,11 @@ class modelBooking
     {
         if ($this->conn) {
             $query = "
-                SELECT tb.formCode, tb.bookingDate, tb.numberOfAdults, tb.numberOfChildren, u.fullName, tp.packageName, c.customerCode, tb.status
+                SELECT tb.formCode, tb.bookingDate, tb.numberOfAdults, tb.numberOfChildren, u.fullName, c.customerCode, tb.status, tour.tourName
                 FROM tourbookingform tb
                 JOIN customer c ON tb.customerCode = c.customerCode 
                 JOIN users u ON c.username = u.username
-                JOIN tourpackage tp ON tb.tourPackageCode = tp.tourPackageCode
+                JOIN tour tour ON tb.tourCode = tour.tourCode
             ";
             $result = $this->conn->query($query);
             $bookings = [];

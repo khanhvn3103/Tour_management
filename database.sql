@@ -50,6 +50,7 @@ CREATE TABLE `vehicle`  (
 CREATE TABLE `tour`  (
     `tourCode` int NOT NULL AUTO_INCREMENT,
     `tourName` varchar(100) NULL DEFAULT NULL,
+    `tourImage` varchar(500) NULL DEFAULT NULL,
     `startDate` datetime NULL DEFAULT NULL,
     `price` float NULL DEFAULT NULL,
     `description` varchar(500) NULL DEFAULT NULL,
