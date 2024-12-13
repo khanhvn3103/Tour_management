@@ -39,8 +39,8 @@ $data = $db->selectAllSpots();
         <tr>
             <td><input class="form-check-input" type="checkbox" value="<?php echo $item['spotCode']; ?>" name="selected_ids[]"></td>
             <td><?php echo $item['spotCode']; ?></td>
-            <td><img src="<?php echo $item['image'] ? `/Tour_management/modules/sightseeing_spot/` . $item['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="<?php echo $item['spotName']; ?>" width="100px"/></td>
-            <td><a href="/Tour_management/modules/sightseeing_spot/index.php?a=edit&id=<?php echo $item['spotCode']; ?>" class="text-decoration-none fw-bold"><?php echo $item['spotName']; ?></a></td>
+            <td><img style="border-radius: 6px" src="<?php echo $item['image'] ? `/Tour_management/modules/sightseeing_spot/` . $item['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?>" alt="<?php echo $item['spotName']; ?>" width="100px"/></td>
+            <td><a href="/Tour_management/modules/sightseeing_spot/index.php?a=edit&id=<?php echo $item['spotCode']; ?>" class="text-decoration-none"><?php echo $item['spotName']; ?></a></td>
             <td><?php echo $item['startTime']; ?></td>
             <td><?php echo $item['endTime']; ?></td>
             <td><?php echo $item['description']; ?></td>

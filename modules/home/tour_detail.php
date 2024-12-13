@@ -20,13 +20,39 @@
     // tour_gallery
     $tour_gallery = $tour->show_gallery($get_tourCode);
 
+    // Kết nối đến cơ sở dữ liệu
+    include_once("../../models/clsKetNoi.php");
+    $p = new clsKetNoi();
+    $conn = $p->ketNoiDB();
+    // Truy vấn thông tin hình ảnh của tour
+    $queryImages = "SELECT image_path FROM tour_images WHERE tourCode = ?";
+    $stmtImages = $conn->prepare($queryImages);
+    $stmtImages->bind_param("i", $get_tourCode);
+    $stmtImages->execute();
+    $resultImages = $stmtImages->get_result();
+    $imagePaths = $resultImages->fetch_all(MYSQLI_ASSOC);
+
+    // Truy vấn thông tin địa điểm tham quan
+    $querySightseeing = "SELECT * FROM sightseeingspot WHERE tourPackageCode = ?";
+    $stmtSightseeing = $conn->prepare($querySightseeing);
+    $stmtSightseeing->bind_param("i", $get_tourCode);
+    $stmtSightseeing->execute();
+    $resultSightseeing = $stmtSightseeing->get_result();
+    $sightseeingSpots = $resultSightseeing->fetch_all(MYSQLI_ASSOC);
+
+    // Đóng kết nối
+    $stmtImages->close();
+    $stmtSightseeing->close();
+    $p->closeKetNoi($conn);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $selectedTour->name; ?></title>
+    <title><?php echo $tour_inforDetail['tourName']; ?></title>
     <link rel="stylesheet" href="/Tour_management/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="/Tour_management/asset/css/style.css">
     <link rel="stylesheet" href="/Tour_management/asset/css/tourDetail.css">
@@ -256,23 +282,44 @@
                             <!-- tab-content-4 -->
                             <div class="tour-gallery tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
                                 <p class="h2 text-uppercase">HÌNH ẢNH ĐỊA ĐIỂM</p>
-                                <div class="images">
-                                    <!-- 1 -->
-                                    <div class="item">
-                                        <img src="<?= htmlspecialchars($tour_gallery['gallery1']) ?>" alt="">
+                                <!-- Detailed Description Section -->
+                                <div class="row mt-5">
+                                    <div class="col-12">
+                                        <ul>
+                                            <?php foreach ($sightseeingSpots as $spot) { ?>
+                                                <li>
+<!--                                                    <img src="--><?php //echo $spot['image'] ? '/Tour_management/modules/sightseeing_spot/' . $spot['image'] : '/Tour_management/asset/images/default-thumbnail.jpg'; ?><!--" alt="--><?php //echo $spot['spotName']; ?><!--" class="img-fluid" style="max-width: 200px;">-->
+                                                    <img src="<?php echo $spot['image'] ?>" alt="<?php echo $spot['spotName']; ?>" class="img-fluid" style="max-width: 200px; border-radius: 10px">
+
+                                                    <br>
+                                                    <strong>Địa điểm: <?php echo $spot['spotName']; ?></strong>
+                                                    <br>
+                                                    Thời gian từ: <?php echo date('d/m/Y H:i', strtotime($spot['startTime'])); ?> đến <?php echo date('d/m/Y H:i', strtotime($spot['endTime'])); ?>:
+                                                    <br>
+                                                    Mô tả: <?php echo $spot['description']; ?>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
+                                        <p>
                                     </div>
-                                    
-                                    <!-- 2 -->
-                                    <div class="item">
-                                        <img src="<?= htmlspecialchars($tour_gallery['gallery2']) ?>" alt="">
-                                    </div>
-                                    
-                                    <!-- 3 -->
-                                    <div class="item">
-                                        <img src="<?= htmlspecialchars($tour_gallery['gallery3']) ?>" alt="">
-                                    </div>
-                                    
                                 </div>
+<!--                                <div class="images">-->
+<!--                                    <!-- 1 -->-->
+<!--                                    <div class="item">-->
+<!--                                        <img src="--><?php //= htmlspecialchars($tour_gallery['gallery1']) ?><!--" alt="">-->
+<!--                                    </div>-->
+<!--                                    -->
+<!--                                    <!-- 2 -->-->
+<!--                                    <div class="item">-->
+<!--                                        <img src="--><?php //= htmlspecialchars($tour_gallery['gallery2']) ?><!--" alt="">-->
+<!--                                    </div>-->
+<!--                                    -->
+<!--                                    <!-- 3 -->-->
+<!--                                    <div class="item">-->
+<!--                                        <img src="--><?php //= htmlspecialchars($tour_gallery['gallery3']) ?><!--" alt="">-->
+<!--                                    </div>-->
+<!--                                    -->
+<!--                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -282,24 +329,26 @@
                         <div class="books-form">
                             <div class="text-head text-center p-4 fw-bold fs-5">ĐẶT TOUR</div>
                 
-                            <form action="" method="post" enctype="multipart/form-data" class="px-4">
-                
-                                <label for="stratDate" class="form-label pt-3 pb-0 mb-0 fw-bold">Ngày Bắt Đầu :</label>
+                            <form action="booking.php" method="post" enctype="multipart/form-data" class="px-4">
+                                <input type="hidden" name="tour_code" value="<?php echo $get_tourCode; ?>">
+
+                                <label for="stratDate" class="form-label pt-3 pb-0 mb-0 fw-bold">Chọn ngày khởi hành:</label>
                                 <div class="input-group pt-1">
                                     <span class="input-group-text border-0 rounded-0"><i class="fa-regular fa-calendar-days border-0"></i></span>
-                                    <input type="date" class="input form-control bg-opacity-50 rounded-0" id="startDate" name="startDate" value="<?= htmlspecialchars($tour_inforDetail['startDate'])?>" required>
+                                    <input type="date" class="input form-control bg-opacity-50 rounded-0" id="date" name="date" required>
                                 </div>
+
                 
-                                <label for="endDate" class="form-label pt-3 pb-0 mb-0 fw-bold">Ngày Kết Thúc :</label>
-                                <div class="input-group pt-1">
-                                    <span class="input-group-text border-0 rounded-0"><i class="fa-regular fa-calendar-days border-0"></i></span>
-                                    <input type="date" class="input form-control bg-opacity-50 rounded-0" id="endDate" name="endDate" value="<?= htmlspecialchars($tour_inforDetail['endDate'])?>" required>
-                                </div>
-                
-                                <label for="roomNumber" class="form-label pt-3 pb-0 mb-0 fw-bold">Số Người :</label>
+                                <label for="adults" class="form-label pt-3 pb-0 mb-0 fw-bold">Số người lớn:</label>
                                 <div class="input-group pt-1">
                                     <span class="input-group-text border-0 rounded-0"><i class="fa-solid fa-door-open border-0"></i></span>
-                                    <input type="number" class="form-control text-center" id="roomNumber" name="roomNumber" value="1" min="1">
+                                    <input type="number" id="adults" name="adults" class="form-control text-center" value="1" min="1">
+                                </div>
+
+                                <label for="children" class="form-label pt-3 pb-0 mb-0 fw-bold">Số trẻ em:</label>
+                                <div class="input-group pt-1">
+                                    <span class="input-group-text border-0 rounded-0"><i class="fa-solid fa-door-open border-0"></i></span>
+                                    <input type="number" class="form-control text-center" id="children" name="children" value="1" min="1">
                                 </div>
                                 
                                 <div class="price pe-0">
@@ -363,7 +412,8 @@
             </div>
         </div>
     </footer>
-
+    <script src="/Tour_management/asset/js/jquery-3.7.1.js"></script>
+    <script src="/Tour_management/asset/js/sweetalert2@11.min.js"></script>
     <script src="/Tour_management/asset/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 
 $db = new modelBooking();
-$customerCode = 1; // Thay thế bằng mã khách hàng thực tế (có thể lấy từ session)
+$customerCode = $_SESSION['customerCode'];
 
 $notifications = $db->getNotifications($customerCode);
 ?>

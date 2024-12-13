@@ -29,7 +29,7 @@ $bookings = $db->selectAllBookings();
     <tr>
         <th scope="col">#</th>
         <th scope="col">Tên Khách Hàng</th>
-        <th scope="col">Tên Gói Tour</th>
+        <th scope="col">Tên Tour</th>
         <th scope="col">Số Người Lớn</th>
         <th scope="col">Số Trẻ Em</th>
         <th scope="col">Ngày Đặt</th>
@@ -42,7 +42,7 @@ $bookings = $db->selectAllBookings();
         <tr>
             <td><?php echo $index + 1; ?></td>
             <td><?php echo htmlspecialchars($booking['fullName']); ?></td>
-            <td><?php echo htmlspecialchars($booking['packageName']); ?></td>
+            <td><?php echo htmlspecialchars($booking['tourName']); ?></td>
             <td><?php echo htmlspecialchars($booking['numberOfAdults']); ?></td>
             <td><?php echo htmlspecialchars($booking['numberOfChildren']); ?></td>
             <td><?php echo date('d/m/Y H:i', strtotime($booking['bookingDate'])); ?></td>
