@@ -74,7 +74,9 @@ INSERT INTO sightseeingspot_tour (tourCode, spotCode) VALUES
 
 INSERT INTO tourbookingform (bookingDate, numberOfChildren, numberOfAdults, customerCode, tourCode) VALUES
 ('2023-12-01 10:00:00', 2, 2, 1, 1),
-('2023-12-15 15:00:00', 1, 3, 2, 2);
+('2023-12-15 15:00:00', 1, 3, 2, 2),
+('2023-12-01 10:00:00', 2, 2, 1, 3),
+('2023-12-15 15:00:00', 1, 3, 2, 4);
 
 INSERT INTO detailbookingform (fullName, gender, dob, identifyCard, nationality, formCode) VALUES
 ('Nguyen Van A', 1, '1990-01-01 00:00:00', '123456789', 'Vietnam', 1),

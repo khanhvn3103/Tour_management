@@ -161,13 +161,13 @@ class modelBill
         }
 
         // Lấy thông tin chi tiết từ detailbookingform
-        $details = $detailBookingFormModel->getDetailBookingForm($formCode);
-        if (!$details) {
-            return "Không tìm thấy chi tiết booking với formCode: $formCode.";
-        }
+        // $details = $detailBookingFormModel->getDetailBookingForm($formCode);
+        // if (!$details) {
+        //     return "Không tìm thấy chi tiết booking với formCode: $formCode.";
+        // }
 
         // Tính tổng số người
-        $numberOfPeople = count($details);
+        $numberOfPeople = $booking['numberOfChildren']+$booking['numberOfAdults'];
 
         // Lấy thông tin voucher nếu có
         $voucher = $voucherCode ? $voucherModel->getVoucher($voucherCode) : null;
